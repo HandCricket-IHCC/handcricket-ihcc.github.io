@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Squad registration for the Member Boards of the International Hand Cricket Council.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f3324">
+<title>Squad Registration - IHCC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Design: a deep pitch-green hero with soft mowed-grass stripes and a stitched ball emblem, then clean white cards on a pale lawn background. Gold is a small accent for the ball seam and the progress fill; red is only for errors. */
+:root {
+  --bg: #eef4ef;
+  --surface: #ffffff;
+  --fg: #12201a;
+  --muted: #475a50;
+  --line: #cddad2;
+  --brand: #1b5e43;
+  --brand-fg: #ffffff;
+  --brand-soft: #e1efe6;
+  --gold: #c8962e;
+  --band: #0c2e21;
+  --band2: #123d2b;
+  --band-fg: #f2f8f4;
+  --band-muted: #b9d1c3;
+  --error: #b3261e;
+  --focus: #0b57d0;
+  --shadow: 0 1px 2px rgba(10,40,25,.06), 0 8px 24px rgba(10,40,25,.07);
+  --font-display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b130f; --surface: #14201a; --fg: #e8f0eb; --muted: #a8bbb0; --line: #2b3f34;
+    --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
+    --error: #ff8a80; --focus: #8ab4f8; --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b130f; --surface: #14201a; --fg: #e8f0eb; --muted: #a8bbb0; --line: #2b3f34;
+  --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
+  --error: #ff8a80; --focus: #8ab4f8; --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 18px/1.62 var(--font-body);
+}
+.skip { position: absolute; left: 8px; top: -60px; z-index: 20; background: var(--brand); color: var(--brand-fg); padding: 12px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 8px; }
+.wrap { width: 100%; max-width: 700px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Hero */
+.topnav { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0 0 26px; padding: 0 0 14px; border-bottom: 1px solid rgba(255,255,255,.2); }
+.topnav a { color: var(--band-fg); text-decoration: none; font-weight: 600; padding: 6px 2px; border-bottom: 2px solid transparent; }
+.topnav a:hover, .topnav a[aria-current=page] { border-bottom-color: var(--gold); }
+.topnav a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.hero { position: relative; overflow: hidden; color: var(--band-fg);
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 56px, rgba(255,255,255,0) 56px 112px),
+    linear-gradient(160deg, var(--band2), var(--band));
+  padding: 44px 0 64px; }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 34px; background: var(--bg); clip-path: ellipse(60% 100% at 50% 100%); }
+.hero-row { display: flex; align-items: center; gap: 22px; }
+.ball { flex: none; width: 104px; height: 104px; filter: drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+.org { font: 600 16px/1.2 var(--font-display); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 8px; color: var(--band-muted); }
+h1 { font: 700 clamp(40px, 9vw, 62px)/1 var(--font-display); margin: 0; text-wrap: balance; letter-spacing: .005em; }
+.lede { margin: 18px 0 0; max-width: 52ch; opacity: .95; }
+.deadline { display: inline-flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin-top: 20px; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); font-weight: 600; }
+.deadline span { color: var(--band-muted); font-weight: 400; }
+.hero-gold { display: block; width: 72px; height: 4px; border-radius: 4px; background: var(--gold); margin: 0 0 18px; }
+
+main { padding-bottom: 20px; }
+section { margin-top: 38px; }
+h2 { font: 700 32px/1.1 var(--font-display); margin: 0 0 16px; letter-spacing: .01em; text-wrap: balance; }
+h2::before { content: ""; display: block; width: 36px; height: 4px; border-radius: 4px; background: var(--gold); margin-bottom: 10px; }
+
+.progress { margin-top: 28px; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); text-align: center; }
+.pnum { margin: 0 0 12px; font-size: 19px; } .pnum strong { font: 700 34px/1 var(--font-display); color: var(--brand); }
+.dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.dots i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); background: transparent; }
+.dots i.on { background: var(--gold); border-color: var(--gold); }
+.cta { display: block; text-align: center; text-decoration: none; padding: 18px 20px; border-radius: 14px; font: 700 26px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase; background: linear-gradient(180deg, var(--brand), color-mix(in srgb, var(--brand) 82%, #000)); color: var(--brand-fg); box-shadow: 0 6px 18px rgba(27,94,67,.3); }
+.cta:hover { filter: brightness(1.08); }
+.cta:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.cta[aria-disabled=true] { opacity: .6; }
+.foot p { margin: 0 0 8px; }
+.foot a { color: var(--brand); font-weight: 700; }
+.foot a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btnwa { display: inline-block; text-decoration: none; padding: 12px 22px; border-radius: 10px; font-weight: 700; background: var(--brand); color: var(--brand-fg); }
+.btnwa:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.closed { margin-top: 28px; padding: 18px 20px; border-radius: 12px; border: 2px solid var(--gold); background: var(--surface); font-weight: 600; }
+
+.steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: s; }
+.steps li { counter-increment: s; position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 16px 70px; box-shadow: var(--shadow); }
+.steps li::before { content: counter(s); position: absolute; left: 16px; top: 14px; width: 40px; height: 40px; border-radius: 50%; background: var(--brand); color: var(--brand-fg); font: 700 24px/40px var(--font-display); text-align: center; }
+.steps strong { display: block; }
+.steps span { color: var(--muted); }
+
+.checklist { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.checklist li { position: relative; padding: 10px 14px 10px 46px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.checklist li::before { content: ""; position: absolute; left: 15px; top: 15px; width: 16px; height: 9px; border-left: 3px solid var(--brand); border-bottom: 3px solid var(--brand); transform: rotate(-45deg); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); }
+.field { margin-top: 22px; }
+.field:first-of-type { margin-top: 0; }
+label, .label { display: block; font-weight: 700; margin-bottom: 6px; }
+.hint { display: block; font-weight: 400; color: var(--muted); font-size: 16px; margin-top: 2px; }
+input[type=text], input[type=email], input[type=tel], select {
+  width: 100%; min-height: 52px; padding: 10px 14px; font: inherit; color: var(--fg);
+  background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+input:hover, select:hover { border-color: var(--brand); }
+input:focus, select:focus, button:focus-visible, summary:focus-visible, input[type=checkbox]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+input[aria-invalid=true], select[aria-invalid=true] { border-color: var(--error); }
+.err { color: var(--error); font-size: 16px; font-weight: 600; margin-top: 6px; }
+.err:empty { display: none; }
+
+.board-info { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--brand-soft); }
+.board-info:empty { display: none; }
+.board-info p { margin: 0 0 8px; font-weight: 600; }
+.bar { height: 10px; border-radius: 10px; background: var(--line); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; border-radius: 10px; background: linear-gradient(90deg, var(--brand), var(--gold)); transition: width .4s ease; }
+
+.req { font-weight: 400; color: var(--muted); font-size: 15px; }
+.allreq { margin: 0 0 18px; font-weight: 600; }
+fieldset.consent-box { margin: 26px 0 0; padding: 18px; border: 1.5px solid var(--line); border-radius: 14px; }
+fieldset.consent-box legend { font: 700 22px/1.1 var(--font-display); padding: 0 8px; }
+fieldset.consent-box p { margin: 0 0 12px; color: var(--muted); font-size: 16px; }
+.linkbtn { margin-top: 16px; background: none; border: 0; padding: 8px 0; font: inherit; font-weight: 700; color: var(--brand); text-decoration: underline; cursor: pointer; }
+.terms { margin-top: 8px; padding: 14px 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
+.terms p { margin: 0 0 10px; } .terms ol { margin: 0 0 10px; padding-left: 1.3em; }
+.consent { display: flex; gap: 14px; align-items: flex-start; margin-top: 12px; padding: 16px; background: var(--brand-soft); border-radius: 12px; }
+.consent input { width: 26px; height: 26px; margin: 2px 0 0; flex: none; accent-color: var(--brand); }
+.consent label { margin: 0; font-weight: 400; }
+button.go {
+  margin-top: 26px; width: 100%; min-height: 58px; font: 700 23px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase;
+  background: linear-gradient(180deg, var(--brand), color-mix(in srgb, var(--brand) 82%, #000)); color: var(--brand-fg); border: 0; border-radius: 12px; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(27,94,67,.28);
+}
+button.go:hover { filter: brightness(1.08); }
+button.go[disabled] { opacity: .6; cursor: progress; }
+.summary { margin: 0 0 20px; padding: 14px 16px; border: 2px solid var(--error); border-radius: 12px; color: var(--error); font-weight: 600; }
+.summary:empty { display: none; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 18px; margin-top: 10px; }
+details[open] { box-shadow: var(--shadow); }
+summary { cursor: pointer; font-weight: 700; padding: 15px 0; }
+details p { margin: 0 0 16px; color: var(--muted); }
+
+.thanks { text-align: center; padding-top: 10px; }
+.thanks .ball { width: 84px; height: 84px; margin: 0 auto 12px; display: block; }
+.thanks h2 { font-size: 44px; }
+.thanks h2::before { margin-inline: auto; }
+.thanks .card { text-align: left; }
+.foot { margin: 44px 0 0; padding: 22px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; text-align: center; }
+@media (max-width: 480px) { .ball { width: 72px; height: 72px; } .hero-row { gap: 14px; } .card { padding: 20px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="topnav" aria-label="Main"><a href="index.html">Home</a><a href="squad.html" aria-current="page">Squad registration</a><a href="boards.html">Boards</a><a href="news.html">News</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a></nav>
+    <div class="hero-row">
+      <svg class="ball" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="3"/>
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#e8c97a" stroke-width="1" stroke-dasharray="2 4"/>
+        <circle cx="60" cy="52" r="31" fill="#1b5e43" stroke="#f4e3b0" stroke-width="2.5"/>
+        <path d="M43 30c9 11 9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="2.4" stroke-linecap="round"/>
+        <g stroke="#f4e3b0" stroke-width="1.8" stroke-linecap="round"><path d="M46 38l5-1.5M47 48l6-.5M47 58l6 .5M46 68l5 1.5M74 38l-5-1.5M73 48l-6-.5M73 58l-6 .5M74 68l-5 1.5"/></g>
+        <rect x="26" y="88" width="68" height="20" rx="5" fill="#e8c97a"/>
+        <text x="60" y="103" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, Arial, sans-serif" font-weight="700" font-size="17" letter-spacing="3" fill="#0c2e21">IHCC</text>
+      </svg>
+      <div>
+        <p class="org">International Hand Cricket Council</p>
+        <h1>Squad Registration</h1>
+      </div>
+    </div>
+    <p class="lede">Every player of a Member Board registers here, one form for each player. Your details go straight to IHCC.</p>
+    <p class="deadline"><span>Last date:</span> 31 October 2026, 11:59 PM Pakistan time</p>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div id="closedNote" class="closed" hidden role="status">Registration is closed. The last date was 31 October 2026, 11:59 PM Pakistan time.</div>
+  <div id="startView">
+    <section class="progress" id="progressSec" aria-label="Boards progress" hidden>
+      <p class="pnum"><strong id="doneNum">0</strong> of 15 boards have registered the minimum 12 players.</p>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </section>
+
+    <section aria-labelledby="how">
+      <h2 id="how">How it works</h2>
+      <ol class="steps">
+        <li><strong>Get your details ready.</strong> <span>The checklist below tells you what you need.</span></li>
+        <li><strong>Fill in the form once for yourself.</strong> <span>Each player of the board fills in their own form.</span></li>
+        <li><strong>Press Submit.</strong> <span>You will see a thank you page when your form has been received.</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="ready">
+      <h2 id="ready">Keep these ready</h2>
+      <ul class="checklist">
+        <li>Your board.</li>
+        <li>Your display name: the same name you use in the Hand Cricket app.</li>
+        <li>Your real name, written correctly.</li>
+        <li>The email address on which you have Hand Cricket premium.</li>
+        <li>Your WhatsApp number with the country code.</li>
+        <li>Your city and country.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="start">
+      <h2 id="start">Ready to register?</h2>
+      <p>The form has your details and three short agreements. It takes about two minutes.</p>
+      <p><a class="cta" id="cta" href="register.html">Start registration</a></p>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">Questions</h2>
+      <details>
+        <summary>How many players must a board register?</summary>
+        <p>A board needs at least 12 players. Every player fills in this form for themselves. There is no upper limit on the form.</p>
+      </details>
+      <details>
+        <summary>Which players can vote?</summary>
+        <p>The first 12 players of a board's squad are its voting members. The board decides the order of its squad.</p>
+      </details>
+      <details>
+        <summary>What if I make a mistake?</summary>
+        <p>The same email address or display name cannot be submitted twice. Write to IHCC at handcricket.ihcc@gmail.com, or tell IHCC in the IHCC group, with your registration number, and your entry will be corrected.</p>
+      </details>
+      <details>
+        <summary>Why is my IP address recorded?</summary>
+        <p>Only to keep the registration fair: to find fake or duplicate entries, and later to keep elections fair. It is recorded only if you tick the data and privacy box.</p>
+      </details>
+      <details>
+        <summary>Who can see my details?</summary>
+        <p>Only IHCC management. The page shows other players only a number: how many players each board has registered so far. No names or details are shown.</p>
+      </details>
+    </section>
+  </div>
+  <footer class="foot">
+    <p>Contact IHCC: handcricket.ihcc@gmail.com</p>
+    <p><a href="https://whatsapp.com/channel/0029Vb9By49EVccTOBSzb60T">Follow the official IHCC WhatsApp channel</a></p>
+    <p>Last updated: 23 October 2026</p>
+    <p>International Hand Cricket Council, IHCC Management, 2026.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var API = "https://krkrpcnovdobnscknfnw.supabase.co/functions/v1/submit-squad-player";
+  fetch(API).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.ok) return;
+    var done = 0, dots = document.getElementById("dots"); dots.textContent = "";
+    Object.keys(d.counts).forEach(function (k) { var i = document.createElement("i"); if (d.counts[k] >= 12) { done++; i.className = "on"; } dots.appendChild(i); });
+    document.getElementById("doneNum").textContent = done;
+    document.getElementById("progressSec").hidden = false;
+    if (d.closed) {
+      document.getElementById("closedNote").hidden = false;
+      var c = document.getElementById("cta"); c.textContent = "Registration closed"; c.removeAttribute("href"); c.setAttribute("aria-disabled", "true");
+    }
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
