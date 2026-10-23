@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f3324">
+<title>IHCC Admin</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3C/svg%3E">
+<style>
+:root { --bg:#eef4ef; --surface:#fff; --fg:#12201a; --muted:#475a50; --line:#cddad2; --brand:#1b5e43; --brand-fg:#fff; --soft:#e1efe6; --band:#0c2e21; --band-fg:#f2f8f4; --error:#b3261e; --warn:#8a5a00; --focus:#0b57d0; --font:"Segoe UI",Roboto,Arial,sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0b130f; --surface:#14201a; --fg:#e8f0eb; --muted:#a8bbb0; --line:#2b3f34; --brand:#55c192; --brand-fg:#07140d; --soft:#193026; --band:#07140d; --band-fg:#e8f0eb; --error:#ff8a80; --warn:#f0c060; --focus:#8ab4f8; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--font); }
+.skip { position: absolute; left: 8px; top: -60px; background: var(--brand); color: var(--brand-fg); padding: 10px 14px; border-radius: 8px; font-weight: 700; z-index: 10; }
+.skip:focus { top: 8px; }
+header { background: var(--band); color: var(--band-fg); padding: 18px 16px; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header .wrap { padding: 0; display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; }
+h1 { margin: 0; font-size: 24px; }
+h2 { font-size: 22px; margin: 28px 0 10px; }
+h3 { font-size: 18px; margin: 0; }
+main { padding-bottom: 60px; }
+button, select, input { font: inherit; }
+button { min-height: 44px; padding: 0 16px; border-radius: 8px; border: 2px solid var(--brand); background: var(--brand); color: var(--brand-fg); font-weight: 700; cursor: pointer; }
+button.alt { background: transparent; color: var(--brand); }
+button.danger { background: transparent; border-color: var(--error); color: var(--error); }
+button[disabled] { opacity: .55; cursor: progress; }
+input[type=text], input[type=email], input[type=search], select { min-height: 44px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); max-width: 100%; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-top: 14px; }
+.msg { margin: 16px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--soft); font-weight: 600; }
+.msg.err { background: transparent; border: 2px solid var(--error); color: var(--error); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.row label { display: grid; gap: 4px; font-weight: 600; }
+table { border-collapse: collapse; width: 100%; background: var(--surface); }
+th, td { text-align: left; padding: 8px 10px; border: 1px solid var(--line); }
+th { background: var(--soft); }
+.scroll { overflow-x: auto; }
+dl { margin: 10px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; }
+dt { color: var(--muted); font-weight: 600; }
+dd { margin: 0; overflow-wrap: anywhere; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 14px; font-weight: 700; background: var(--soft); }
+.flag { color: var(--warn); font-weight: 700; }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<header>
+  <div class="wrap">
+    <h1>IHCC Admin</h1>
+    <div id="who" aria-live="polite"></div>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div id="status" class="msg" role="status" hidden></div>
+
+  <section id="loginView" hidden aria-labelledby="loginH">
+    <h2 id="loginH">Sign in</h2>
+    <p>This page is only for IHCC administrators. Sign in with your Google account.</p>
+    <p><button id="signIn" type="button">Sign in with Google</button></p>
+  </section>
+
+  <section id="deniedView" hidden aria-labelledby="deniedH">
+    <h2 id="deniedH">Not authorised</h2>
+    <p id="deniedText"></p>
+    <p><button id="signOut2" type="button" class="alt">Sign out</button></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section aria-labelledby="sumH">
+      <h2 id="sumH">Boards summary</h2>
+      <div class="scroll">
+        <table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Number of players per board</caption>
+          <thead><tr><th scope="col">Board</th><th scope="col">Total</th><th scope="col">Verified</th><th scope="col">Pending</th><th scope="col">Rejected</th><th scope="col">12 complete</th></tr></thead>
+          <tbody id="sumBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="entH">
+      <h2 id="entH">Entries</h2>
+      <div class="row" role="search">
+        <label>Board <select id="fBoard"><option value="">All boards</option></select></label>
+        <label>Status <select id="fStatus"><option value="">All</option><option>pending</option><option>verified</option><option>rejected</option></select></label>
+        <label>Search <input id="fSearch" type="search" placeholder="Name, email, number"></label>
+        <label><span>Only flagged</span><select id="fFlag"><option value="">No</option><option value="1">Yes</option></select></label>
+        <button id="csvBtn" type="button" class="alt">Download CSV</button>
+        <button id="reloadBtn" type="button" class="alt">Reload</button>
+      </div>
+      <p id="count" role="status"></p>
+      <div id="entries"></div>
+    </section>
+
+    <section id="adminsSec" aria-labelledby="admH" hidden>
+      <h2 id="admH">Administrators</h2>
+      <div id="admins"></div>
+      <div class="card">
+        <h3>Add or change an administrator</h3>
+        <form id="admForm" class="row" style="margin-top:12px">
+          <label>Google email <input id="aEmail" type="email" required></label>
+          <label>Name <input id="aName" type="text"></label>
+          <label>Role
+            <select id="aRole">
+              <option value="core">core (core officer)</option>
+              <option value="verifier">verifier</option>
+              <option value="board_director">board_director</option>
+              <option value="election_officer">election_officer</option>
+              <option value="auditor">auditor</option>
+              <option value="owner">owner</option>
+            </select>
+          </label>
+          <label>Board (board_director only) <select id="aBoard"><option value="">None</option></select></label>
+          <label>Active <select id="aActive"><option value="true">Yes</option><option value="false">No, remove access</option></select></label>
+          <button type="submit">Save administrator</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="auditSec" aria-labelledby="audH" hidden>
+      <h2 id="audH">Audit log</h2>
+      <div class="scroll"><table>
+        <thead><tr><th scope="col">When</th><th scope="col">Who</th><th scope="col">Action</th><th scope="col">Target</th><th scope="col">Details</th></tr></thead>
+        <tbody id="auditBody"></tbody>
+      </table></div>
+    </section>
+
+    <p style="margin-top:36px"><button id="signOut" type="button" class="alt">Sign out</button></p>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  var URL = "https://krkrpcnovdobnscknfnw.supabase.co";
+  var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
+  var BOARDS = ["New Zealand Hand Cricket Board","England Hand Cricket Board","Pakistan Hand Cricket Board","Bangladesh Hand Cricket Board","Afghanistan Hand Cricket Board","Australia Hand Cricket Board","Sri Lanka Hand Cricket Board","South Africa Hand Cricket Board","UAE Hand Cricket Board","USA Hand Cricket Board","Oman Hand Cricket Board","Nepal Hand Cricket Board","Scotland Hand Cricket Board","Zimbabwe Hand Cricket Board","India Hand Cricket Board"];
+  var sb = window.supabase.createClient(URL, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  var $ = function (id) { return document.getElementById(id); };
+  var me = null, entries = [];
+
+  function say(text, isErr) {
+    var s = $("status"); s.textContent = text || ""; s.hidden = !text; s.className = "msg" + (isErr ? " err" : "");
+  }
+  function show(view) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; }); }
+  function td(text) { var c = document.createElement("td"); c.textContent = text == null ? "" : String(text); return c; }
+  function th(text) { var c = document.createElement("th"); c.scope = "row"; c.textContent = text; return c; }
+
+  BOARDS.forEach(function (b) {
+    [$("fBoard"), $("aBoard")].forEach(function (sel) { var o = document.createElement("option"); o.value = b; o.textContent = b; sel.appendChild(o); });
+  });
+
+  async function rpc(name, args) {
+    var r = await sb.rpc(name, args || {});
+    if (r.error) throw new Error(r.error.message || "Request failed");
+    return r.data;
+  }
+
+  async function start() {
+    var s = await sb.auth.getSession();
+    if (!s.data.session) { show("loginView"); $("who").textContent = ""; return; }
+    try {
+      me = await rpc("admin_me");
+    } catch (e) { say("Could not check your access: " + e.message, true); show("loginView"); return; }
+    var email = s.data.session.user.email || "";
+    if (!me || !me.is_admin) {
+      $("deniedText").textContent = "The account " + email + " is not an IHCC administrator. Sign out and sign in with the correct Google account, or ask the IHCC Owner to add you.";
+      show("deniedView"); return;
+    }
+    $("who").textContent = me.email + " (" + me.role + (me.board_name ? ", " + me.board_name : "") + ")";
+    show("panel");
+    $("adminsSec").hidden = me.role !== "owner";
+    $("auditSec").hidden = !(me.role === "owner" || me.role === "auditor");
+    await loadAll();
+  }
+
+  async function loadAll() {
+    say("Loading");
+    try {
+      var jobs = [];
+      if (["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0) jobs.push(loadSummary()); else $("sumBody").textContent = "";
+      if (me.role !== "auditor" && me.role !== "election_officer") jobs.push(loadEntries()); else { entries = []; render(); }
+      if (me.role === "owner") jobs.push(loadAdmins());
+      if (me.role === "owner" || me.role === "auditor") jobs.push(loadAudit());
+      await Promise.all(jobs);
+      say("");
+    } catch (e) { say("Error: " + e.message, true); }
+  }
+
+  async function loadSummary() {
+    var rows = await rpc("admin_summary"), by = {};
+    rows.forEach(function (r) { by[r.board_name] = r; });
+    var body = $("sumBody"); body.textContent = "";
+    BOARDS.forEach(function (b) {
+      var r = by[b] || { total: 0, verified: 0, pending: 0, rejected: 0, has_12: false };
+      var tr = document.createElement("tr");
+      tr.appendChild(th(b)); tr.appendChild(td(r.total)); tr.appendChild(td(r.verified)); tr.appendChild(td(r.pending)); tr.appendChild(td(r.rejected)); tr.appendChild(td(r.has_12 ? "Yes" : "No"));
+      body.appendChild(tr);
+    });
+  }
+
+  async function loadEntries() { entries = await rpc("admin_list_entries"); render(); }
+
+  function flagsOf(e) {
+    var f = [];
+    if (e.same_ip_entries > 1) f.push(e.same_ip_entries + " entries from the same IP");
+    if (e.same_whatsapp_entries > 1) f.push(e.same_whatsapp_entries + " entries with the same WhatsApp number");
+    if (e.same_ip_other_boards > 0) f.push("same IP used for another board");
+    if (e.country_mismatch) f.push("IP country differs from the country entered");
+    return f;
+  }
+
+  var LABELS = { created_at: "Submitted", board_name: "Board", display_name: "Display name", real_name: "Real name", email: "Email", whatsapp: "WhatsApp", city: "City", country: "Country", status: "Status", admin_note: "Note", receipt_code: "Registration number", email_status: "Confirmation email", fill_seconds: "Seconds to fill", ip_address: "IP address", ip_city: "IP city", ip_country: "IP country", ip_isp: "Internet provider", device_type: "Device", client_timezone: "Time zone" };
+  var ORDER = ["board_name", "display_name", "real_name", "email", "whatsapp", "city", "country", "receipt_code", "created_at", "email_status", "fill_seconds", "ip_address", "ip_city", "ip_country", "ip_isp", "device_type", "client_timezone", "admin_note"];
+  var canEdit = function () { return ["owner", "core", "verifier"].indexOf(me.role) >= 0; };
+
+  function filtered() {
+    var b = $("fBoard").value, s = $("fStatus").value, q = $("fSearch").value.trim().toLowerCase(), fl = $("fFlag").value;
+    return entries.filter(function (e) {
+      if (b && e.board_name !== b) return false;
+      if (s && e.status !== s) return false;
+      if (fl && flagsOf(e).length === 0) return false;
+      if (q) {
+        var hay = [e.display_name, e.real_name, e.email, e.whatsapp, e.receipt_code, e.city, e.country].join(" ").toLowerCase();
+        if (hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+  }
+
+  function render() {
+    var list = filtered(), box = $("entries"); box.textContent = "";
+    $("count").textContent = list.length + " of " + entries.length + " entries shown.";
+    list.forEach(function (e) {
+      var card = document.createElement("article"); card.className = "card";
+      var h = document.createElement("h3"); h.textContent = e.display_name + " - " + e.board_name; card.appendChild(h);
+      var pill = document.createElement("span"); pill.className = "pill"; pill.textContent = "Status: " + e.status; card.appendChild(document.createTextNode(" ")); card.appendChild(pill);
+      var fl = flagsOf(e);
+      if (fl.length) { var p = document.createElement("p"); p.className = "flag"; p.textContent = "Flags: " + fl.join("; ") + "."; card.appendChild(p); }
+      var dl = document.createElement("dl");
+      ORDER.forEach(function (k) {
+        if (e[k] === undefined || e[k] === null || e[k] === "") return;
+        if (k === "board_name" || k === "display_name") return;
+        var dt = document.createElement("dt"); dt.textContent = LABELS[k] || k;
+        var dd = document.createElement("dd"); dd.textContent = k === "created_at" ? new Date(e[k]).toLocaleString() : e[k];
+        dl.appendChild(dt); dl.appendChild(dd);
+      });
+      card.appendChild(dl);
+      if (canEdit()) {
+        var tools = document.createElement("div"); tools.className = "tools";
+        var l1 = document.createElement("label"); l1.textContent = "Set status ";
+        var sel = document.createElement("select");
+        ["pending", "verified", "rejected"].forEach(function (s) { var o = document.createElement("option"); o.textContent = s; if (s === e.status) o.selected = true; sel.appendChild(o); });
+        l1.appendChild(sel);
+        var l2 = document.createElement("label"); l2.textContent = "Note ";
+        var note = document.createElement("input"); note.type = "text"; note.maxLength = 500; note.value = e.admin_note || ""; l2.appendChild(note);
+        var save = document.createElement("button"); save.type = "button"; save.textContent = "Save status for " + e.display_name;
+        save.addEventListener("click", async function () {
+          save.disabled = true;
+          try { await rpc("admin_set_status", { p_id: e.id, p_status: sel.value, p_note: note.value }); say("Saved: " + e.display_name + " is now " + sel.value + "."); await Promise.all([loadEntries(), loadSummary()]); }
+          catch (er) { say("Could not save: " + er.message, true); }
+          save.disabled = false;
+        });
+        tools.appendChild(l1); tools.appendChild(l2); tools.appendChild(save);
+        if (me.role === "owner") {
+          var del = document.createElement("button"); del.type = "button"; del.className = "danger"; del.textContent = "Delete entry of " + e.display_name;
+          var armed = false;
+          del.addEventListener("click", async function () {
+            if (!armed) { armed = true; del.textContent = "Press again to confirm deleting " + e.display_name; return; }
+            del.disabled = true;
+            try { await rpc("admin_delete_entry", { p_id: e.id }); say("Deleted the entry of " + e.display_name + "."); await Promise.all([loadEntries(), loadSummary(), loadAudit()]); }
+            catch (er) { say("Could not delete: " + er.message, true); del.disabled = false; }
+          });
+          tools.appendChild(del);
+        }
+        card.appendChild(tools);
+      }
+      box.appendChild(card);
+    });
+  }
+
+  async function loadAdmins() {
+    var rows = await rpc("admin_list_admins"), box = $("admins"); box.textContent = "";
+    var wrap = document.createElement("div"); wrap.className = "scroll";
+    var t = document.createElement("table");
+    t.innerHTML = "<thead><tr><th scope='col'>Email</th><th scope='col'>Name</th><th scope='col'>Role</th><th scope='col'>Board</th><th scope='col'>Active</th></tr></thead>";
+    var tb = document.createElement("tbody");
+    rows.forEach(function (r) { var tr = document.createElement("tr"); tr.appendChild(th(r.email)); tr.appendChild(td(r.display_name)); tr.appendChild(td(r.role)); tr.appendChild(td(r.board_name)); tr.appendChild(td(r.active ? "Yes" : "No")); tb.appendChild(tr); });
+    t.appendChild(tb); wrap.appendChild(t); box.appendChild(wrap);
+  }
+
+  async function loadAudit() {
+    if (!(me.role === "owner" || me.role === "auditor")) return;
+    var rows = await rpc("admin_audit"), body = $("auditBody"); body.textContent = "";
+    rows.forEach(function (r) {
+      var tr = document.createElement("tr");
+      tr.appendChild(td(new Date(r.at).toLocaleString())); tr.appendChild(td(r.actor_email)); tr.appendChild(td(r.action)); tr.appendChild(td(r.target)); tr.appendChild(td(JSON.stringify(r.details || {})));
+      body.appendChild(tr);
+    });
+  }
+
+  $("admForm").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    try {
+      await rpc("admin_upsert_admin", { p_email: $("aEmail").value, p_role: $("aRole").value, p_board: $("aBoard").value || null, p_name: $("aName").value || null, p_active: $("aActive").value === "true" });
+      say("Administrator saved: " + $("aEmail").value + "."); $("admForm").reset(); await Promise.all([loadAdmins(), loadAudit()]);
+    } catch (e) { say("Could not save the administrator: " + e.message, true); }
+  });
+
+  function csvCell(v) { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  $("csvBtn").addEventListener("click", function () {
+    var list = filtered(); if (!list.length) { say("Nothing to download.", true); return; }
+    var keys = Object.keys(list[0]).filter(function (k) { return k !== "id"; });
+    var lines = [keys.join(",")].concat(list.map(function (e) { return keys.map(function (k) { return csvCell(e[k]); }).join(","); }));
+    var blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a"); a.href = window.URL.createObjectURL(blob); a.download = "ihcc-entries-" + new Date().toISOString().slice(0, 10) + ".csv";
+    document.body.appendChild(a); a.click(); a.remove(); say("The CSV file has been downloaded.");
+  });
+
+  ["fBoard", "fStatus", "fFlag"].forEach(function (id) { $(id).addEventListener("change", render); });
+  $("fSearch").addEventListener("input", render);
+  $("reloadBtn").addEventListener("click", loadAll);
+  $("signIn").addEventListener("click", function () {
+    sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
+  });
+  async function out() { await sb.auth.signOut(); me = null; entries = []; say("You are signed out."); show("loginView"); $("who").textContent = ""; }
+  $("signOut").addEventListener("click", out); $("signOut2").addEventListener("click", out);
+
+  sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN" && !me) start(); });
+  start();
+})();
+</script>
+</body>
+</html>
