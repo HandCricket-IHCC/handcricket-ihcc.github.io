@@ -292,6 +292,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 
 <main id="main" class="wrap" tabindex="-1">
   <p id="msg" class="msgbox" role="status" aria-live="polite" hidden></p>
+  <p id="doneMsg" class="msgbox" hidden></p>
 
   <section id="loadingView" aria-live="polite"><p>Checking your sign-in. Please wait.</p></section>
 
@@ -437,7 +438,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 </footer>
 <!--/SITEFOOT-->
 
-<script src="toast.js?v=1"></script>
+<script src="dialog.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
@@ -451,14 +452,21 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   var FIELDS = ["display_name", "real_name", "whatsapp", "email", "city", "country"];
   var LABEL = { display_name: "Display name", real_name: "Real name", whatsapp: "WhatsApp number", email: "Gmail address", city: "City", country: "Country" };
 
+  /* say: plain written message in a live region (sign-in problems, sign-out). */
   function say(text, bad) {
     var m = $("msg"); m.textContent = text || ""; m.hidden = !text; m.className = "msgbox" + (bad ? " bad" : "");
-    if (window.IHCCToast) {
-      /* the toast announces; the written message stays on the page to read later */
-      m.removeAttribute("role"); m.removeAttribute("aria-live");
-      window.IHCCToast.show(text, bad);
-    }
+    var d = $("doneMsg"); d.textContent = ""; d.hidden = true;
   }
+  /* notify: result of an action. Opens a dialog that the screen reader reads out by itself.
+     The written message also stays on the page. buttons: [{label, focus: function -> element}]. */
+  function notify(text, bad, buttons) {
+    if (!window.IHCCDialog) { say(text, bad); return; }
+    var m = $("msg"); m.textContent = ""; m.hidden = true;
+    var d = $("doneMsg"); d.textContent = text; d.hidden = false; d.className = "msgbox" + (bad ? " bad" : "");
+    window.IHCCDialog.show({ title: (bad ? "Error. " : "") + text, bad: !!bad, buttons: buttons });
+  }
+  function lineEl(id) { return id ? $("line-" + id) : null; }
+  function firstLine() { return document.querySelector("#plist .line"); }
   function show(view) {
     ["loadingView", "loginView", "deniedView", "repView"].forEach(function (v) { $(v).hidden = v !== view; });
   }
@@ -605,10 +613,12 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     });
     $("copyBtn").disabled = n === 0; $("dlBtn").disabled = n === 0;
     if (focusSpec) {
-      var t = document.querySelector('button[data-id="' + focusSpec.id + '"][data-act="' + focusSpec.act + '"]');
-      if (!t || t.disabled) t = $("line-" + focusSpec.id);
-      if (t) t.focus();
+      /* focus the row itself: the screen reader reads its new number and name */
+      var t = $("line-" + focusSpec.id);
+      if (t) setTimeout(function () { t.focus(); }, 60);
     }
+    /* first paragraph of the state box can take focus (used after final submit) */
+    var sp = $("stateBox").querySelector("p"); if (sp) sp.setAttribute("tabindex", "-1");
   }
 
   function clearErrors() {
@@ -649,16 +659,23 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
       else if (r.mail_status === "limit") note += " The daily email limit for this player was reached, so no email was sent now.";
       else note += " The email to the player could not be sent. IHCC will check this.";
       if (r.other_board) note += " This player may also be in another board's squad. IHCC will contact you.";
+      var savedId = wasEdit ? editingId : null;
       resetForm();
       await loadList(); await refreshMe();
       busy = false;
       render();
-      say(note);
-      $("display_name").focus();
+      if (!wasEdit && players.length) savedId = players[players.length - 1].id;
+      var btns = [];
+      if (!wasEdit && players.length < 20 && editable()) btns.push({ label: "Add next player", focus: function () { return $("display_name"); } });
+      btns.push({ label: "Close", focus: function () { return lineEl(savedId) || firstLine() || $("display_name"); } });
+      notify(note, false, btns);
     } catch (e) {
       busy = false;
       if (e.field && $("e-" + e.field)) { fieldError(e.field, e.message); $("summary").textContent = e.message; $("summary").focus(); }
-      else { $("summary").textContent = errText(e); $("summary").focus(); }
+      else {
+        $("summary").textContent = errText(e);
+        notify(errText(e), true, [{ label: "Close", focus: function () { return $("addBtn"); } }]);
+      }
       render();
     }
   });
@@ -667,10 +684,17 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     var p = players.filter(function (x) { return x.id === id; })[0]; if (!p) return;
     editingId = id; clearErrors();
     FIELDS.forEach(function (f) { $(f).value = p[f] || ""; });
-    render(); say("Editing " + p.display_name + ". Change the details and press Save changes.");
+    render();
+    /* written note only; focus goes to the field, which the screen reader reads by itself */
+    $("msg").textContent = ""; $("msg").hidden = true;
+    var dm = $("doneMsg"); dm.textContent = "Editing " + p.display_name + ". Change the details and press Save changes."; dm.hidden = false; dm.className = "msgbox";
     $("formSec").scrollIntoView({ behavior: "smooth", block: "start" }); $("display_name").focus();
   }
-  $("cancelEdit").addEventListener("click", function () { resetForm(); render(); say("Editing cancelled."); $("display_name").focus(); });
+  $("cancelEdit").addEventListener("click", function () {
+    var id = editingId; resetForm(); render();
+    var dm = $("doneMsg"); dm.textContent = ""; dm.hidden = true;
+    var t = lineEl(id) || firstLine() || $("display_name"); t.focus();
+  });
 
   function askDelete(li, p) {
     var acts = li.querySelector(".acts"); acts.hidden = true;
@@ -686,9 +710,12 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
       try {
         await rpc("rep_delete_player", { p_id: p.id });
         await loadList(); await refreshMe(); render();
-        say(p.display_name + " was deleted. The numbers of the other players were updated.");
-        $("listTitle").focus();
-      } catch (e) { say(errText(e), true); box.remove(); acts.hidden = false; }
+        notify(p.display_name + " was deleted. The numbers of the other players were updated.", false,
+          [{ label: "Close", focus: function () { return firstLine() || $("display_name") || $("listTitle"); } }]);
+      } catch (e) {
+        box.remove(); acts.hidden = false;
+        notify(errText(e), true, [{ label: "Close", focus: function () { return acts.querySelector('[data-act="del"]') || lineEl(p.id); } }]);
+      }
     };
     box.querySelector(".confirm").focus();
   }
@@ -697,29 +724,36 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     try {
       await rpc("rep_move_player", { p_id: id, p_dir: dir });
       await loadList();
-      render({ id: id, act: dir < 0 ? "up" : "down" });
-      var p = players.filter(function (x) { return x.id === id; })[0];
-      if (p) say(p.display_name + " is now number " + p.position + ".");
-    } catch (e) { say(errText(e), true); }
+      var dm = $("doneMsg"); dm.textContent = ""; dm.hidden = true;
+      render({ id: id });
+    } catch (e) { notify(errText(e), true, [{ label: "Close", focus: function () { return lineEl(id); } }]); }
   }
 
   // consent
   $("consentChk").addEventListener("change", function () { $("consentBtn").disabled = !this.checked; });
   $("consentBtn").addEventListener("click", async function () {
     this.disabled = true;
-    try { await call("consent", { text: CONSENT }); await refreshMe(); render(); say("Thank you. You can now add players."); $("display_name").focus(); }
-    catch (e) { say(errText(e), true); this.disabled = false; }
+    var self = this;
+    try {
+      await call("consent", { text: CONSENT }); await refreshMe(); render();
+      notify("Thank you. You can now add players.", false, [{ label: "Add first player", focus: function () { return $("display_name"); } }]);
+    }
+    catch (e) { self.disabled = false; notify(errText(e), true, [{ label: "Close", focus: function () { return $("consentBtn"); } }]); }
   });
 
   // copy / download
   function listText() { return players.map(lineOf).join("\n"); }
   $("copyBtn").addEventListener("click", async function () {
     var t = listText();
-    try { await navigator.clipboard.writeText(t); say("The squad list was copied."); }
+    var back = [{ label: "Close", focus: function () { return $("copyBtn"); } }];
+    try { await navigator.clipboard.writeText(t); notify("The squad list was copied.", false, back); }
     catch (e) {
       var ta = el("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); say("The squad list was copied."); } catch (e2) { say("Copy did not work. Use the download button instead.", true); }
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
       ta.remove();
+      if (ok) notify("The squad list was copied.", false, back);
+      else notify("Copy did not work. Use the download button instead.", true, back);
     }
   });
   $("dlBtn").addEventListener("click", function () {
@@ -728,7 +762,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     var blob = new Blob([head + listText() + "\n"], { type: "text/plain;charset=utf-8" });
     var a = el("a"); a.href = URL.createObjectURL(blob); a.download = me.board + " squad list.txt";
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
-    say("The squad list file was downloaded.");
+    notify("The squad list file was downloaded.", false, [{ label: "Close", focus: function () { return $("dlBtn"); } }]);
   });
 
   // final submit
@@ -743,20 +777,25 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   $("finalChk").addEventListener("change", finalReady); $("finalType").addEventListener("input", finalReady);
   $("finalCancel").addEventListener("click", function () { $("finalPanel").hidden = true; $("finalBtn").hidden = false; $("finalBtn").focus(); });
   $("finalGo").addEventListener("click", async function () {
+    var self = this;
     this.disabled = true;
     try {
       var r = await call("final_submit", { consent: true });
       await refreshMe(); await loadList();
       $("finalPanel").hidden = true; $("finalBtn").hidden = false;
       render();
-      say("Your final list was submitted. " + (r.mail_status === "sent" ? "A copy was sent to your email." : "The copy email could not be sent."));
-      $("boardName").focus();
-    } catch (e) { say(errText(e), true); this.disabled = false; }
+      notify("Your final list was submitted. " + (r.mail_status === "sent" ? "A copy was sent to your email." : "The copy email could not be sent."), false,
+        [{ label: "Close", focus: function () { var p = $("stateBox").querySelector("p"); return p || $("boardName"); } }]);
+    } catch (e) { self.disabled = false; notify(errText(e), true, [{ label: "Close", focus: function () { return $("finalGo"); } }]); }
   });
 
   async function doReopen() {
-    try { await call("reopen"); await refreshMe(); render(); say("Your list is open for editing again. The IHCC Owner was informed. Remember to lock it again with Final submit."); $("boardName").focus(); }
-    catch (e) { say(errText(e), true); }
+    try {
+      await call("reopen"); await refreshMe(); render();
+      notify("Your list is open for editing again. The IHCC Owner was informed. Remember to lock it again with Final submit.", false,
+        [{ label: "Close", focus: function () { return $("display_name"); } }]);
+    }
+    catch (e) { notify(errText(e), true, [{ label: "Close", focus: function () { return $("reopenBtn") || $("boardName"); } }]); }
   }
 
   // auth
