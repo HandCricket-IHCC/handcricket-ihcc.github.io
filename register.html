@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Squad registration for the Member Boards of the International Hand Cricket Council.">
+<meta name="description" content="Board representatives enter the squad list of their Member Board for the International Hand Cricket Council.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0f3324">
-<title>Register - IHCC Squad Registration</title>
+<title>Board Squad List - IHCC</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="International Hand Cricket Council">
-<meta property="og:title" content="Register - IHCC Squad Registration">
-<meta property="og:description" content="Squad registration for the Member Boards of the International Hand Cricket Council.">
+<meta property="og:title" content="Board Squad List - IHCC">
+<meta property="og:description" content="Board representatives enter the squad list of their Member Board for the International Hand Cricket Council.">
 <meta property="og:image" content="https://handcricket-ihcc.github.io/IHCC_logo.png">
 <meta property="og:url" content="https://handcricket-ihcc.github.io/register.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -186,6 +186,30 @@ details p { margin: 0 0 16px; color: var(--muted); }
 .thanks .card { text-align: left; }
 .foot { margin: 44px 0 0; padding: 22px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; text-align: center; }
 @media (max-width: 480px) { .ball { width: 72px; height: 72px; } .hero-row { gap: 14px; } .card { padding: 20px; } }
+.small { color: var(--muted); font-size: 16px; }
+.msgbox { margin: 20px 0 0; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--brand); background: var(--brand-soft); font-weight: 600; }
+.msgbox.bad { border-color: var(--error); color: var(--error); background: var(--surface); }
+.countdown { margin: 10px 0 0; font-weight: 700; }
+.warnbox { margin: 14px 0 0; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--error); color: var(--error); font-weight: 700; background: var(--surface); }
+.statebox { margin: 14px 0 0; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--gold); background: var(--surface); font-weight: 600; }
+.statebox p { margin: 0 0 10px; }
+.progress .bar { margin-top: 10px; }
+button.alt { min-height: 48px; padding: 0 20px; font: 700 17px/1 var(--font-body); border-radius: 10px; border: 2px solid var(--brand); background: transparent; color: var(--brand); cursor: pointer; }
+button.alt:hover { background: var(--brand-soft); }
+button.alt.wide { width: 100%; margin-top: 12px; min-height: 52px; }
+button.alt.danger { border-color: var(--error); color: var(--error); }
+.toolrow { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 0; }
+.plist { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.plist li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.plist li.voter { border-left: 8px solid var(--gold); }
+.plist .line { margin: 0 0 10px; font-weight: 600; overflow-wrap: anywhere; }
+.plist .line:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.plist .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.plist .acts button { min-height: 44px; padding: 0 14px; font: 700 16px/1 var(--font-body); border-radius: 10px; border: 2px solid var(--brand); background: transparent; color: var(--brand); cursor: pointer; }
+.plist .acts button.danger { border-color: var(--error); color: var(--error); }
+.plist .acts button[disabled] { opacity: .45; cursor: not-allowed; }
+.plist .confirm { margin: 0 0 10px; font-weight: 700; }
+.field input:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
 /*SITE-CSS*/
 .sitebar { background: var(--band); color: var(--band-fg); border-bottom: 3px solid var(--gold); }
 .sitebar .in { max-width: 960px; margin: 0 auto; padding: 8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; }
@@ -229,7 +253,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html" aria-current="page">Squad registration</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html" aria-current="page">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -258,144 +282,137 @@ details p { margin: 0 0 16px; color: var(--muted); }
       </svg>
       <div>
         <p class="org">International Hand Cricket Council</p>
-        <h1>Your Registration</h1>
+        <h1>Board squad list</h1>
       </div>
     </div>
-    <p class="lede">Fill in all the fields and tick the three boxes at the end. Then press Submit.</p>
+    <p class="lede">For board representatives only. Sign in with your Google account to enter the squad of your board.</p>
     <p class="deadline"><span>Last date:</span> 31 October 2026, 11:59 PM Pakistan time</p>
   </div>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
-  <div id="closedNote" class="closed" hidden role="status">Registration is closed. The last date was 31 October 2026, 11:59 PM Pakistan time.</div>
-  <div id="startView">
-    <section aria-labelledby="formTitle">
-      <p><a class="back" href="squad.html">Back to the squad registration information</a></p>
-      <h2 id="formTitle">Your details</h2>
-      <div class="card">
-        <p class="allreq">All fields are required.</p>
-        <div id="summary" class="summary" role="alert" tabindex="-1"></div>
-        <form id="f" novalidate autocomplete="on">
-          <div class="field">
-            <label for="board">Board <span class="req">(required)</span> <span class="hint">Choose your board from the list. You will see how many players have already registered.</span></label>
-            <select id="board" name="board" required aria-required="true" aria-describedby="boardInfo e-board">
-              <option value="">Select a board</option>
-              <option>New Zealand Hand Cricket Board</option>
-              <option>England Hand Cricket Board</option>
-              <option>Pakistan Hand Cricket Board</option>
-              <option>Bangladesh Hand Cricket Board</option>
-              <option>Afghanistan Hand Cricket Board</option>
-              <option>Australia Hand Cricket Board</option>
-              <option>Sri Lanka Hand Cricket Board</option>
-              <option>South Africa Hand Cricket Board</option>
-              <option>UAE Hand Cricket Board</option>
-              <option>USA Hand Cricket Board</option>
-              <option>Oman Hand Cricket Board</option>
-              <option>Nepal Hand Cricket Board</option>
-              <option>Scotland Hand Cricket Board</option>
-              <option>Zimbabwe Hand Cricket Board</option>
-              <option>India Hand Cricket Board</option>
-            </select>
-            <div class="board-info" id="boardInfo" aria-live="polite"></div>
-            <div class="err" id="e-board"></div>
-          </div>
+  <p id="msg" class="msgbox" role="status" aria-live="polite" hidden></p>
 
+  <section id="loadingView" aria-live="polite"><p>Checking your sign-in. Please wait.</p></section>
+
+  <section id="loginView" hidden aria-labelledby="loginTitle">
+    <h2 id="loginTitle">Sign in</h2>
+    <div class="card">
+      <p>Only the representative of each board can open this page. The Owner of IHCC has added one Gmail address for each board. Sign in with that Gmail address.</p>
+      <button class="go" id="signInBtn" type="button">Sign in with Google</button>
+      <p class="small">If your Gmail is not on the list, you will see a message and nothing else. Need help? Write to <a href="mailto:handcricket.ihcc@gmail.com">handcricket.ihcc@gmail.com</a>.</p>
+    </div>
+  </section>
+
+  <section id="deniedView" hidden aria-labelledby="deniedTitle">
+    <h2 id="deniedTitle" tabindex="-1">Not on the list</h2>
+    <div class="card">
+      <p id="deniedText"></p>
+      <p>If you think this is a mistake, write to <a href="mailto:handcricket.ihcc@gmail.com">handcricket.ihcc@gmail.com</a>.</p>
+      <button class="alt" id="signOutDenied" type="button">Sign out</button>
+    </div>
+  </section>
+
+  <div id="repView" hidden>
+    <section aria-labelledby="boardName">
+      <h2 id="boardName" tabindex="-1"></h2>
+      <p id="whoLine" class="small"></p>
+      <p id="deadlineLine" class="countdown"></p>
+      <div id="counter" class="progress" role="status" aria-live="polite"></div>
+      <p id="warn" class="warnbox" hidden></p>
+      <div id="stateBox" class="statebox" hidden></div>
+    </section>
+
+    <section id="consentSec" hidden aria-labelledby="consentTitle">
+      <h2 id="consentTitle">Before you start</h2>
+      <div class="card">
+        <p id="consentText" class="ctext"></p>
+        <div class="consent">
+          <input id="consentChk" type="checkbox" aria-labelledby="consentText">
+          <label for="consentChk">I agree</label>
+        </div>
+        <button class="go" id="consentBtn" type="button" disabled>Continue</button>
+      </div>
+    </section>
+
+    <section id="formSec" hidden aria-labelledby="formTitle">
+      <h2 id="formTitle">Add a player</h2>
+      <div class="card">
+        <p class="allreq">All fields are required. Add one player at a time.</p>
+        <div id="summary" class="summary" role="alert" tabindex="-1"></div>
+        <form id="f" novalidate autocomplete="off">
           <div class="field">
-            <label for="display_name">Display name <span class="req">(required)</span> <span class="hint">The cricketer's name you use in the Hand Cricket app.</span></label>
-            <input id="display_name" name="display_name" type="text" maxlength="40" required aria-required="true" autocomplete="off" aria-describedby="e-display_name">
+            <label for="display_name">Display name <span class="req">(required)</span>
+              <span class="hint" id="h-display">The cricketer's name used in the Hand Cricket app. It must be a real international (T20, ODI or Test) cricketer of your board's country. Domestic cricketers are not allowed.</span></label>
+            <input id="display_name" type="text" maxlength="40" autocomplete="off" aria-describedby="h-display e-display_name">
             <div class="err" id="e-display_name"></div>
           </div>
-
           <div class="field">
-            <label for="real_name">Real name <span class="req">(required)</span> <span class="hint">Your own full name, written correctly.</span></label>
-            <input id="real_name" name="real_name" type="text" maxlength="80" required aria-required="true" autocomplete="name" aria-describedby="e-real_name">
+            <label for="real_name">Real name <span class="req">(required)</span> <span class="hint" id="h-real">The player's own full name, written correctly.</span></label>
+            <input id="real_name" type="text" maxlength="80" autocomplete="off" aria-describedby="h-real e-real_name">
             <div class="err" id="e-real_name"></div>
           </div>
-
           <div class="field">
-            <label for="email">Email address <span class="req">(required)</span> <span class="hint">The email on which you have Hand Cricket premium.</span></label>
-            <input id="email" name="email" type="email" maxlength="254" required aria-required="true" autocomplete="email" inputmode="email" aria-describedby="e-email">
-            <div class="err" id="e-email"></div>
-          </div>
-
-          <div class="field">
-            <label for="whatsapp">WhatsApp number <span class="req">(required)</span> <span class="hint">Include the country code, for example +92 300 1234567.</span></label>
-            <input id="whatsapp" name="whatsapp" type="tel" maxlength="25" required aria-required="true" autocomplete="tel" inputmode="tel" aria-describedby="e-whatsapp">
+            <label for="whatsapp">WhatsApp number <span class="req">(required)</span> <span class="hint" id="h-wa">Include the country code, for example +92 300 1234567.</span></label>
+            <input id="whatsapp" type="tel" maxlength="25" autocomplete="off" inputmode="tel" aria-describedby="h-wa e-whatsapp">
             <div class="err" id="e-whatsapp"></div>
           </div>
-
+          <div class="field">
+            <label for="email">Gmail address <span class="req">(required)</span>
+              <span class="hint" id="h-email">Enter the player's Gmail address. The same address will be used for voting. It should be the Gmail on which the player has Hand Cricket premium.</span></label>
+            <input id="email" type="email" maxlength="254" autocomplete="off" inputmode="email" aria-describedby="h-email e-email">
+            <div class="err" id="e-email"></div>
+          </div>
           <div class="field">
             <label for="city">City <span class="req">(required)</span></label>
-            <input id="city" name="city" type="text" maxlength="60" required aria-required="true" autocomplete="address-level2" aria-describedby="e-city">
+            <input id="city" type="text" maxlength="60" autocomplete="off" aria-describedby="e-city">
             <div class="err" id="e-city"></div>
           </div>
-
           <div class="field">
-            <label for="country">Country <span class="req">(required)</span></label>
-            <input id="country" name="country" type="text" maxlength="60" required aria-required="true" autocomplete="country-name" aria-describedby="e-country">
+            <label for="country">Country <span class="req">(required)</span> <span class="hint" id="h-country">Country where the player lives.</span></label>
+            <input id="country" type="text" maxlength="60" autocomplete="off" aria-describedby="h-country e-country">
             <div class="err" id="e-country"></div>
           </div>
-
-          <div class="hp" aria-hidden="true">
-            <label for="website">Leave this field empty</label>
-            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-
-          <fieldset class="consent-box">
-            <legend>Your agreement <span class="req">(all three required)</span></legend>
-
-            <p class="ctext" id="ct_board">Please choose your board above. This text will then show its name. By ticking the box below you confirm that you are joining that board of your own free will, without pressure from anyone.</p>
-            <div class="consent">
-              <input id="consent_board" name="consent_board" type="checkbox" required aria-required="true" aria-labelledby="ct_board lb_board" aria-describedby="e-consent_board">
-              <label for="consent_board" id="lb_board">I agree</label>
-            </div>
-            <div class="err" id="e-consent_board"></div>
-
-            <p class="ctext" id="ct_constitution">I accept the IHCC Constitution and all its rules and regulations, and I will follow them.</p>
-            <div class="consent">
-              <input id="consent_constitution" name="consent_constitution" type="checkbox" required aria-required="true" aria-labelledby="ct_constitution lb_constitution" aria-describedby="e-consent_constitution">
-              <label for="consent_constitution" id="lb_constitution">I agree</label>
-            </div>
-            <div class="err" id="e-consent_constitution"></div>
-
-            <p class="ctext" id="ct_data">I agree to the data terms of this form. Along with the details I type, IHCC also notes technical details such as my IP address and device, only to keep registration and elections fair.</p>
-            <div class="consent">
-              <input id="consent_data" name="consent_data" type="checkbox" required aria-required="true" aria-labelledby="ct_data lb_data" aria-describedby="e-consent_data">
-              <label for="consent_data" id="lb_data">I agree</label>
-            </div>
-            <div class="err" id="e-consent_data"></div>
-          </fieldset>
-          <button class="go" id="go" type="submit">Submit</button>
+          <button class="go" id="addBtn" type="submit">Add player</button>
+          <button class="alt wide" id="cancelEdit" type="button" hidden>Cancel editing</button>
         </form>
       </div>
     </section>
 
-  </div>
-
-  <section id="thanksView" class="thanks" hidden aria-labelledby="thanksTitle">
-    <svg class="ball" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <circle cx="50" cy="50" r="46" fill="#1b5e43" stroke="#e8c97a" stroke-width="3"/>
-      <path d="M30 52l14 14 27-30" fill="none" stroke="#f4e3b0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <h2 id="thanksTitle" tabindex="-1">Thank you</h2>
-    <div class="card">
-      <p>Your form has been submitted. Your details are now with the International Hand Cricket Council.</p>
-      <div class="receipt">
-        <p class="lbl">Your registration number. Please write it down or copy it.</p>
-        <span class="code" id="receiptCode"></span>
-        <button type="button" id="copyBtn">Copy my number</button>
-        <p class="lbl" id="copyMsg" role="status"></p>
+    <section id="listSec" aria-labelledby="listTitle">
+      <h2 id="listTitle" tabindex="-1">Your squad list</h2>
+      <p class="small">Players 1 to 12 are voters. Players 13 to 20 are not voters. You can move players up or down to change their number.</p>
+      <ul id="plist" class="plist" aria-label="Squad list"></ul>
+      <p id="emptyNote" class="small" hidden>No players yet. Add the first player using the form above.</p>
+      <div class="toolrow">
+        <button class="alt" id="copyBtn" type="button">Copy list</button>
+        <button class="alt" id="dlBtn" type="button">Download list as TXT file</button>
       </div>
-      <p id="emailNote" hidden></p>
-      <h3 id="nextH" style="margin:18px 0 6px">Next steps</h3>
-      <ol aria-labelledby="nextH">
-        <li>Check your email for the confirmation message. If you do not see it, look in your spam folder.</li>
-        <li>Follow the official IHCC WhatsApp channel: <a href="https://whatsapp.com/channel/0029Vb9By49EVccTOBSzb60T">open the channel</a>.</li>
-        <li>Write down your registration number and keep it safe. It is your proof of registration.</li>
-      </ol>
-      <p>You can close this page. Each other player of your board must open this same page and fill in their own form.</p>
-    </div>
-  </section>
+    </section>
+
+    <section id="finalSec" hidden aria-labelledby="finalTitle">
+      <h2 id="finalTitle">Final submit</h2>
+      <div class="card">
+        <p id="finalIntro">When your list is ready, press Final submit. IHCC will receive your final list and you will get a copy by email.</p>
+        <button class="go" id="finalBtn" type="button">Final submit</button>
+        <div id="finalPanel" hidden>
+          <p id="finalQ" class="ctext" tabindex="-1"></p>
+          <div class="consent">
+            <input id="finalChk" type="checkbox" aria-labelledby="finalConsentText">
+            <label for="finalChk" id="finalConsentText"></label>
+          </div>
+          <div class="field">
+            <label for="finalType">Type FINAL in capital letters to confirm</label>
+            <input id="finalType" type="text" autocomplete="off" autocapitalize="characters">
+          </div>
+          <button class="go" id="finalGo" type="button" disabled>Submit the final list</button>
+          <button class="alt wide" id="finalCancel" type="button">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="toolrow"><button class="alt" id="signOut" type="button">Sign out</button></p>
+  </div>
 </main>
 <!--SITEFOOT-->
 <footer class="sitefoot">
@@ -406,7 +423,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad registration</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
@@ -420,224 +437,339 @@ details p { margin: 0 0 16px; color: var(--muted); }
 </footer>
 <!--/SITEFOOT-->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
-  var API = "https://krkrpcnovdobnscknfnw.supabase.co/functions/v1/submit-squad-player";
-  var MIN_PLAYERS = 12;
-  var f = document.getElementById("f");
-  var go = document.getElementById("go");
-  var summary = document.getElementById("summary");
-  var boardSel = document.getElementById("board");
-  var info = document.getElementById("boardInfo");
-  var deviceInfo = { model: "", platform: "" };
-  try {
-    if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-      navigator.userAgentData.getHighEntropyValues(["model", "platform", "platformVersion"]).then(function (h) {
-        deviceInfo.model = h.model || "";
-        deviceInfo.platform = ((h.platform || "") + " " + (h.platformVersion || "")).trim();
-      }).catch(function () {});
-    }
-  } catch (e) {}
-  var fields = ["board", "display_name", "real_name", "email", "whatsapp", "city", "country", "consent_board", "consent_constitution", "consent_data"];
-  var labels = { board: "Board", display_name: "Display name", real_name: "Real name", email: "Email address", whatsapp: "WhatsApp number", city: "City", country: "Country", consent_board: "Free will box", consent_constitution: "Constitution box", consent_data: "Data and privacy box" };
-  var BOARD_STYLE = {
-    "New Zealand Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDFF", "#1d4e89"],
-    "England Hand Cricket Board": ["\uD83C\uDDEC\uD83C\uDDE7", "#c8102e"],
-    "Pakistan Hand Cricket Board": ["\uD83C\uDDF5\uD83C\uDDF0", "#01411c"],
-    "Bangladesh Hand Cricket Board": ["\uD83C\uDDE7\uD83C\uDDE9", "#006a4e"],
-    "Afghanistan Hand Cricket Board": ["\uD83C\uDDE6\uD83C\uDDEB", "#b01e2d"],
-    "Australia Hand Cricket Board": ["\uD83C\uDDE6\uD83C\uDDFA", "#b8860b"],
-    "Sri Lanka Hand Cricket Board": ["\uD83C\uDDF1\uD83C\uDDF0", "#8d153a"],
-    "South Africa Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDE6", "#007749"],
-    "UAE Hand Cricket Board": ["\uD83C\uDDE6\uD83C\uDDEA", "#00732f"],
-    "USA Hand Cricket Board": ["\uD83C\uDDFA\uD83C\uDDF8", "#3c3b6e"],
-    "Oman Hand Cricket Board": ["\uD83C\uDDF4\uD83C\uDDF2", "#a00f2d"],
-    "Nepal Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDF5", "#dc143c"],
-    "Scotland Hand Cricket Board": ["\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74\uDB40\uDC7F", "#0b4f9c"],
-    "Zimbabwe Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDFC", "#b08900"],
-    "India Hand Cricket Board": ["\uD83C\uDDEE\uD83C\uDDF3", "#e07b00"]
-  };
-  var counts = null;
-  var startedAt = Date.now();
-  var boardLabel = document.getElementById("ct_board");
-  var boardDefault = boardLabel.textContent;
-  function updateBoardConsent() {
-    boardLabel.textContent = boardSel.value
-      ? "I am joining the " + boardSel.value + " of my own free will, without pressure from anyone, and I am happy to play for it."
-      : boardDefault;
-  }
-  var baseNames = [];
-  Array.prototype.forEach.call(boardSel.options, function (o, i) { baseNames.push(o.text); if (i > 0) o.value = o.text; });
+  var URL_ = "https://krkrpcnovdobnscknfnw.supabase.co";
+  var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
+  var FN = URL_ + "/functions/v1/rep-squad";
+  var CONSENT = "I confirm that I have permission from every player I add, that the details are correct, and I agree to the data terms of this form. Along with the details I type, IHCC also notes technical details such as my IP address and device, only to keep registration and elections fair.";
+  var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  var $ = function (id) { return document.getElementById(id); };
+  var me = null, players = [], editingId = null, busy = false, starting = false;
+  var FIELDS = ["display_name", "real_name", "whatsapp", "email", "city", "country"];
+  var LABEL = { display_name: "Display name", real_name: "Real name", whatsapp: "WhatsApp number", email: "Gmail address", city: "City", country: "Country" };
 
-  function renderCounts() {
-    if (!counts) return;
-    Array.prototype.forEach.call(boardSel.options, function (o, i) {
-      if (!o.value) return;
-      var n = counts[o.value] || 0;
-      var st = BOARD_STYLE[o.value]; o.text = (st ? st[0] + " " : "") + baseNames[i] + " (" + n + " registered)";
+  function say(text, bad) {
+    var m = $("msg"); m.textContent = text || ""; m.hidden = !text; m.className = "msgbox" + (bad ? " bad" : "");
+  }
+  function show(view) {
+    ["loadingView", "loginView", "deniedView", "repView"].forEach(function (v) { $(v).hidden = v !== view; });
+  }
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function errText(e) {
+    var m = String((e && e.message) || e || "");
+    if (m.indexOf("E|") === 0) return m.split("|").slice(2).join("|");
+    return m || "Something went wrong. Please try again.";
+  }
+  async function rpc(name, args) {
+    var r = await sb.rpc(name, args || {});
+    if (r.error) throw new Error(r.error.message || "Request failed");
+    return r.data;
+  }
+  async function call(action, data) {
+    var s = await sb.auth.getSession();
+    if (!s.data.session) throw new Error("Please sign in again.");
+    var res = await fetch(FN, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + s.data.session.access_token, apikey: KEY },
+      body: JSON.stringify(Object.assign({ action: action }, data || {}))
     });
-    showInfo();
+    var j = await res.json().catch(function () { return { ok: false, error: "Unexpected reply. Please try again." }; });
+    if (!j.ok) { var er = new Error(j.error || "Something went wrong."); er.field = j.field; throw er; }
+    return j;
   }
-  function showInfo() {
-    var b = boardSel.value;
-    info.textContent = "";
-    if (!b || !counts) return;
-    var n = counts[b] || 0;
-    var st = BOARD_STYLE[b] || ["", "#1b5e43"];
-    info.style.setProperty("--bc", st[1]);
-    var chip = document.createElement("div"); chip.className = "board-chip";
-    var fl = document.createElement("span"); fl.className = "flag"; fl.setAttribute("aria-hidden", "true"); fl.textContent = st[0];
-    var nm = document.createElement("strong"); nm.textContent = b;
-    chip.appendChild(fl); chip.appendChild(nm); info.appendChild(chip);
-    var p = document.createElement("p");
-    if (n === 0) p.textContent = "No player has registered for this board yet. You will be the first.";
-    else if (n === 1) p.textContent = "1 player has registered for this board so far. At least " + MIN_PLAYERS + " are needed.";
-    else if (n < MIN_PLAYERS) p.textContent = n + " players have registered for this board so far. At least " + MIN_PLAYERS + " are needed.";
-    else p.textContent = n + " players have registered for this board so far. The minimum of " + MIN_PLAYERS + " is complete.";
-    var bar = document.createElement("div"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
-    var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(n / MIN_PLAYERS * 100)) + "%"; bar.appendChild(i);
-    info.appendChild(p); info.appendChild(bar);
+  function lineOf(p) {
+    return "•" + p.position + ", Display name, " + p.display_name + ".. Real name, " + p.real_name + (p.position <= 12 ? ".. Voter" : "");
   }
-  function loadCounts() {
-    fetch(API, { method: "GET" })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (!d || !d.ok) return;
-        counts = d.counts;
-        renderCounts();
-        if (d.closed) {
-          document.getElementById("closedNote").hidden = false;
-          go.disabled = true; go.textContent = "Registration closed";
-        }
-      })
-      .catch(function () {});
+  function pkt(d) {
+    return new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Karachi", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true }).format(new Date(d)) + " (Pakistan time)";
   }
-  boardSel.addEventListener("change", function () { showInfo(); updateBoardConsent(); });
-  loadCounts();
+  function left(deadline, now) {
+    var ms = new Date(deadline).getTime() - new Date(now).getTime() - (Date.now() - clientAtLoad);
+    if (ms <= 0) return null;
+    var m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mi = m % 60;
+    return d + " day" + (d === 1 ? "" : "s") + ", " + h + " hour" + (h === 1 ? "" : "s") + " and " + mi + " minute" + (mi === 1 ? "" : "s");
+  }
+  var clientAtLoad = Date.now();
 
-  function sparkle() {
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var box = document.createElement("div"); box.className = "spark"; box.setAttribute("aria-hidden", "true");
-    var cols = ["#1b5e43", "#c8962e", "#55c192", "#e8c97a", "#ffffff"];
-    for (var k = 0; k < 40; k++) {
-      var i = document.createElement("i");
-      i.style.left = Math.random() * 100 + "%";
-      i.style.background = cols[k % cols.length];
-      i.style.animationDelay = (Math.random() * 0.6) + "s";
-      i.style.animationDuration = (1.8 + Math.random() * 1.4) + "s";
-      box.appendChild(i);
+  async function start() {
+    if (starting) return; starting = true;
+    try {
+      var s = await sb.auth.getSession();
+      if (!s.data.session) { show("loginView"); return; }
+      show("loadingView");
+      me = await rpc("rep_me");
+      clientAtLoad = Date.now();
+      if (!me || !me.authorized) {
+        var em = (s.data.session.user && s.data.session.user.email) || "";
+        $("deniedText").textContent = "The Google account " + em + " is not on the list of board representatives. Sign out and sign in with the Gmail address that the IHCC Owner added for your board.";
+        show("deniedView"); $("deniedTitle").focus(); return;
+      }
+      await loadList();
+      show("repView");
+      render();
+      $("boardName").focus();
+      resetIdle();
+    } catch (e) {
+      say(errText(e), true); show("loginView");
+    } finally { starting = false; }
+  }
+  async function loadList() { players = await rpc("rep_list"); me.count = players.length; }
+  async function refreshMe() { var c = clientAtLoad; me = await rpc("rep_me"); clientAtLoad = Date.now(); }
+
+  function editable() { return me && me.editable; }
+
+  function render(focusSpec) {
+    var n = players.length, min = 12, max = 20;
+    $("boardName").textContent = me.board;
+    $("whoLine").textContent = "Signed in as " + me.email + ".";
+    var l = left(me.deadline, me.now);
+    $("deadlineLine").textContent = l ? "Last date: " + pkt(me.deadline) + ". Time left: " + l + "." : "The last date has passed (" + pkt(me.deadline) + ").";
+    var c = $("counter"); c.textContent = "";
+    var need = Math.max(0, min - n);
+    c.appendChild(el("p", { "class": "pnum" }, n + " of " + min + " minimum" + (need > 0 ? ", " + need + " more needed" : ". Minimum reached") + ". Maximum " + max + "."));
+    var bar = el("div", { "class": "bar", "aria-hidden": "true" }); var fill = el("i"); fill.style.width = Math.min(100, Math.round(n / min * 100)) + "%"; bar.appendChild(fill); c.appendChild(bar);
+    var warn = $("warn");
+    if (n < min && !me.is_final) { warn.hidden = false; warn.textContent = "Warning: your board will be disqualified if it has fewer than 12 players by the deadline."; } else { warn.hidden = true; warn.textContent = ""; }
+
+    // state box
+    var sb_ = $("stateBox"); sb_.textContent = ""; sb_.hidden = true;
+    var past = !l;
+    if (me.is_final) {
+      sb_.hidden = false;
+      sb_.appendChild(el("p", null, "Your final list was submitted on " + pkt(me.final_at) + ". It is locked."));
+      if (!past) {
+        sb_.appendChild(el("p", null, "Before the deadline you can reopen it, make changes, and lock it again."));
+        var rb = el("button", { type: "button", "class": "alt", id: "reopenBtn" }, "Reopen to edit"); rb.addEventListener("click", doReopen); sb_.appendChild(rb);
+      } else { sb_.appendChild(el("p", null, "The deadline has passed. Only the IHCC Owner can unlock the list now.")); }
+    } else if (!me.editable) {
+      sb_.hidden = false;
+      sb_.appendChild(el("p", null, n >= min ? "The deadline has passed and your list was locked automatically." : "The deadline has passed. Your board has fewer than 12 players and is not eligible."));
+      sb_.appendChild(el("p", null, "Only the IHCC Owner can unlock the list now."));
+    } else if (me.owner_unlock) {
+      sb_.hidden = false;
+      sb_.appendChild(el("p", null, "The IHCC Owner has unlocked your list. You can edit it now."));
     }
-    document.body.appendChild(box);
-    setTimeout(function () { box.remove(); }, 4200);
-  }
-  document.getElementById("copyBtn").addEventListener("click", function () {
-    var t = document.getElementById("receiptCode").textContent, m = document.getElementById("copyMsg");
-    function ok() { m.textContent = "Copied."; }
-    function fallback() {
-      var r = document.createRange(); r.selectNodeContents(document.getElementById("receiptCode"));
-      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-      try { document.execCommand("copy"); ok(); } catch (e) { m.textContent = "Please select and copy the number above."; }
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback();
-  });
 
-  function setErr(name, msg) {
-    var el = document.getElementById(name);
-    var out = document.getElementById("e-" + name);
-    if (!el || !out) return;
-    out.textContent = msg || "";
-    if (msg) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid");
-  }
-  fields.forEach(function (n) {
-    var el = document.getElementById(n);
-    var evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
-    el.addEventListener(evt, function () { if (el.getAttribute("aria-invalid")) setErr(n, ""); });
-  });
-  function clearAll() { fields.forEach(function (n) { setErr(n, ""); }); summary.textContent = ""; }
+    // consent / form / final visibility
+    var needConsent = editable() && !me.consent_at;
+    $("consentSec").hidden = !needConsent;
+    $("consentText").textContent = CONSENT;
+    $("formSec").hidden = !(editable() && me.consent_at);
+    $("addBtn").hidden = false;
+    $("finalSec").hidden = !(editable() && me.consent_at);
+    $("finalBtn").disabled = n < min;
+    $("finalIntro").textContent = n < min ? "You need at least 12 players before you can do the final submit." : "When your list is ready, press Final submit. IHCC will receive your final list and you will get a copy by email.";
+    $("formTitle").textContent = editingId ? "Edit player" : "Add a player";
+    $("addBtn").textContent = editingId ? "Save changes" : "Add player";
+    $("cancelEdit").hidden = !editingId;
+    $("addBtn").disabled = (!editingId && n >= max) || busy;
+    if (!editingId && n >= max) { $("formTitle").textContent = "Add a player (list is full)"; }
 
-  function cleanPhone(s) {
-    s = String(s || "").replace(/[\u0660-\u0669]/g, function (c) { return String(c.charCodeAt(0) - 0x0660); }).replace(/[\u06F0-\u06F9]/g, function (c) { return String(c.charCodeAt(0) - 0x06F0); });
-    s = s.replace(/[^0-9+()\-\s]/g, "").replace(/\s+/g, " ").trim();
-    if (/^00/.test(s)) s = "+" + s.slice(2);
-    return s;
-  }
-
-  function validate() {
-    var v = {};
-    fields.forEach(function (n) { var el = document.getElementById(n); v[n] = n.indexOf("consent") === 0 ? el.checked : el.value.replace(/\s+/g, " ").trim(); });
-    v.whatsapp = cleanPhone(v.whatsapp); document.getElementById("whatsapp").value = v.whatsapp;
-    var e = {};
-    if (!v.board) e.board = "Choose your board from the list.";
-    if (v.display_name.length < 2) e.display_name = "Enter your display name.";
-    if (v.real_name.length < 2) e.real_name = "Enter your real name.";
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) e.email = "Enter a valid email address, for example name@gmail.com.";
-    var digits = v.whatsapp.replace(/\D/g, "");
-    if (!/^[0-9+()\-\s]+$/.test(v.whatsapp) || digits.length < 8 || digits.length > 15) e.whatsapp = "Enter a valid WhatsApp number with the country code, for example +92 300 1234567. The form read your number as: " + (v.whatsapp || "empty") + ".";
-    if (v.city.length < 2) e.city = "Enter your city.";
-    if (v.country.length < 2) e.country = "Enter your country.";
-    if (!v.consent_board) e.consent_board = "Tick this box to confirm you are joining this board of your own free will.";
-    if (!v.consent_constitution) e.consent_constitution = "Tick this box to accept the IHCC Constitution.";
-    if (!v.consent_data) e.consent_data = "Tick this box to agree to the data and privacy terms.";
-    return { v: v, e: e };
-  }
-
-  function showErrors(e) {
-    var names = fields.filter(function (n) { return e[n]; });
-    names.forEach(function (n) { setErr(n, e[n]); });
-    if (names.length) {
-      summary.textContent = names.length === 1 ? "There is 1 problem: " + labels[names[0]] + "." : "There are " + names.length + " problems: " + names.map(function (n) { return labels[n]; }).join(", ") + ".";
-      document.getElementById(names[0]).focus();
+    // list
+    var ul = $("plist"); ul.textContent = "";
+    $("emptyNote").hidden = n > 0;
+    players.forEach(function (p, i) {
+      var li = el("li", { "class": p.position <= 12 ? "voter" : "" });
+      li.appendChild(el("p", { "class": "line", tabindex: "0", id: "line-" + p.id }, lineOf(p)));
+      if (editable()) {
+        var acts = el("div", { "class": "acts" });
+        var mk = function (label, act, cls) {
+          var b = el("button", { type: "button", "data-id": p.id, "data-act": act }, label);
+          b.setAttribute("aria-label", label + " " + p.display_name);
+          if (cls) b.className = cls; return b;
+        };
+        var be = mk("Edit", "edit"), bd = mk("Delete", "del", "danger"), bu = mk("Move up", "up"), bw = mk("Move down", "down");
+        if (i === 0) bu.disabled = true; if (i === n - 1) bw.disabled = true;
+        be.addEventListener("click", function () { startEdit(p.id); });
+        bd.addEventListener("click", function () { askDelete(li, p); });
+        bu.addEventListener("click", function () { move(p.id, -1); });
+        bw.addEventListener("click", function () { move(p.id, 1); });
+        [be, bd, bu, bw].forEach(function (b) { acts.appendChild(b); });
+        li.appendChild(acts);
+      }
+      ul.appendChild(li);
+    });
+    $("copyBtn").disabled = n === 0; $("dlBtn").disabled = n === 0;
+    if (focusSpec) {
+      var t = document.querySelector('button[data-id="' + focusSpec.id + '"][data-act="' + focusSpec.act + '"]');
+      if (!t || t.disabled) t = $("line-" + focusSpec.id);
+      if (t) t.focus();
     }
   }
 
-  f.addEventListener("submit", function (ev) {
+  function clearErrors() {
+    FIELDS.forEach(function (f) { $("e-" + f).textContent = ""; $(f).removeAttribute("aria-invalid"); });
+    $("summary").textContent = "";
+  }
+  function fieldError(f, text) {
+    if (f && $("e-" + f)) { $("e-" + f).textContent = text; $(f).setAttribute("aria-invalid", "true"); }
+  }
+  function resetForm() { FIELDS.forEach(function (f) { $(f).value = ""; }); editingId = null; clearErrors(); }
+
+  function validateLocal() {
+    var bad = [];
+    FIELDS.forEach(function (f) { if (!$(f).value.trim()) { fieldError(f, LABEL[f] + " is required."); bad.push(f); } });
+    var em = $("email").value.trim();
+    if (em && !/^[A-Za-z0-9._%+-]+@gmail\.com$/i.test(em)) { fieldError("email", "Enter a valid Gmail address ending in @gmail.com."); if (bad.indexOf("email") < 0) bad.push("email"); }
+    return bad;
+  }
+
+  $("f").addEventListener("submit", async function (ev) {
     ev.preventDefault();
-    if (go.disabled) return;
-    clearAll();
-    var r = validate();
-    if (Object.keys(r.e).length) { showErrors(r.e); return; }
-
-    go.disabled = true; go.textContent = "Submitting";
-    var closedNow = false;
-    var tz = ""; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (x) {}
-    var body = JSON.stringify({
-      board: r.v.board, display_name: r.v.display_name, real_name: r.v.real_name, email: r.v.email,
-      whatsapp: r.v.whatsapp, city: r.v.city, country: r.v.country, consent_board: true, consent_constitution: true, consent_data: true, device_model: deviceInfo.model, device_platform: deviceInfo.platform, form_version: "2026-10-23-v4", fill_seconds: Math.round((Date.now() - startedAt) / 1000),
-      website: document.getElementById("website").value, timezone: tz
-    });
-
-    fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: body })
-      .then(function (res) { closedNow = res.status === 403; return res.json().catch(function () { return { ok: false, error: "Unexpected reply." }; }); })
-      .then(function (data) {
-        if (data && data.ok) {
-          document.getElementById("receiptCode").textContent = data.receipt || "";
-          var en = document.getElementById("emailNote");
-          if (data.email_sent) { en.textContent = "A confirmation email with this number has also been sent to your email address. If you do not see it, please check your spam folder."; en.hidden = false; }
-          document.getElementById("startView").hidden = true;
-          document.getElementById("thanksView").hidden = false;
-          document.title = "Thank you - IHCC Squad Registration";
-          window.scrollTo(0, 0);
-          document.getElementById("thanksTitle").focus();
-          sparkle();
-          return;
-        }
-        var msg = (data && data.error) || "Something went wrong. Please try again.";
-        if (data && data.field && document.getElementById(data.field)) {
-          setErr(data.field, msg);
-          summary.textContent = msg;
-          document.getElementById(data.field).focus();
-        } else {
-          summary.textContent = msg;
-          summary.focus();
-        }
-      })
-      .catch(function () {
-        summary.textContent = "The form could not be sent. Check your internet connection and try again.";
-        summary.focus();
-      })
-      .then(function () { if (!closedNow) { go.disabled = false; go.textContent = "Submit"; } else { go.textContent = "Registration closed"; } });
+    if (busy) return;
+    clearErrors();
+    var bad = validateLocal();
+    if (bad.length) {
+      $("summary").textContent = "Please fix: " + bad.map(function (f) { return LABEL[f]; }).join(", ") + ".";
+      $("summary").focus(); return;
+    }
+    busy = true; $("addBtn").disabled = true;
+    var wasEdit = !!editingId;
+    try {
+      var payload = { id: editingId };
+      FIELDS.forEach(function (f) { payload[f] = $(f).value; });
+      var r = await call("save_player", payload);
+      var note = wasEdit ? "Changes saved." : "Player added.";
+      if (r.mail_status === "sent") note += " An email was sent to the player.";
+      else if (r.mail_status === "none") note += " No email was sent because the details are the same as in the last email.";
+      else if (r.mail_status === "limit") note += " The daily email limit for this player was reached, so no email was sent now.";
+      else note += " The email to the player could not be sent. IHCC will check this.";
+      if (r.other_board) note += " This player may also be in another board's squad. IHCC will contact you.";
+      resetForm();
+      await loadList(); await refreshMe();
+      busy = false;
+      render();
+      say(note);
+      $("display_name").focus();
+    } catch (e) {
+      busy = false;
+      if (e.field && $("e-" + e.field)) { fieldError(e.field, e.message); $("summary").textContent = e.message; $("summary").focus(); }
+      else { $("summary").textContent = errText(e); $("summary").focus(); }
+      render();
+    }
   });
+
+  function startEdit(id) {
+    var p = players.filter(function (x) { return x.id === id; })[0]; if (!p) return;
+    editingId = id; clearErrors();
+    FIELDS.forEach(function (f) { $(f).value = p[f] || ""; });
+    render(); say("Editing " + p.display_name + ". Change the details and press Save changes.");
+    $("formSec").scrollIntoView({ behavior: "smooth", block: "start" }); $("display_name").focus();
+  }
+  $("cancelEdit").addEventListener("click", function () { resetForm(); render(); say("Editing cancelled."); $("display_name").focus(); });
+
+  function askDelete(li, p) {
+    var acts = li.querySelector(".acts"); acts.hidden = true;
+    var box = el("div", { "class": "confirmbox" });
+    box.appendChild(el("p", { "class": "confirm", tabindex: "-1" }, "Delete " + p.display_name + " from the squad list?"));
+    var row = el("div", { "class": "acts" });
+    var yes = el("button", { type: "button", "class": "danger" }, "Yes, delete"); yes.setAttribute("aria-label", "Yes, delete " + p.display_name);
+    var no = el("button", { type: "button" }, "Cancel"); no.setAttribute("aria-label", "Cancel, keep " + p.display_name);
+    row.appendChild(yes); row.appendChild(no); box.appendChild(row); li.appendChild(box);
+    no.addEventListener("click", function () { box.remove(); acts.hidden = false; var b = acts.querySelector('[data-act="del"]'); if (b) b.focus(); });
+    yes.onclick = async function () {
+      yes.disabled = true;
+      try {
+        await rpc("rep_delete_player", { p_id: p.id });
+        await loadList(); await refreshMe(); render();
+        say(p.display_name + " was deleted. The numbers of the other players were updated.");
+        $("listTitle").focus();
+      } catch (e) { say(errText(e), true); box.remove(); acts.hidden = false; }
+    };
+    box.querySelector(".confirm").focus();
+  }
+
+  async function move(id, dir) {
+    try {
+      await rpc("rep_move_player", { p_id: id, p_dir: dir });
+      await loadList();
+      render({ id: id, act: dir < 0 ? "up" : "down" });
+      var p = players.filter(function (x) { return x.id === id; })[0];
+      if (p) say(p.display_name + " is now number " + p.position + ".");
+    } catch (e) { say(errText(e), true); }
+  }
+
+  // consent
+  $("consentChk").addEventListener("change", function () { $("consentBtn").disabled = !this.checked; });
+  $("consentBtn").addEventListener("click", async function () {
+    this.disabled = true;
+    try { await call("consent", { text: CONSENT }); await refreshMe(); render(); say("Thank you. You can now add players."); $("display_name").focus(); }
+    catch (e) { say(errText(e), true); this.disabled = false; }
+  });
+
+  // copy / download
+  function listText() { return players.map(lineOf).join("\n"); }
+  $("copyBtn").addEventListener("click", async function () {
+    var t = listText();
+    try { await navigator.clipboard.writeText(t); say("The squad list was copied."); }
+    catch (e) {
+      var ta = el("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); say("The squad list was copied."); } catch (e2) { say("Copy did not work. Use the download button instead.", true); }
+      ta.remove();
+    }
+  });
+  $("dlBtn").addEventListener("click", function () {
+    var d = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Karachi", day: "numeric", month: "long", year: "numeric" }).format(new Date());
+    var head = me.board + "\nDate: " + d + "\nStatus: " + (me.is_final || (!me.editable && players.length >= 12) ? "Final" : "Not final") + "\n\n";
+    var blob = new Blob([head + listText() + "\n"], { type: "text/plain;charset=utf-8" });
+    var a = el("a"); a.href = URL.createObjectURL(blob); a.download = me.board + " squad list.txt";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    say("The squad list file was downloaded.");
+  });
+
+  // final submit
+  $("finalBtn").addEventListener("click", function () {
+    $("finalPanel").hidden = false; $("finalBtn").hidden = true;
+    $("finalQ").textContent = "Are you sure you want to submit the final list of " + players.length + " players for the " + me.board + "? After this the list is locked. Before the deadline you can reopen it.";
+    $("finalConsentText").textContent = CONSENT;
+    $("finalChk").checked = false; $("finalType").value = ""; $("finalGo").disabled = true;
+    $("finalQ").focus();
+  });
+  function finalReady() { $("finalGo").disabled = !($("finalChk").checked && $("finalType").value.trim() === "FINAL"); }
+  $("finalChk").addEventListener("change", finalReady); $("finalType").addEventListener("input", finalReady);
+  $("finalCancel").addEventListener("click", function () { $("finalPanel").hidden = true; $("finalBtn").hidden = false; $("finalBtn").focus(); });
+  $("finalGo").addEventListener("click", async function () {
+    this.disabled = true;
+    try {
+      var r = await call("final_submit", { consent: true });
+      await refreshMe(); await loadList();
+      $("finalPanel").hidden = true; $("finalBtn").hidden = false;
+      render();
+      say("Your final list was submitted. " + (r.mail_status === "sent" ? "A copy was sent to your email." : "The copy email could not be sent."));
+      $("boardName").focus();
+    } catch (e) { say(errText(e), true); this.disabled = false; }
+  });
+
+  async function doReopen() {
+    try { await call("reopen"); await refreshMe(); render(); say("Your list is open for editing again. The IHCC Owner was informed. Remember to lock it again with Final submit."); $("boardName").focus(); }
+    catch (e) { say(errText(e), true); }
+  }
+
+  // auth
+  $("signInBtn").addEventListener("click", function () {
+    sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
+  });
+  async function out() { await sb.auth.signOut(); me = null; players = []; editingId = null; say("You are signed out."); show("loginView"); }
+  $("signOut").addEventListener("click", out); $("signOutDenied").addEventListener("click", out);
+  sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN" && !me) start(); });
+
+  var idleTimer = null;
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(async function () { await out(); say("You were signed out because the page was not used for 60 minutes."); }, 60 * 60 * 1000);
+  }
+  ["click", "keydown", "touchstart"].forEach(function (ev) { document.addEventListener(ev, function () { if (me) resetIdle(); }, { passive: true }); });
+
+  start();
 })();
 </script>
+
 </body>
 </html>
