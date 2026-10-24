@@ -11,7 +11,7 @@
      });
    - Focus goes to the title, so TalkBack, Jieshuo and NVDA read it by themselves.
    - Swiping stays inside the dialog (the page behind is not reachable).
-   - Escape works like the LAST button (normally Close).
+   - Escape works like the LAST button (normally Close), including its onClick function.
    - After a button is pressed, the dialog is removed and focus goes to the element returned by that
      button's focus() function. It is looked up AFTER a short delay, so the page can redraw first.
      If it cannot be found, focus goes back to the button that opened the dialog, then to <main>. */
@@ -109,7 +109,10 @@
       dlg.appendChild(btn); btnEls.push(btn);
     });
     var last = buttons[buttons.length - 1];
-    function escape() { closeCurrent(last.focus, opener); }
+    function escape() {
+      if (last.onClick) { try { last.onClick(); } catch (e) {} }
+      closeCurrent(last.focus, opener);
+    }
 
     dlg.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); escape(); return; }
