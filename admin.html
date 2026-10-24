@@ -86,6 +86,8 @@ details.entry .body { padding: 0 16px 16px; }
         <select id="viewSel">
           <option value="entries">Entries</option>
           <option value="summary">Boards summary</option>
+          <option value="reps">Board representatives</option>
+          <option value="progress">Squad progress</option>
           <option value="admins">Administrators</option>
           <option value="audit">Audit log</option>
         </select>
@@ -143,6 +145,37 @@ details.entry .body { padding: 0 16px 16px; }
       </div>
     </section>
 
+    <section id="repsSec" aria-labelledby="repsH" hidden>
+      <h2 id="repsH">Board representatives</h2>
+      <p>Add one Gmail address for each board. Only that Gmail can open the squad list page of the board. After saving, send the invitation email.</p>
+      <div class="scroll"><table>
+        <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Representative Gmail for each board</caption>
+        <thead><tr><th scope="col">Board</th><th scope="col">Representative Gmail</th><th scope="col">Invitation</th><th scope="col">Actions</th></tr></thead>
+        <tbody id="repsBody"></tbody>
+      </table></div>
+    </section>
+
+    <section id="progSec" aria-labelledby="progH" hidden>
+      <h2 id="progH">Squad progress</h2>
+      <p id="progNote" role="status"></p>
+      <div class="row" id="progTools">
+        <button id="remindBtn" type="button" class="alt" data-ownerbtn="1">Send reminder now</button>
+        <button id="voterBtn" type="button" class="alt" data-ownerbtn="1">Download voter list (CSV)</button>
+        <button id="allSquadBtn" type="button" class="alt" data-ownerbtn="1">Download all squads (CSV backup)</button>
+        <button id="progReload" type="button" class="alt">Reload</button>
+      </div>
+      <div class="scroll"><table>
+        <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Squad progress of every board</caption>
+        <thead><tr><th scope="col">Board</th><th scope="col">Representative</th><th scope="col">Last sign-in</th><th scope="col">Players</th><th scope="col">Status</th><th scope="col" data-owner="1">Lock or unlock</th></tr></thead>
+        <tbody id="progBody"></tbody>
+      </table></div>
+      <h3 style="margin-top:26px">Players who may be in more than one board</h3>
+      <div class="scroll"><table>
+        <thead><tr><th scope="col">Board</th><th scope="col">Display name</th><th scope="col">Other board</th><th scope="col">Other display name</th><th scope="col">Matched on</th></tr></thead>
+        <tbody id="dupBody"></tbody>
+      </table></div>
+    </section>
+
     <section id="auditSec" aria-labelledby="audH" hidden>
       <h2 id="audH">Audit log</h2>
       <div class="scroll"><table>
@@ -160,7 +193,7 @@ details.entry .body { padding: 0 16px 16px; }
 (function () {
   var URL = "https://krkrpcnovdobnscknfnw.supabase.co";
   var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
-  var BOARDS = ["New Zealand Hand Cricket Board","England Hand Cricket Board","Pakistan Hand Cricket Board","Bangladesh Hand Cricket Board","Afghanistan Hand Cricket Board","Australia Hand Cricket Board","Sri Lanka Hand Cricket Board","South Africa Hand Cricket Board","UAE Hand Cricket Board","USA Hand Cricket Board","Oman Hand Cricket Board","Nepal Hand Cricket Board","Scotland Hand Cricket Board","Zimbabwe Hand Cricket Board","India Hand Cricket Board"];
+  var BOARDS = ["New Zealand Hand Cricket Board","England Hand Cricket Board","Pakistan Hand Cricket Board","Bangladesh Hand Cricket Board","Afghanistan Hand Cricket Board","Australia Hand Cricket Board","Sri Lanka Hand Cricket Board","South Africa Hand Cricket Board","UAE Hand Cricket Board","USA Hand Cricket Board","Nepal Hand Cricket Board","Scotland Hand Cricket Board","Zimbabwe Hand Cricket Board","India Hand Cricket Board","Germany Hand Cricket Board"];
   var sb = window.supabase.createClient(URL, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
   var $ = function (id) { return document.getElementById(id); };
   var me = null, entries = [], boardCounts = {};
@@ -200,6 +233,8 @@ details.entry .body { padding: 0 16px 16px; }
       var ok = o.value === "entries" ? (me.role !== "auditor" && me.role !== "election_officer")
         : o.value === "summary" ? ["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0
         : o.value === "admins" ? me.role === "owner"
+        : o.value === "reps" ? me.role === "owner"
+        : o.value === "progress" ? (me.role === "owner" || me.role === "core")
         : (me.role === "owner" || me.role === "auditor");
       o.disabled = !ok; o.hidden = !ok;
     });
@@ -213,6 +248,10 @@ details.entry .body { padding: 0 16px 16px; }
     var v = $("viewSel").value;
     $("entSec").hidden = v !== "entries"; $("sumSec").hidden = v !== "summary";
     $("adminsSec").hidden = !(v === "admins" && me.role === "owner");
+    $("repsSec").hidden = !(v === "reps" && me.role === "owner");
+    $("progSec").hidden = !(v === "progress" && (me.role === "owner" || me.role === "core"));
+    if (v === "reps" && me.role === "owner") loadReps();
+    if (v === "progress" && (me.role === "owner" || me.role === "core")) loadProgress();
     $("auditSec").hidden = !(v === "audit" && (me.role === "owner" || me.role === "auditor"));
   }
 
@@ -399,6 +438,97 @@ details.entry .body { padding: 0 16px 16px; }
   });
 
   ["fBoard", "fStatus", "fFlag"].forEach(function (id) { $(id).addEventListener("change", function () { boardLine(); render(); }); });
+
+  // ---- Board representatives and squad progress ----
+  function fmt(d) { return d ? new Date(d).toLocaleString("en-GB", { timeZone: "Asia/Karachi", dateStyle: "medium", timeStyle: "short" }) + " PKT" : "Never"; }
+  async function callFn(action, data) {
+    var ses = await sb.auth.getSession();
+    var r = await fetch(URL + "/functions/v1/rep-squad", { method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + ses.data.session.access_token, apikey: KEY },
+      body: JSON.stringify(Object.assign({ action: action }, data || {})) });
+    var j = await r.json().catch(function () { return { ok: false, error: "Unexpected reply." }; });
+    if (!j.ok && j.error) throw new Error(j.error);
+    return j;
+  }
+  function errMsg(e) { var m = String(e && e.message || e); return m.indexOf("E|") === 0 ? m.split("|").slice(2).join("|") : m; }
+  function btn(label, fn, cls, aria) { var b = document.createElement("button"); b.type = "button"; b.textContent = label; if (cls) b.className = cls; if (aria) b.setAttribute("aria-label", aria); b.addEventListener("click", fn); return b; }
+
+  async function loadReps() {
+    try {
+      var rows = await rpc("admin_progress"), body = $("repsBody"); body.textContent = "";
+      rows.forEach(function (r) {
+        var tr = document.createElement("tr"); tr.appendChild(th(r.board));
+        var c = document.createElement("td"), inp = document.createElement("input");
+        inp.type = "email"; inp.value = r.rep_email || ""; inp.setAttribute("aria-label", "Representative Gmail for " + r.board); inp.style.minWidth = "220px"; c.appendChild(inp); tr.appendChild(c);
+        tr.appendChild(td(r.rep_email ? (r.invite_status ? (r.invite_status === "sent" ? "Sent " + fmt(r.invited_at) : r.invite_status) : "Not sent") : "No email set"));
+        var a = document.createElement("td");
+        a.appendChild(btn("Save", async function () {
+          try { await rpc("admin_rep_set", { p_board: r.board, p_email: inp.value }); say("Saved the representative for " + r.board + ". Now send the invitation."); loadReps(); }
+          catch (e) { say(errMsg(e), true); }
+        }, "", "Save representative for " + r.board));
+        if (r.rep_email) {
+          a.appendChild(btn(r.invite_status ? "Resend invitation" : "Send invitation", async function () {
+            try { var j = await callFn("admin_invite", { board: r.board }); say(j.ok ? "Invitation sent to " + r.rep_email + "." : "The invitation email could not be sent.", !j.ok); loadReps(); }
+            catch (e) { say(errMsg(e), true); }
+          }, "alt", (r.invite_status ? "Resend invitation to " : "Send invitation to ") + r.board));
+          a.appendChild(btn("Remove", async function () {
+            try { await rpc("admin_rep_remove", { p_board: r.board }); say("Removed the representative of " + r.board + "."); loadReps(); }
+            catch (e) { say(errMsg(e), true); }
+          }, "alt", "Remove representative of " + r.board));
+        }
+        tr.appendChild(a); body.appendChild(tr);
+      });
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+
+  async function loadProgress() {
+    try {
+      var rows = await rpc("admin_progress"), body = $("progBody"); body.textContent = "";
+      var owner = me.role === "owner", done = 0, risk = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[data-owner]"), function (n) { n.hidden = !owner; });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-ownerbtn]"), function (n) { n.hidden = !owner; });
+      rows.forEach(function (r) {
+        var i = r.info || {}, tr = document.createElement("tr");
+        tr.appendChild(th(r.board)); tr.appendChild(td(r.rep_email || "Not set")); tr.appendChild(td(fmt(r.last_sign_in)));
+        tr.appendChild(td(i.count)); tr.appendChild(td(i.status));
+        if (i.completed) done++; if (i.status === "At risk" || i.status === "Under 12: not eligible") risk++;
+        if (owner) {
+          var c = document.createElement("td");
+          if (i.is_final || i.completed) c.appendChild(btn("Unlock", async function () { try { await rpc("admin_set_unlock", { p_board: r.board, p_unlock: true }); say(r.board + " is unlocked."); loadProgress(); } catch (e) { say(errMsg(e), true); } }, "alt", "Unlock " + r.board));
+          else if (i.owner_unlock) c.appendChild(btn("Lock", async function () { try { await rpc("admin_set_unlock", { p_board: r.board, p_unlock: false }); say(r.board + " is locked."); loadProgress(); } catch (e) { say(errMsg(e), true); } }, "alt", "Lock " + r.board));
+          else c.textContent = "Open";
+          tr.appendChild(c);
+        }
+        body.appendChild(tr);
+      });
+      $("progNote").textContent = "Boards completed: " + done + " of " + rows.length + ". Boards at risk or not eligible: " + risk + ".";
+      var d = await rpc("admin_dup_flags"), db = $("dupBody"); db.textContent = "";
+      if (!d.length) { var tr0 = document.createElement("tr"), t0 = td("No player is in more than one board."); t0.colSpan = 5; tr0.appendChild(t0); db.appendChild(tr0); }
+      d.forEach(function (x) { var tr = document.createElement("tr"); [x.board, x.display_name, x.other_board, x.other_display_name, x.match].forEach(function (v) { tr.appendChild(td(v)); }); db.appendChild(tr); });
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+  function downloadCsv(rows, cols, name) {
+    var lines = [cols.map(function (c) { return csvCell(c[1]); }).join(",")];
+    rows.forEach(function (r) { lines.push(cols.map(function (c) { return csvCell(r[c[0]]); }).join(",")); });
+    var blob = new Blob(["\uFEFF" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a"); a.href = window.URL.createObjectURL(blob); a.download = name + "-" + new Date().toISOString().slice(0, 10) + ".csv";
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  $("progReload").addEventListener("click", loadProgress);
+  $("remindBtn").addEventListener("click", async function () {
+    try { var j = await callFn("admin_reminder"); say("Reminder emails sent to " + j.sent + " board representative" + (j.sent === 1 ? "" : "s") + " with fewer than 12 players."); } catch (e) { say(errMsg(e), true); }
+  });
+  $("voterBtn").addEventListener("click", async function () {
+    try { var rows = await rpc("admin_voter_list"); if (!rows.length) { say("No completed boards yet, so the voter list is empty.", true); return; }
+      downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"]], "ihcc-voter-list"); say("The voter list was downloaded (" + rows.length + " voters). This download is recorded in the audit log."); }
+    catch (e) { say(errMsg(e), true); }
+  });
+  $("allSquadBtn").addEventListener("click", async function () {
+    try { var rows = await rpc("admin_all_squads"); if (!rows.length) { say("There are no players yet.", true); return; }
+      downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"], ["status", "Board status"]], "ihcc-all-squads"); say("The backup was downloaded (" + rows.length + " players). This download is recorded in the audit log."); }
+    catch (e) { say(errMsg(e), true); }
+  });
+
   $("viewSel").addEventListener("change", setView);
   $("fSearch").addEventListener("input", render);
   $("reloadBtn").addEventListener("click", loadAll);
