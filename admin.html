@@ -62,6 +62,7 @@ details.entry .body { padding: 0 16px 16px; }
 
 <main id="main" class="wrap" tabindex="-1">
   <div id="status" class="msg" role="status" hidden></div>
+  <div id="status2" class="msg" hidden></div>
 
   <section id="loginView" hidden aria-labelledby="loginH">
     <h2 id="loginH">Sign in</h2>
@@ -188,7 +189,7 @@ details.entry .body { padding: 0 16px 16px; }
   </div>
 </main>
 
-<script src="toast.js?v=1"></script>
+<script src="dialog.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
@@ -199,13 +200,34 @@ details.entry .body { padding: 0 16px 16px; }
   var $ = function (id) { return document.getElementById(id); };
   var me = null, entries = [], boardCounts = {};
 
-  function say(text, isErr) {
+  /* sayLive: plain written message in a live region (login problems, loading, sign-out). */
+  function sayLive(text, isErr) {
     var s = $("status"); s.textContent = text || ""; s.hidden = !text; s.className = "msg" + (isErr ? " err" : "");
-    if (window.IHCCToast) {
-      /* the toast announces; the written message stays on the page to read later */
-      s.removeAttribute("role");
-      window.IHCCToast.show(text, isErr);
+    var w = $("status2"); w.textContent = ""; w.hidden = true;
+  }
+  /* find the button that was pressed again after the page redrew its tables */
+  function findBack(op, key) {
+    if (op && document.body.contains(op) && op !== document.body) return op;
+    if (!key) return null;
+    var all = document.querySelectorAll("button, select, input, a, [tabindex]");
+    for (var i = 0; i < all.length; i++) {
+      var c = all[i];
+      if (c.id === key || c.getAttribute("aria-label") === key || (c.tagName === "BUTTON" && c.textContent.trim() === key)) return c;
     }
+    return null;
+  }
+  /* say: results of actions. Opens a dialog (read out by the screen reader); the written message stays on the page. */
+  function say(text, isErr) {
+    if (!text) { sayLive(""); return; }
+    if (!window.IHCCDialog) { sayLive(text, isErr); return; }
+    var op = document.activeElement;
+    var key = op && (op.id || op.getAttribute("aria-label") || (op.textContent || "").trim()) || "";
+    var s = $("status"); s.textContent = ""; s.hidden = true;
+    var w = $("status2"); w.textContent = text; w.hidden = false; w.className = "msg" + (isErr ? " err" : "");
+    window.IHCCDialog.show({
+      title: (isErr ? "Error. " : "") + text, bad: !!isErr,
+      buttons: [{ label: "Close", focus: function () { return findBack(op, key); } }]
+    });
   }
   function show(view) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; }); }
   function td(text) { var c = document.createElement("td"); c.textContent = text == null ? "" : String(text); return c; }
@@ -226,7 +248,7 @@ details.entry .body { padding: 0 16px 16px; }
     if (!s.data.session) { show("loginView"); $("who").textContent = ""; return; }
     try {
       me = await rpc("admin_me");
-    } catch (e) { say("Could not check your access: " + e.message, true); show("loginView"); return; }
+    } catch (e) { sayLive("Could not check your access: " + e.message, true); show("loginView"); return; }
     var email = s.data.session.user.email || "";
     if (!me || !me.is_admin) {
       $("deniedText").textContent = "The account " + email + " is not an IHCC administrator. Sign out and sign in with the correct Google account, or ask the IHCC Owner to add you.";
@@ -263,7 +285,7 @@ details.entry .body { padding: 0 16px 16px; }
 
   var idleTimer = null, IDLE_MS = 30 * 60 * 1000;
   function startIdle() {
-    function reset() { clearTimeout(idleTimer); idleTimer = setTimeout(async function () { await out(); say("You were signed out because the page was not used for 30 minutes."); }, IDLE_MS); }
+    function reset() { clearTimeout(idleTimer); idleTimer = setTimeout(async function () { await out(); sayLive("You were signed out because the page was not used for 30 minutes."); }, IDLE_MS); }
     ["click", "keydown", "touchstart", "change"].forEach(function (ev) { document.addEventListener(ev, reset, true); });
     reset();
   }
@@ -274,7 +296,7 @@ details.entry .body { padding: 0 16px 16px; }
   }
 
   async function loadAll() {
-    say("Loading");
+    sayLive("Loading");
     try {
       var jobs = [];
       if (["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0) { jobs.push(loadSummary()); jobs.push(loadStats()); } else { $("sumBody").textContent = ""; $("statSec").hidden = true; }
@@ -282,7 +304,7 @@ details.entry .body { padding: 0 16px 16px; }
       if (me.role === "owner") jobs.push(loadAdmins());
       if (me.role === "owner" || me.role === "auditor") jobs.push(loadAudit());
       await Promise.all(jobs);
-      say("");
+      sayLive("");
     } catch (e) { say("Error: " + e.message, true); }
   }
 
@@ -541,7 +563,7 @@ details.entry .body { padding: 0 16px 16px; }
   $("signIn").addEventListener("click", function () {
     sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
   });
-  async function out() { await sb.auth.signOut(); me = null; entries = []; say("You are signed out."); show("loginView"); $("who").textContent = ""; }
+  async function out() { await sb.auth.signOut(); me = null; entries = []; sayLive("You are signed out."); show("loginView"); $("who").textContent = ""; }
   $("signOut").addEventListener("click", out); $("signOut2").addEventListener("click", out);
 
   sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN" && !me) start(); });
