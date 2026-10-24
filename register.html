@@ -444,7 +444,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
   var FN = URL_ + "/functions/v1/rep-squad";
   var CONSENT = "I confirm that I have permission from every player I add, that the details are correct, and I agree to the data terms of this form. Along with the details I type, IHCC also notes technical details such as my IP address and device, only to keep registration and elections fair.";
-  var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, lock: function (name, timeout, fn) { return fn(); } } });
   var $ = function (id) { return document.getElementById(id); };
   var me = null, players = [], editingId = null, busy = false, starting = false;
   var FIELDS = ["display_name", "real_name", "whatsapp", "email", "city", "country"];
@@ -501,10 +501,11 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   async function start() {
     if (starting) return; starting = true;
     try {
-      var s = await sb.auth.getSession();
+      var s = await Promise.race([sb.auth.getSession(), new Promise(function (res) { setTimeout(function () { res(null); }, 12000); })]);
+      if (!s) { say("The sign-in check took too long. Press Sign in with Google again. If it still does not work, open this page in the Chrome browser.", true); show("loginView"); return; }
       if (!s.data.session) { show("loginView"); return; }
       show("loadingView");
-      me = await rpc("rep_me");
+      me = await Promise.race([rpc("rep_me"), new Promise(function (res, rej) { setTimeout(function () { rej(new Error("The server did not answer. Please reload the page and try again.")); }, 20000); })]);
       clientAtLoad = Date.now();
       if (!me || !me.authorized) {
         var em = (s.data.session.user && s.data.session.user.email) || "";
