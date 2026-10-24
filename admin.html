@@ -188,6 +188,7 @@ details.entry .body { padding: 0 16px 16px; }
   </div>
 </main>
 
+<script src="toast.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
@@ -200,6 +201,11 @@ details.entry .body { padding: 0 16px 16px; }
 
   function say(text, isErr) {
     var s = $("status"); s.textContent = text || ""; s.hidden = !text; s.className = "msg" + (isErr ? " err" : "");
+    if (window.IHCCToast) {
+      /* the toast announces; the written message stays on the page to read later */
+      s.removeAttribute("role");
+      window.IHCCToast.show(text, isErr);
+    }
   }
   function show(view) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; }); }
   function td(text) { var c = document.createElement("td"); c.textContent = text == null ? "" : String(text); return c; }
