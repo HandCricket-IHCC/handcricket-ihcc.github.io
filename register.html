@@ -437,6 +437,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 </footer>
 <!--/SITEFOOT-->
 
+<script src="toast.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
@@ -452,6 +453,11 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 
   function say(text, bad) {
     var m = $("msg"); m.textContent = text || ""; m.hidden = !text; m.className = "msgbox" + (bad ? " bad" : "");
+    if (window.IHCCToast) {
+      /* the toast announces; the written message stays on the page to read later */
+      m.removeAttribute("role"); m.removeAttribute("aria-live");
+      window.IHCCToast.show(text, bad);
+    }
   }
   function show(view) {
     ["loadingView", "loginView", "deniedView", "repView"].forEach(function (v) { $(v).hidden = v !== view; });
