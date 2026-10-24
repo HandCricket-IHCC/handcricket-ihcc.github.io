@@ -227,7 +227,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="squad.html">Squad registration</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -275,9 +275,9 @@ details p { margin: 0 0 16px; color: var(--muted); }
     <div class="cards">
       <div class="tile">
         <span class="tag">Open now</span>
-        <h3>Squad registration</h3>
-        <p>Every player of a Member Board registers here. The last date is 31 October 2026, 11:59 PM Pakistan time.</p>
-        <a class="btn" href="squad.html">Read more and register</a>
+        <h3>Squad lists</h3>
+        <p>Each Member Board sends its squad list through its board representative. The last date is 31 October 2026, 11:59 PM Pakistan time.</p>
+        <a class="btn" href="squad.html">Read more</a>
       </div>
       <div class="tile">
         <span class="tag soon">In preparation</span>
@@ -294,8 +294,8 @@ details p { margin: 0 0 16px; color: var(--muted); }
 
   <section aria-labelledby="boards">
     <h2 id="boards">The 15 Member Boards</h2>
-    <p><a href="boards.html">See how many players each board has registered</a></p>
-    <ul class="boards"><li>New Zealand</li><li>England</li><li>Pakistan</li><li>Bangladesh</li><li>Afghanistan</li><li>Australia</li><li>Sri Lanka</li><li>South Africa</li><li>UAE</li><li>USA</li><li>Oman</li><li>Nepal</li><li>Scotland</li><li>Zimbabwe</li><li>India</li></ul>
+    <p><a href="boards.html">See the squad list progress of each board</a></p>
+    <ul class="boards"><li>New Zealand</li><li>England</li><li>Pakistan</li><li>Bangladesh</li><li>Afghanistan</li><li>Australia</li><li>Sri Lanka</li><li>South Africa</li><li>UAE</li><li>USA</li><li>Nepal</li><li>Scotland</li><li>Zimbabwe</li><li>India</li><li>Germany</li></ul>
   </section>
 
   <section aria-labelledby="contact">
@@ -313,7 +313,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad registration</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
@@ -330,9 +330,9 @@ details p { margin: 0 0 16px; color: var(--muted); }
 (function () {
   var el = document.getElementById("countdown"); if (!el) return;
   var end = Date.parse("2026-10-31T18:59:59Z"), ms = end - Date.now();
-  if (ms <= 0) { el.textContent = "Squad registration is closed."; return; }
+  if (ms <= 0) { el.textContent = "Squad lists are closed."; return; }
   var days = Math.ceil(ms / 86400000);
-  el.textContent = days > 1 ? "Squad registration closes in " + days + " days: 31 October 2026, 11:59 PM Pakistan time." : "Last day: squad registration closes today at 11:59 PM Pakistan time.";
+  el.textContent = days > 1 ? "Squad lists close in " + days + " days: 31 October 2026, 11:59 PM Pakistan time." : "Last day: squad lists close today at 11:59 PM Pakistan time.";
 })();
 </script>
 </body>
