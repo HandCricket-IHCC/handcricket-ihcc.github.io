@@ -48,6 +48,16 @@ details.entry > summary { padding: 12px 16px; cursor: pointer; font-weight: 600;
 details.entry > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
 details.entry .body { padding: 0 16px 16px; }
 .sr { position: absolute; left: -9999px; }
+textarea { font: inherit; width: 100%; min-height: 160px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); }
+fieldset { border: 1.5px solid var(--line); border-radius: 10px; margin: 14px 0 0; padding: 8px 14px 12px; }
+legend { font-weight: 700; padding: 0 6px; }
+.opt { display: flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 600; }
+.opt input { width: 22px; height: 22px; flex: none; }
+.fieldrow { display: grid; gap: 4px; margin-top: 14px; font-weight: 600; }
+.fieldrow .hint { font-weight: 400; color: var(--muted); }
+.fieldrow input[type=text], .fieldrow input[type=email] { width: 100%; }
+.boardsbox { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 14px; }
+pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; margin: 6px 0 0; }
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -89,6 +99,7 @@ details.entry .body { padding: 0 16px 16px; }
           <option value="summary">Boards summary</option>
           <option value="reps">Board representatives</option>
           <option value="progress">Squad progress</option>
+          <option value="mail">Send email</option>
           <option value="admins">Administrators</option>
           <option value="audit">Audit log</option>
         </select>
@@ -177,6 +188,67 @@ details.entry .body { padding: 0 16px 16px; }
       </table></div>
     </section>
 
+    <section id="mailSec" aria-labelledby="mailH" hidden>
+      <h2 id="mailH">Send email</h2>
+      <p>Each person gets his own email from International Hand Cricket Council. It is signed IHCC Management, the subject starts with [IHCC], and replies come to the IHCC Gmail. Campaigns may use 240 emails a day. If a group is bigger, the rest is sent automatically the next day.</p>
+      <p id="mailBudget" role="status"></p>
+      <form id="mailForm" class="card" novalidate>
+        <h3 id="mailFormH">Write an email</h3>
+        <fieldset>
+          <legend>Who gets it</legend>
+          <label class="opt"><input type="radio" name="mAud" value="reps" checked> All board representatives</label>
+          <label class="opt"><input type="radio" name="mAud" value="admins"> All administrators</label>
+          <label class="opt"><input type="radio" name="mAud" value="one"> One person</label>
+        </fieldset>
+        <fieldset id="mBoardsSet">
+          <legend>Choose boards (leave all unticked for every representative)</legend>
+          <div class="boardsbox" id="mBoards"></div>
+        </fieldset>
+        <div id="mOneSet" hidden>
+          <div class="fieldrow"><label for="mEmail">Email address</label><input id="mEmail" type="email" autocomplete="off"></div>
+          <div class="fieldrow"><label for="mName">Name (optional)</label><span class="hint" id="mNameHint">If you write a name, the email starts with Assalam o Alaikum and the name.</span><input id="mName" type="text" autocomplete="off" aria-describedby="mNameHint"></div>
+        </div>
+        <div class="fieldrow"><label for="mSubject">Subject</label><span class="hint" id="mSubjHint">[IHCC] is added in front automatically.</span><input id="mSubject" type="text" maxlength="150" autocomplete="off" aria-describedby="mSubjHint"></div>
+        <div class="fieldrow"><label for="mBody">Message</label><span class="hint" id="mBodyHint">Leave an empty line between paragraphs. You may write {board} for the board name and {name} for the person's name. The greeting and the signature are added automatically.</span><textarea id="mBody" maxlength="6000" aria-describedby="mBodyHint"></textarea></div>
+        <div class="row" style="margin-top:16px">
+          <button id="mReview" type="button">Review and send</button>
+          <button id="mTest" type="button" class="alt">Send a test to myself</button>
+        </div>
+      </form>
+      <div id="mReviewBox" class="card" hidden aria-labelledby="mReviewH">
+        <h3 id="mReviewH" tabindex="-1"></h3>
+        <p id="mReviewInfo"></p>
+        <p><strong>Subject:</strong> <span id="mReviewSubj"></span></p>
+        <p style="margin-bottom:0"><strong>Message:</strong></p><pre class="mailpre" id="mReviewBody"></pre>
+        <div class="scroll"><table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">People who will get this email</caption>
+          <thead><tr><th scope="col">Email</th><th scope="col">Board</th><th scope="col">Name</th></tr></thead>
+          <tbody id="mReviewBody2"></tbody>
+        </table></div>
+        <div id="mConfirmRow" class="fieldrow" hidden><label for="mConfirm">This is a big group. Type SEND to confirm.</label><input id="mConfirm" type="text" autocomplete="off"></div>
+        <div class="row" style="margin-top:16px">
+          <button id="mSendNow" type="button">Send now</button>
+          <button id="mBack" type="button" class="alt">Back to edit</button>
+        </div>
+      </div>
+      <p id="mProgress" role="status"></p>
+      <h3 style="margin-top:26px" id="mHistH" tabindex="-1">Sent and waiting emails</h3>
+      <div class="row"><button id="mReload" type="button" class="alt">Reload</button></div>
+      <div class="scroll"><table>
+        <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Email campaigns, newest first</caption>
+        <thead><tr><th scope="col">When</th><th scope="col">To</th><th scope="col">Subject</th><th scope="col">People</th><th scope="col">Sent</th><th scope="col">Failed</th><th scope="col">Waiting</th><th scope="col">Actions</th></tr></thead>
+        <tbody id="mHist"></tbody>
+      </table></div>
+      <div id="mDetail" class="card" hidden>
+        <h3 id="mDetailH" tabindex="-1"></h3>
+        <div class="scroll"><table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">People of this email campaign</caption>
+          <thead><tr><th scope="col">Email</th><th scope="col">Board</th><th scope="col">Status</th><th scope="col">Problem</th></tr></thead>
+          <tbody id="mDetailBody"></tbody>
+        </table></div>
+      </div>
+    </section>
+
     <section id="auditSec" aria-labelledby="audH" hidden>
       <h2 id="audH">Audit log</h2>
       <div class="scroll"><table>
@@ -217,7 +289,7 @@ details.entry .body { padding: 0 16px 16px; }
     return null;
   }
   /* say: results of actions. Opens a dialog (read out by the screen reader); the written message stays on the page. */
-  function say(text, isErr) {
+  function say(text, isErr, focusFn) {
     if (!text) { sayLive(""); return; }
     if (!window.IHCCDialog) { sayLive(text, isErr); return; }
     var op = document.activeElement;
@@ -226,7 +298,7 @@ details.entry .body { padding: 0 16px 16px; }
     var w = $("status2"); w.textContent = text; w.hidden = false; w.className = "msg" + (isErr ? " err" : "");
     window.IHCCDialog.show({
       title: (isErr ? "Error. " : "") + text, bad: !!isErr,
-      buttons: [{ label: "Close", focus: function () { return findBack(op, key); } }]
+      buttons: [{ label: "Close", focus: function () { var f = focusFn && focusFn(); return f || findBack(op, key); } }]
     });
   }
   function show(view) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; }); }
@@ -262,6 +334,7 @@ details.entry .body { padding: 0 16px 16px; }
         : o.value === "summary" ? ["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0
         : o.value === "admins" ? me.role === "owner"
         : o.value === "reps" ? me.role === "owner"
+        : o.value === "mail" ? me.role === "owner"
         : o.value === "progress" ? (me.role === "owner" || me.role === "core")
         : (me.role === "owner" || me.role === "auditor");
       o.disabled = !ok; o.hidden = !ok;
@@ -277,6 +350,8 @@ details.entry .body { padding: 0 16px 16px; }
     $("entSec").hidden = v !== "entries"; $("sumSec").hidden = v !== "summary";
     $("adminsSec").hidden = !(v === "admins" && me.role === "owner");
     $("repsSec").hidden = !(v === "reps" && me.role === "owner");
+    $("mailSec").hidden = !(v === "mail" && me.role === "owner");
+    if (v === "mail" && me.role === "owner") loadMail();
     $("progSec").hidden = !(v === "progress" && (me.role === "owner" || me.role === "core"));
     if (v === "reps" && me.role === "owner") loadReps();
     if (v === "progress" && (me.role === "owner" || me.role === "core")) loadProgress();
@@ -556,6 +631,126 @@ details.entry .body { padding: 0 16px 16px; }
       downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"], ["status", "Board status"]], "ihcc-all-squads"); say("The backup was downloaded (" + rows.length + " players). This download is recorded in the audit log."); }
     catch (e) { say(errMsg(e), true); }
   });
+
+
+  // ---- Send email (owner only) ----
+  var DAILY = 240;
+  async function callMail(action, data) {
+    var ses = await sb.auth.getSession();
+    var r = await fetch(URL + "/functions/v1/owner-mail", { method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + ses.data.session.access_token, apikey: KEY },
+      body: JSON.stringify(Object.assign({ action: action }, data || {})) });
+    var j = await r.json().catch(function () { return { ok: false, error: "Unexpected reply." }; });
+    if (!j.ok && j.error && action !== "test") throw new Error(j.error);
+    return j;
+  }
+  BOARDS.forEach(function (b, i) {
+    var l = document.createElement("label"); l.className = "opt";
+    var c = document.createElement("input"); c.type = "checkbox"; c.value = b; c.name = "mBoard";
+    l.appendChild(c); l.appendChild(document.createTextNode(b)); $("mBoards").appendChild(l);
+  });
+  function mAud() { return document.querySelector('input[name="mAud"]:checked').value; }
+  function mBoardsSel() { return Array.prototype.map.call(document.querySelectorAll('input[name="mBoard"]:checked'), function (c) { return c.value; }); }
+  function mSync() { var a = mAud(); $("mBoardsSet").hidden = a !== "reps"; $("mOneSet").hidden = a !== "one"; }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="mAud"]'), function (r) { r.addEventListener("change", mSync); });
+  mSync();
+  function mArgs() { var a = mAud(); return { p_audience: a, p_boards: a === "reps" && mBoardsSel().length ? mBoardsSel() : null, p_email: a === "one" ? $("mEmail").value : null, p_name: a === "one" ? $("mName").value : null }; }
+  var mSentToday = 0;
+  function mBudgetLine() { $("mailBudget").textContent = "Today " + mSentToday + " of " + DAILY + " campaign emails are used. " + Math.max(0, DAILY - mSentToday) + " are left for today."; }
+
+  async function loadMail() {
+    try {
+      var d = await rpc("admin_mail_list"); mSentToday = d.sent_today || 0; mBudgetLine();
+      var body = $("mHist"); body.textContent = "";
+      if (!d.campaigns.length) { var tr0 = document.createElement("tr"); var c0 = td("No emails have been created yet."); c0.colSpan = 8; tr0.appendChild(c0); body.appendChild(tr0); }
+      d.campaigns.forEach(function (c) {
+        var tr = document.createElement("tr");
+        tr.appendChild(td(fmt(c.created_at))); tr.appendChild(td(c.detail)); tr.appendChild(td(c.subject));
+        tr.appendChild(td(c.total)); tr.appendChild(td(c.sent)); tr.appendChild(td(c.failed));
+        tr.appendChild(td(c.status === "cancelled" ? "Stopped" : c.pending));
+        var a = document.createElement("td");
+        a.appendChild(btn("Details", function () { showMailDetail(c); }, "alt", "Details of the email " + c.subject));
+        if (c.failed > 0 && c.status !== "cancelled") a.appendChild(btn("Send failed again", async function () {
+          try { say("Sending again."); var j = await callMail("retry", { campaign_id: c.id }); say("Tried again: " + j.sent + " sent, " + j.failed + " failed, " + j.pending + " waiting."); loadMail(); }
+          catch (e) { say(errMsg(e), true); }
+        }, "alt", "Send the failed emails of " + c.subject + " again"));
+        if (c.pending > 0 && c.status !== "cancelled") {
+          a.appendChild(btn("Send waiting now", async function () {
+            try { var j = await callMail("send", { campaign_id: c.id }); say("Sent " + j.sent + ", failed " + j.failed + ", still waiting " + j.pending + (j.pending && j.budget_left === 0 ? ". Today's limit is used. The rest goes tomorrow automatically." : ".")); loadMail(); }
+            catch (e) { say(errMsg(e), true); }
+          }, "alt", "Send the waiting emails of " + c.subject + " now"));
+          a.appendChild(btn("Stop remaining", async function () {
+            try { var j = await rpc("admin_mail_cancel", { p_campaign: c.id }); say("Stopped. " + j.stopped + " waiting " + (j.stopped === 1 ? "email" : "emails") + " will not be sent."); loadMail(); }
+            catch (e) { say(errMsg(e), true); }
+          }, "danger", "Stop the waiting emails of " + c.subject));
+        }
+        tr.appendChild(a); body.appendChild(tr);
+      });
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+  async function showMailDetail(c) {
+    try {
+      var rows = await rpc("admin_mail_recipients", { p_campaign: c.id }), b = $("mDetailBody"); b.textContent = "";
+      rows.forEach(function (r) { var tr = document.createElement("tr"); tr.appendChild(td(r.email)); tr.appendChild(td(r.board)); tr.appendChild(td(r.status)); tr.appendChild(td(r.error)); b.appendChild(tr); });
+      $("mDetail").hidden = false; var h = $("mDetailH"); h.textContent = "People of the email " + c.subject + ": " + rows.length; h.focus();
+    } catch (e) { say(errMsg(e), true); }
+  }
+  function mValid() {
+    if ($("mSubject").value.trim().length < 3) { say("Write a subject first.", true); return false; }
+    if ($("mBody").value.trim().length < 3) { say("Write the message first.", true); return false; }
+    return true;
+  }
+  var mPending = null;
+  $("mReview").addEventListener("click", async function () {
+    if (!mValid()) return;
+    try {
+      var a = await rpc("admin_mail_audience", mArgs()), list = a.recipients || [];
+      if (!list.length) { say("No one is in this group yet.", true); return; }
+      mPending = { args: mArgs(), count: list.length };
+      var d = await rpc("admin_mail_list"); mSentToday = d.sent_today || 0; mBudgetLine();
+      var left = Math.max(0, DAILY - mSentToday), now = Math.min(left, list.length);
+      var b = $("mReviewBody2"); b.textContent = "";
+      list.forEach(function (r) { var tr = document.createElement("tr"); tr.appendChild(td(r.email)); tr.appendChild(td(r.board)); tr.appendChild(td(r.name)); b.appendChild(tr); });
+      $("mReviewH").textContent = "Review: this email goes to " + list.length + " " + (list.length === 1 ? "person" : "people");
+      $("mReviewInfo").textContent = now >= list.length ? "All of them are sent now." : now + " are sent now and " + (list.length - now) + " tomorrow, because of the daily limit.";
+      $("mReviewSubj").textContent = ($("mSubject").value.trim().indexOf("[IHCC]") === 0 ? "" : "[IHCC] ") + $("mSubject").value.trim();
+      $("mReviewBody").textContent = $("mBody").value.trim();
+      $("mConfirmRow").hidden = list.length <= 20; $("mConfirm").value = "";
+      $("mReviewBox").hidden = false; $("mailForm").hidden = true; $("mReviewH").focus();
+    } catch (e) { say(errMsg(e), true); }
+  });
+  $("mBack").addEventListener("click", function () { $("mReviewBox").hidden = true; $("mailForm").hidden = false; $("mailFormH").setAttribute("tabindex", "-1"); $("mailFormH").focus(); });
+  $("mTest").addEventListener("click", async function () {
+    if (!mValid()) return;
+    try { var j = await callMail("test", { subject: $("mSubject").value, body: $("mBody").value });
+      say(j.ok ? "A test email was sent to " + j.to + "." : "The test email could not be sent." + (j.error ? " " + j.error : ""), !j.ok); }
+    catch (e) { say(errMsg(e), true); }
+  });
+  $("mSendNow").addEventListener("click", async function () {
+    if (!mPending) return;
+    if (mPending.count > 20 && $("mConfirm").value.trim() !== "SEND") { say("Type SEND in the box to confirm this big group.", true); return; }
+    var sendBtn = $("mSendNow"); sendBtn.disabled = true;
+    try {
+      var a = mPending.args;
+      var made = await rpc("admin_mail_create", { p_audience: a.p_audience, p_boards: a.p_boards, p_email: a.p_email, p_name: a.p_name, p_subject: $("mSubject").value, p_body: $("mBody").value });
+      var sent = 0, failed = 0, pending = made.total, guard = 0;
+      while (pending > 0 && guard++ < 30) {
+        $("mProgress").textContent = "Sending. " + sent + " sent so far.";
+        var j = await callMail("send", { campaign_id: made.id });
+        sent += j.sent; failed += j.failed; pending = j.pending;
+        if (j.sent + j.failed === 0) break;
+      }
+      $("mProgress").textContent = "";
+      $("mReviewBox").hidden = true; $("mailForm").hidden = false; mPending = null;
+      var msg = "Sent to " + sent + " " + (sent === 1 ? "person" : "people") + "." + (failed ? " " + failed + " could not be sent." : "") + (pending ? " " + pending + " are waiting and go out automatically." : "");
+      if (!failed && !pending) { $("mSubject").value = ""; $("mBody").value = ""; }
+      var hh = $("mHistH"); hh.setAttribute("tabindex", "-1");
+      say(msg, failed > 0, function () { return hh; });
+      loadMail();
+    } catch (e) { $("mProgress").textContent = ""; say(errMsg(e), true); }
+    finally { sendBtn.disabled = false; }
+  });
+  $("mReload").addEventListener("click", loadMail);
 
   $("viewSel").addEventListener("change", setView);
   $("fSearch").addEventListener("input", render);
