@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="The 15 Member Boards of IHCC and how many players each has registered.">
+<meta name="description" content="The 15 Member Boards of IHCC and the progress of their squad lists.">
 <meta name="theme-color" content="#0f3324">
 <title>Boards - IHCC</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="International Hand Cricket Council">
 <meta property="og:title" content="Boards - IHCC">
-<meta property="og:description" content="The 15 Member Boards of IHCC and how many players each has registered.">
+<meta property="og:description" content="The 15 Member Boards of IHCC and the progress of their squad lists.">
 <meta property="og:image" content="https://handcricket-ihcc.github.io/IHCC_logo.png">
 <meta property="og:url" content="https://handcricket-ihcc.github.io/boards.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -236,7 +236,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad registration</a></li><li><a href="boards.html" aria-current="page">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html" aria-current="page">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -268,13 +268,13 @@ details p { margin: 0 0 16px; color: var(--muted); }
         <h1>The Member Boards</h1>
       </div>
     </div>
-    <p class="lede">The 15 Member Boards of IHCC and how many players each has registered.</p>
+    <p class="lede">The 15 Member Boards of IHCC and the progress of their squad lists.</p>
   </div>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
   <section aria-labelledby="b">
-    <h2 id="b">Registration progress</h2>
+    <h2 id="b">Squad list progress</h2>
     <p class="legend" id="summ" role="status">Loading the numbers.</p>
     <ul class="bcards" id="list"></ul>
   </section>
@@ -288,7 +288,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad registration</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
@@ -303,7 +303,8 @@ details p { margin: 0 0 16px; color: var(--muted); }
 <!--/SITEFOOT-->
 <script>
 (function () {
-  var API = "https://krkrpcnovdobnscknfnw.supabase.co/functions/v1/submit-squad-player";
+  var API = "https://krkrpcnovdobnscknfnw.supabase.co/rest/v1/rpc/public_board_progress";
+  var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
   var MIN = 12;
   var BOARD_STYLE = {
     "New Zealand Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDFF", "#1d4e89"],
@@ -316,7 +317,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     "South Africa Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDE6", "#007749"],
     "UAE Hand Cricket Board": ["\uD83C\uDDE6\uD83C\uDDEA", "#00732f"],
     "USA Hand Cricket Board": ["\uD83C\uDDFA\uD83C\uDDF8", "#3c3b6e"],
-    "Oman Hand Cricket Board": ["\uD83C\uDDF4\uD83C\uDDF2", "#a00f2d"],
+    "Germany Hand Cricket Board": ["\uD83C\uDDE9\uD83C\uDDEA", "#c9a100"],
     "Nepal Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDF5", "#dc143c"],
     "Scotland Hand Cricket Board": ["\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74\uDB40\uDC7F", "#0b4f9c"],
     "Zimbabwe Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDFC", "#b08900"],
@@ -324,22 +325,23 @@ details p { margin: 0 0 16px; color: var(--muted); }
   };
   var names = Object.keys(BOARD_STYLE);
   var list = document.getElementById("list");
-  function draw(counts) {
+  function draw(rows) {
     list.textContent = "";
-    var done = 0;
+    var done = 0, by = {};
+    (rows || []).forEach(function (r) { by[r.board] = r; });
     names.forEach(function (n) {
-      var c = counts ? (counts[n] || 0) : 0; if (c >= MIN) done++;
+      var r = by[n], c = r ? r.count : 0, st = r ? r.state : null; if (st === "Completed") done++;
       var li = document.createElement("li"); li.className = "bcard"; li.style.setProperty("--bc", BOARD_STYLE[n][1]);
       var t = document.createElement("strong"); t.textContent = BOARD_STYLE[n][0] + " " + n;
-      var s = document.createElement("span"); s.textContent = counts ? (c + " of " + MIN + " minimum players registered" + (c >= MIN ? ". Minimum complete." : ".")) : "Numbers are not available right now.";
+      var s = document.createElement("span"); s.textContent = rows ? st : "Not available right now.";
       var bar = document.createElement("div"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
       var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(c / MIN * 100)) + "%"; bar.appendChild(i);
       li.appendChild(t); li.appendChild(s); li.appendChild(bar); list.appendChild(li);
     });
-    document.getElementById("summ").textContent = counts ? (done + " of 15 boards have registered the minimum " + MIN + " players.") : "Numbers are not available right now. Please try again later.";
+    document.getElementById("summ").textContent = rows ? (done + " of 15 boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
   }
   draw(null);
-  fetch(API).then(function (r) { return r.json(); }).then(function (d) { if (d && d.ok) draw(d.counts); }).catch(function () {});
+  fetch(API, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" }).then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) draw(d); }).catch(function () {});
 })();
 </script>
 </body>
