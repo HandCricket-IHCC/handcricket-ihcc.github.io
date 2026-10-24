@@ -339,43 +339,46 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     <section id="formSec" hidden aria-labelledby="formTitle">
       <h2 id="formTitle">Add a player</h2>
       <div class="card">
-        <p class="allreq">All fields are required. Add one player at a time.</p>
+        <p class="allreq">All fields are required. Add one player at a time. Press Back to list to return to the squad list.</p>
         <div id="summary" class="summary" role="alert" tabindex="-1"></div>
         <form id="f" novalidate autocomplete="off">
           <div class="field">
-            <label for="display_name">Display name <span class="req">(required)</span>
-              <span class="hint" id="h-display">The cricketer's name used in the Hand Cricket app. It must be a real international (T20, ODI or Test) cricketer of your board's country. Domestic cricketers are not allowed.</span></label>
-            <input id="display_name" type="text" maxlength="40" autocomplete="off" aria-describedby="h-display e-display_name">
+            <label for="display_name">Display name</label>
+            <span class="hint" id="h-display">The cricketer's name used in the Hand Cricket app. It must be a real international (T20, ODI or Test) cricketer of your board's country. Domestic cricketers are not allowed.</span>
+            <input id="display_name" aria-required="true" type="text" maxlength="40" autocomplete="off" aria-describedby="h-display e-display_name">
             <div class="err" id="e-display_name"></div>
           </div>
           <div class="field">
-            <label for="real_name">Real name <span class="req">(required)</span> <span class="hint" id="h-real">The player's own full name, written correctly.</span></label>
-            <input id="real_name" type="text" maxlength="80" autocomplete="off" aria-describedby="h-real e-real_name">
+            <label for="real_name">Real name</label>
+            <span class="hint" id="h-real">The player's own full name, written correctly.</span>
+            <input id="real_name" aria-required="true" type="text" maxlength="80" autocomplete="off" aria-describedby="h-real e-real_name">
             <div class="err" id="e-real_name"></div>
           </div>
           <div class="field">
-            <label for="whatsapp">WhatsApp number <span class="req">(required)</span> <span class="hint" id="h-wa">Include the country code, for example +92 300 1234567.</span></label>
-            <input id="whatsapp" type="tel" maxlength="25" autocomplete="off" inputmode="tel" aria-describedby="h-wa e-whatsapp">
+            <label for="whatsapp">WhatsApp number</label>
+            <span class="hint" id="h-wa">Include the country code, for example +92 300 1234567.</span>
+            <input id="whatsapp" aria-required="true" type="tel" maxlength="25" autocomplete="off" inputmode="tel" aria-describedby="h-wa e-whatsapp">
             <div class="err" id="e-whatsapp"></div>
           </div>
           <div class="field">
-            <label for="email">Gmail address <span class="req">(required)</span>
-              <span class="hint" id="h-email">Enter the player's Gmail address. The same address will be used for voting. It should be the Gmail on which the player has Hand Cricket premium.</span></label>
-            <input id="email" type="email" maxlength="254" autocomplete="off" inputmode="email" aria-describedby="h-email e-email">
+            <label for="email">Gmail address</label>
+            <span class="hint" id="h-email">Enter the player's Gmail address. The same address will be used for voting. It should be the Gmail on which the player has Hand Cricket premium.</span>
+            <input id="email" aria-required="true" type="email" maxlength="254" autocomplete="off" inputmode="email" aria-describedby="h-email e-email">
             <div class="err" id="e-email"></div>
           </div>
           <div class="field">
-            <label for="city">City <span class="req">(required)</span></label>
-            <input id="city" type="text" maxlength="60" autocomplete="off" aria-describedby="e-city">
+            <label for="city">City</label>
+            <input id="city" aria-required="true" type="text" maxlength="60" autocomplete="off" aria-describedby="e-city">
             <div class="err" id="e-city"></div>
           </div>
           <div class="field">
-            <label for="country">Country <span class="req">(required)</span> <span class="hint" id="h-country">Country where the player lives.</span></label>
-            <input id="country" type="text" maxlength="60" autocomplete="off" aria-describedby="h-country e-country">
+            <label for="country">Country</label>
+            <span class="hint" id="h-country">Country where the player lives.</span>
+            <input id="country" aria-required="true" type="text" maxlength="60" autocomplete="off" aria-describedby="h-country e-country">
             <div class="err" id="e-country"></div>
           </div>
           <button class="go" id="addBtn" type="submit">Add player</button>
-          <button class="alt wide" id="cancelEdit" type="button" hidden>Cancel editing</button>
+          <button class="alt wide" id="cancelEdit" type="button">Back to list</button>
         </form>
       </div>
     </section>
@@ -383,6 +386,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     <section id="listSec" aria-labelledby="listTitle">
       <h2 id="listTitle" tabindex="-1">Your squad list</h2>
       <p class="small">Players 1 to 12 are voters. Players 13 to 20 are not voters. You can move players up or down to change their number.</p>
+      <p id="newWrap"><button class="go" id="newBtn" type="button">Add player</button></p>
       <ul id="plist" class="plist" aria-label="Squad list"></ul>
       <p id="emptyNote" class="small" hidden>No players yet. Add the first player using the form above.</p>
       <div class="toolrow">
@@ -449,6 +453,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, lock: function (name, timeout, fn) { return fn(); } } });
   var $ = function (id) { return document.getElementById(id); };
   var me = null, players = [], editingId = null, busy = false, starting = false;
+  var mode = "list", skipPop = 0; /* "list" = squad list page, "form" = add or edit player page */
   var FIELDS = ["display_name", "real_name", "whatsapp", "email", "city", "country"];
   var LABEL = { display_name: "Display name", real_name: "Real name", whatsapp: "WhatsApp number", email: "Gmail address", city: "City", country: "Country" };
 
@@ -576,14 +581,20 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     var needConsent = editable() && !me.consent_at;
     $("consentSec").hidden = !needConsent;
     $("consentText").textContent = CONSENT;
-    $("formSec").hidden = !(editable() && me.consent_at);
+    if (mode === "form" && !(editable() && me.consent_at)) mode = "list";
+    var canAdd = editable() && !!me.consent_at;
+    $("formSec").hidden = !(canAdd && mode === "form");
+    $("listSec").hidden = mode === "form";
+    $("consentSec").hidden = !needConsent || mode === "form";
     $("addBtn").hidden = false;
-    $("finalSec").hidden = !(editable() && me.consent_at);
+    $("finalSec").hidden = !(canAdd && mode === "list");
+    $("newWrap").hidden = !canAdd;
+    $("newBtn").disabled = n >= max;
+    $("newBtn").textContent = n >= max ? "Add player (the list is full, 20 players)" : "Add player";
     $("finalBtn").disabled = n < min;
     $("finalIntro").textContent = n < min ? "You need at least 12 players before you can do the final submit." : "When your list is ready, press Final submit. IHCC will receive your final list and you will get a copy by email.";
     $("formTitle").textContent = editingId ? "Edit player" : "Add a player";
     $("addBtn").textContent = editingId ? "Save changes" : "Add player";
-    $("cancelEdit").hidden = !editingId;
     $("addBtn").disabled = (!editingId && n >= max) || busy;
     if (!editingId && n >= max) { $("formTitle").textContent = "Add a player (list is full)"; }
 
@@ -638,6 +649,32 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     return bad;
   }
 
+  /* ---- two pages inside this page: the squad list, and the add/edit player form ---- */
+  function openForm(id) {
+    var p = id ? players.filter(function (x) { return x.id === id; })[0] : null;
+    resetForm();
+    if (p) { editingId = id; FIELDS.forEach(function (f) { $(f).value = p[f] || ""; }); }
+    mode = "form";
+    render();
+    try { history.pushState({ ihccForm: 1 }, ""); } catch (e) {}
+    window.scrollTo(0, 0);
+    setTimeout(function () { $("display_name").focus(); }, 60);
+  }
+  function doLeave() { resetForm(); mode = "list"; render(); window.scrollTo(0, 0); }
+  /* leave the form page. Same step is used by the Back button, the dialog Close button and Escape. */
+  function leaveForm() {
+    if (mode !== "form") return;
+    doLeave();
+    if (history.state && history.state.ihccForm) { skipPop++; try { history.back(); } catch (e) { skipPop = 0; } }
+  }
+  window.addEventListener("popstate", function () {
+    if (skipPop > 0) { skipPop--; return; }
+    if (mode === "form") {
+      var id = editingId; doLeave();
+      setTimeout(function () { var t = lineEl(id) || $("newBtn"); if (t && !t.disabled) t.focus(); }, 60);
+    }
+  });
+
   $("f").addEventListener("submit", async function (ev) {
     ev.preventDefault();
     if (busy) return;
@@ -667,7 +704,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
       if (!wasEdit && players.length) savedId = players[players.length - 1].id;
       var btns = [];
       if (!wasEdit && players.length < 20 && editable()) btns.push({ label: "Add next player", focus: function () { return $("display_name"); } });
-      btns.push({ label: "Close", focus: function () { return lineEl(savedId) || firstLine() || $("display_name"); } });
+      btns.push({ label: "Close", onClick: leaveForm, focus: function () { return lineEl(savedId) || firstLine() || $("newBtn"); } });
       notify(note, false, btns);
     } catch (e) {
       busy = false;
@@ -682,18 +719,19 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 
   function startEdit(id) {
     var p = players.filter(function (x) { return x.id === id; })[0]; if (!p) return;
-    editingId = id; clearErrors();
-    FIELDS.forEach(function (f) { $(f).value = p[f] || ""; });
-    render();
+    openForm(id);
     /* written note only; focus goes to the field, which the screen reader reads by itself */
     $("msg").textContent = ""; $("msg").hidden = true;
     var dm = $("doneMsg"); dm.textContent = "Editing " + p.display_name + ". Change the details and press Save changes."; dm.hidden = false; dm.className = "msgbox";
-    $("formSec").scrollIntoView({ behavior: "smooth", block: "start" }); $("display_name").focus();
   }
   $("cancelEdit").addEventListener("click", function () {
-    var id = editingId; resetForm(); render();
+    var id = editingId; leaveForm();
     var dm = $("doneMsg"); dm.textContent = ""; dm.hidden = true;
-    var t = lineEl(id) || firstLine() || $("display_name"); t.focus();
+    setTimeout(function () { var t = lineEl(id) || $("newBtn"); if (t && !t.disabled) t.focus(); }, 60);
+  });
+  $("newBtn").addEventListener("click", function () {
+    var dm = $("doneMsg"); dm.textContent = ""; dm.hidden = true;
+    openForm(null);
   });
 
   function askDelete(li, p) {
@@ -711,7 +749,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
         await rpc("rep_delete_player", { p_id: p.id });
         await loadList(); await refreshMe(); render();
         notify(p.display_name + " was deleted. The numbers of the other players were updated.", false,
-          [{ label: "Close", focus: function () { return firstLine() || $("display_name") || $("listTitle"); } }]);
+          [{ label: "Close", focus: function () { return firstLine() || $("newBtn") || $("listTitle"); } }]);
       } catch (e) {
         box.remove(); acts.hidden = false;
         notify(errText(e), true, [{ label: "Close", focus: function () { return acts.querySelector('[data-act="del"]') || lineEl(p.id); } }]);
@@ -736,7 +774,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     var self = this;
     try {
       await call("consent", { text: CONSENT }); await refreshMe(); render();
-      notify("Thank you. You can now add players.", false, [{ label: "Add first player", focus: function () { return $("display_name"); } }]);
+      notify("Thank you. You can now add players.", false, [{ label: "Add first player", onClick: function () { openForm(null); }, focus: function () { return $("display_name"); } }]);
     }
     catch (e) { self.disabled = false; notify(errText(e), true, [{ label: "Close", focus: function () { return $("consentBtn"); } }]); }
   });
@@ -793,7 +831,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     try {
       await call("reopen"); await refreshMe(); render();
       notify("Your list is open for editing again. The IHCC Owner was informed. Remember to lock it again with Final submit.", false,
-        [{ label: "Close", focus: function () { return $("display_name"); } }]);
+        [{ label: "Close", focus: function () { return $("newBtn"); } }]);
     }
     catch (e) { notify(errText(e), true, [{ label: "Close", focus: function () { return $("reopenBtn") || $("boardName"); } }]); }
   }
@@ -802,7 +840,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   $("signInBtn").addEventListener("click", function () {
     sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
   });
-  async function out() { await sb.auth.signOut(); me = null; players = []; editingId = null; say("You are signed out."); show("loginView"); }
+  async function out() { await sb.auth.signOut(); me = null; players = []; editingId = null; mode = "list"; say("You are signed out."); show("loginView"); }
   $("signOut").addEventListener("click", out); $("signOutDenied").addEventListener("click", out);
   sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN" && !me) start(); });
 
