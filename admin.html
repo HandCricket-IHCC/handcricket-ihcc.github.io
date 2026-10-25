@@ -95,19 +95,21 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     <div class="row" style="margin-top:14px">
       <label>Show section
         <select id="viewSel">
-          <option value="entries">Entries</option>
-          <option value="summary">Boards summary</option>
-          <option value="reps">Board representatives</option>
+          <option value="squads">Squads of all boards</option>
           <option value="progress">Squad progress</option>
+          <option value="reps">Board representatives</option>
           <option value="mail">Send email</option>
           <option value="admins">Administrators</option>
           <option value="audit">Audit log</option>
+          <option value="entries">Old registrations (closed)</option>
+          <option value="summary">Old boards summary (closed)</option>
         </select>
       </label>
     </div>
 
     <section id="sumSec" aria-labelledby="sumH" hidden>
-      <h2 id="sumH">Boards summary</h2>
+      <h2 id="sumH">Old boards summary (closed)</h2>
+      <p>This is the record of the old public registration form, which is now closed. New squad lists are in "Squads of all boards".</p>
       <div class="scroll">
         <table>
           <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Number of players per board</caption>
@@ -118,7 +120,8 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     </section>
 
     <section id="entSec" aria-labelledby="entH">
-      <h2 id="entH">Entries</h2>
+      <h2 id="entH">Old registrations (closed)</h2>
+      <p>This is the record of the old public registration form, which is now closed. New squad lists are in "Squads of all boards".</p>
       <p id="boardLine" role="status" style="font-weight:600"></p>
       <div class="row" role="search">
         <label>Board <select id="fBoard"><option value="">All boards</option></select></label>
@@ -165,6 +168,18 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
         <thead><tr><th scope="col">Board</th><th scope="col">Representative Gmail</th><th scope="col">Invitation</th><th scope="col">Actions</th></tr></thead>
         <tbody id="repsBody"></tbody>
       </table></div>
+    </section>
+
+    <section id="squadsSec" aria-labelledby="squadsH" hidden>
+      <h2 id="squadsH" tabindex="-1">Squads of all boards</h2>
+      <p id="squadsNote" role="status"></p>
+      <div class="row">
+        <button id="sqReload" type="button" class="alt">Reload</button>
+        <button id="sqCopy" type="button" class="alt">Copy all squads</button>
+        <button id="sqCsv" type="button" class="alt">Download all squads (CSV)</button>
+      </div>
+      <p>Every copy, download and view is recorded in the audit log.</p>
+      <div id="sqList"></div>
     </section>
 
     <section id="progSec" aria-labelledby="progH" hidden>
@@ -330,8 +345,9 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     show("panel");
     var vs = $("viewSel");
     Array.prototype.forEach.call(vs.options, function (o) {
-      var ok = o.value === "entries" ? (me.role !== "auditor" && me.role !== "election_officer")
-        : o.value === "summary" ? ["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0
+      var ok = o.value === "squads" ? (me.role === "owner" || me.role === "core")
+        : o.value === "entries" ? (me.role !== "auditor" && me.role !== "election_officer" && me.role !== "core")
+        : o.value === "summary" ? ["owner", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0
         : o.value === "admins" ? me.role === "owner"
         : o.value === "reps" ? me.role === "owner"
         : o.value === "mail" ? me.role === "owner"
@@ -348,6 +364,9 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
   function setView() {
     var v = $("viewSel").value;
     $("entSec").hidden = v !== "entries"; $("sumSec").hidden = v !== "summary";
+    $("statSec").hidden = !(v === "entries" || v === "summary");
+    $("squadsSec").hidden = !(v === "squads" && (me.role === "owner" || me.role === "core"));
+    if (v === "squads" && (me.role === "owner" || me.role === "core")) loadSquads();
     $("adminsSec").hidden = !(v === "admins" && me.role === "owner");
     $("repsSec").hidden = !(v === "reps" && me.role === "owner");
     $("mailSec").hidden = !(v === "mail" && me.role === "owner");
@@ -374,8 +393,8 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     sayLive("Loading");
     try {
       var jobs = [];
-      if (["owner", "core", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0) { jobs.push(loadSummary()); jobs.push(loadStats()); } else { $("sumBody").textContent = ""; $("statSec").hidden = true; }
-      if (me.role !== "auditor" && me.role !== "election_officer") jobs.push(loadEntries()); else { entries = []; render(); }
+      if (["owner", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0) { jobs.push(loadSummary()); jobs.push(loadStats()); } else { $("sumBody").textContent = ""; }
+      if (me.role !== "auditor" && me.role !== "election_officer" && me.role !== "core") jobs.push(loadEntries()); else { entries = []; render(); }
       if (me.role === "owner") jobs.push(loadAdmins());
       if (me.role === "owner" || me.role === "auditor") jobs.push(loadAudit());
       await Promise.all(jobs);
@@ -632,6 +651,79 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     catch (e) { say(errMsg(e), true); }
   });
 
+
+  // ---- Squads of all boards (owner and core) ----
+  var sqData = [];
+  function sqLines() {
+    var out = [];
+    sqData.forEach(function (b) {
+      var i = b.info || {};
+      out.push(b.board + " - " + (i.count || 0) + " players - " + (i.status || ""));
+      (b.players || []).forEach(function (p) {
+        out.push(p.number + ". " + p.display_name + " | " + p.real_name + " | " + p.email + " | " + p.whatsapp + " | " + p.city + " | " + p.country + " | " + p.receipt_code + (p.number <= 12 ? " | Voter" : ""));
+      });
+      out.push("");
+    });
+    return out.join("\n");
+  }
+  async function loadSquads() {
+    try {
+      var rows = await rpc("admin_squads_overview"); sqData = rows;
+      var box = $("sqList"); box.textContent = "";
+      var total = 0, started = 0;
+      rows.forEach(function (b) {
+        var i = b.info || {}, n = (b.players || []).length; total += n; if (n) started++;
+        var h = document.createElement("h3"); h.textContent = b.board + ": " + n + " player" + (n === 1 ? "" : "s") + ", " + (i.status || ""); h.style.marginTop = "22px"; box.appendChild(h);
+        var pr = document.createElement("p");
+        pr.textContent = "Representative: " + (b.rep_email || "not set") + ". Last sign-in: " + fmt(b.last_sign_in) + ". Last change: " + (b.updated_at ? fmt(b.updated_at) : "none") + ".";
+        box.appendChild(pr);
+        if (b.rep_email && !i.is_final) {
+          var rb = btn("Send reminder to this representative", async function () {
+            try { var j = await callFn("admin_remind_one", { board: b.board }); if (j.ok) say("A reminder was sent to " + j.email + "."); else say("The reminder email could not be sent. Please try again later.", true); }
+            catch (e) { say(errMsg(e), true); }
+          }, "alt", "Send reminder to the representative of " + b.board);
+          box.appendChild(rb);
+        }
+        if (!n) { var np = document.createElement("p"); np.textContent = "No players yet."; box.appendChild(np); return; }
+        var wrap = document.createElement("div"); wrap.className = "scroll";
+        var t = document.createElement("table");
+        var cap = document.createElement("caption"); cap.className = "sr"; cap.style.cssText = "text-align:left;font-weight:600;padding:6px 0"; cap.textContent = "Squad list of " + b.board; t.appendChild(cap);
+        var thead = document.createElement("thead"), hr = document.createElement("tr");
+        ["No.", "Display name", "Real name", "Gmail", "WhatsApp", "City", "Country", "Registration number", "Added"].forEach(function (c) { var x = document.createElement("th"); x.scope = "col"; x.textContent = c; hr.appendChild(x); });
+        thead.appendChild(hr); t.appendChild(thead);
+        var tb = document.createElement("tbody");
+        b.players.forEach(function (p) {
+          var tr = document.createElement("tr");
+          [p.number + (p.number <= 12 ? " (voter)" : ""), p.display_name, p.real_name, p.email, p.whatsapp, p.city, p.country, p.receipt_code, fmt(p.created_at)].forEach(function (v) { tr.appendChild(td(v)); });
+          tb.appendChild(tr);
+        });
+        t.appendChild(tb); wrap.appendChild(t); box.appendChild(wrap);
+      });
+      $("squadsNote").textContent = "Boards with players: " + started + " of " + rows.length + ". Players in total: " + total + ".";
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+  $("sqReload").addEventListener("click", loadSquads);
+  $("sqCopy").addEventListener("click", async function () {
+    try {
+      var rows = await rpc("admin_squads_overview"); sqData = rows;
+      var txt = sqLines(), n = 0; rows.forEach(function (b) { n += (b.players || []).length; });
+      if (!n) { say("There are no players yet.", true); return; }
+      var ok = false;
+      try { await navigator.clipboard.writeText(txt); ok = true; } catch (_) {
+        var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px";
+        document.body.appendChild(ta); ta.select(); try { ok = document.execCommand("copy"); } catch (_2) {} ta.remove();
+      }
+      if (!ok) { say("Copy did not work in this browser. Use Download instead.", true); return; }
+      try { await rpc("admin_log_copy", { p_rows: n }); } catch (_) {}
+      say("All squads were copied (" + n + " players). This is recorded in the audit log.");
+    } catch (e) { say(errMsg(e), true); }
+  });
+  $("sqCsv").addEventListener("click", async function () {
+    try { var rows = await rpc("admin_all_squads"); if (!rows.length) { say("There are no players yet.", true); return; }
+      downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"], ["status", "Board status"]], "ihcc-all-squads");
+      say("All squads were downloaded (" + rows.length + " players). This is recorded in the audit log."); }
+    catch (e) { say(errMsg(e), true); }
+  });
 
   // ---- Send email (owner only) ----
   var DAILY = 240;
