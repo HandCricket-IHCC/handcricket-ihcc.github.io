@@ -235,8 +235,8 @@ details p { margin: 0 0 16px; color: var(--muted); }
 <div class="sitebar">
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
-    <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html" aria-current="page">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav" data-sk="M" aria-keyshortcuts="Alt+M">Menu</button>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" aria-current="page" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -246,6 +246,25 @@ details p { margin: 0 0 16px; color: var(--muted); }
   function set(o) { n.setAttribute("data-open", o ? "true" : "false"); b.setAttribute("aria-expanded", o ? "true" : "false"); b.textContent = o ? "Close menu" : "Menu"; }
   b.addEventListener("click", function () { set(n.getAttribute("data-open") !== "true"); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && n.getAttribute("data-open") === "true") { set(false); b.focus(); } });
+})();
+</script>
+<script>
+/* Keyboard shortcuts: Alt + key (Windows and Linux). Uses the physical key, so it works with any keyboard language. */
+(function () {
+  if (/Mac|iPhone|iPad/.test(navigator.platform || "")) return;
+  function shown(n) { return !!(n.offsetWidth || n.offsetHeight || n.getClientRects().length) && !n.disabled; }
+  document.addEventListener("keydown", function (e) {
+    if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat) return;
+    var m = /^Key([A-Z])$/.exec(e.code || ""); if (!m) return;
+    if (document.querySelector("dialog[open], .ihcc-wrap")) return;
+    var list = document.querySelectorAll('[data-sk="' + m[1] + '"]');
+    for (var i = 0; i < list.length; i++) {
+      if (!shown(list[i])) continue;
+      e.preventDefault();
+      if (/^(SELECT|INPUT|TEXTAREA)$/.test(list[i].tagName) || list[i].hasAttribute("data-sk-focus")) list[i].focus(); else list[i].click();
+      return;
+    }
+  }, true);
 })();
 </script>
 <!--/SITEBAR-->
@@ -288,7 +307,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      <ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="register.html" data-sk="R" aria-keyshortcuts="Alt+R">Representative sign-in</a></li><li><a href="keyboard-shortcuts.html" data-sk="K" aria-keyshortcuts="Alt+K">Keyboard shortcuts</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
