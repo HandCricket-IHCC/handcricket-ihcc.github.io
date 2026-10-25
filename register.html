@@ -252,8 +252,8 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 <div class="sitebar">
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
-    <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html">Home</a></li><li><a href="squad.html" aria-current="page">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav" data-sk="M" aria-keyshortcuts="Alt+M">Menu</button>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" aria-current="page" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -263,6 +263,25 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   function set(o) { n.setAttribute("data-open", o ? "true" : "false"); b.setAttribute("aria-expanded", o ? "true" : "false"); b.textContent = o ? "Close menu" : "Menu"; }
   b.addEventListener("click", function () { set(n.getAttribute("data-open") !== "true"); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && n.getAttribute("data-open") === "true") { set(false); b.focus(); } });
+})();
+</script>
+<script>
+/* Keyboard shortcuts: Alt + key (Windows and Linux). Uses the physical key, so it works with any keyboard language. */
+(function () {
+  if (/Mac|iPhone|iPad/.test(navigator.platform || "")) return;
+  function shown(n) { return !!(n.offsetWidth || n.offsetHeight || n.getClientRects().length) && !n.disabled; }
+  document.addEventListener("keydown", function (e) {
+    if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat) return;
+    var m = /^Key([A-Z])$/.exec(e.code || ""); if (!m) return;
+    if (document.querySelector("dialog[open], .ihcc-wrap")) return;
+    var list = document.querySelectorAll('[data-sk="' + m[1] + '"]');
+    for (var i = 0; i < list.length; i++) {
+      if (!shown(list[i])) continue;
+      e.preventDefault();
+      if (/^(SELECT|INPUT|TEXTAREA)$/.test(list[i].tagName) || list[i].hasAttribute("data-sk-focus")) list[i].focus(); else list[i].click();
+      return;
+    }
+  }, true);
 })();
 </script>
 <!--/SITEBAR-->
@@ -300,7 +319,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     <h2 id="loginTitle">Sign in</h2>
     <div class="card">
       <p>Only the representative of each board can open this page. The Owner of IHCC has added one Gmail address for each board. Sign in with that Gmail address.</p>
-      <button class="go" id="signInBtn" type="button">Sign in with Google</button>
+      <button class="go" id="signInBtn" type="button" data-sk="G" aria-keyshortcuts="Alt+G">Sign in with Google</button>
       <p class="small">If your Gmail is not on the list, you will see a message and nothing else. Need help? Write to <a href="mailto:handcricket.ihcc@gmail.com">handcricket.ihcc@gmail.com</a>.</p>
     </div>
   </section>
@@ -310,7 +329,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     <div class="card">
       <p id="deniedText"></p>
       <p>If you think this is a mistake, write to <a href="mailto:handcricket.ihcc@gmail.com">handcricket.ihcc@gmail.com</a>.</p>
-      <button class="alt" id="signOutDenied" type="button">Sign out</button>
+      <button class="alt" id="signOutDenied" type="button" data-sk="O" aria-keyshortcuts="Alt+O">Sign out</button>
     </div>
   </section>
 
@@ -332,7 +351,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
           <input id="consentChk" type="checkbox" aria-labelledby="consentText">
           <label for="consentChk">I agree</label>
         </div>
-        <button class="go" id="consentBtn" type="button" disabled>Continue</button>
+        <button class="go" id="consentBtn" type="button" disabled data-sk="W" aria-keyshortcuts="Alt+W">Continue</button>
       </div>
     </section>
 
@@ -377,21 +396,21 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
             <input id="country" aria-required="true" type="text" maxlength="60" autocomplete="off" aria-describedby="h-country e-country">
             <div class="err" id="e-country"></div>
           </div>
-          <button class="go" id="addBtn" type="submit">Add player</button>
-          <button class="alt wide" id="cancelEdit" type="button">Back to list</button>
+          <button class="go" id="addBtn" type="submit" data-sk="V" aria-keyshortcuts="Alt+V">Add player</button>
+          <button class="alt wide" id="cancelEdit" type="button" data-sk="Z" aria-keyshortcuts="Alt+Z">Back to list</button>
         </form>
       </div>
     </section>
 
     <section id="listSec" aria-labelledby="listTitle">
-      <h2 id="listTitle" tabindex="-1">Your squad list</h2>
+      <h2 id="listTitle" tabindex="-1" data-sk-focus data-sk="L" aria-keyshortcuts="Alt+L">Your squad list</h2>
       <p class="small">Players 1 to 12 are voters. Players 13 to 20 are not voters. You can move players up or down to change their number.</p>
-      <p id="newWrap"><button class="go" id="newBtn" type="button">Add player</button></p>
+      <p id="newWrap"><button class="go" id="newBtn" type="button" data-sk="A" aria-keyshortcuts="Alt+A">Add player</button></p>
       <ul id="plist" class="plist" aria-label="Squad list"></ul>
       <p id="emptyNote" class="small" hidden>No players yet. Add the first player using the form above.</p>
       <div class="toolrow">
-        <button class="alt" id="copyBtn" type="button">Copy list</button>
-        <button class="alt" id="dlBtn" type="button">Download list as TXT file</button>
+        <button class="alt" id="copyBtn" type="button" data-sk="C" aria-keyshortcuts="Alt+C">Copy list</button>
+        <button class="alt" id="dlBtn" type="button" data-sk="T" aria-keyshortcuts="Alt+T">Download list as TXT file</button>
       </div>
     </section>
 
@@ -416,7 +435,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
       </div>
     </section>
 
-    <p class="toolrow"><button class="alt" id="signOut" type="button">Sign out</button></p>
+    <p class="toolrow"><button class="alt" id="signOut" type="button" data-sk="O" aria-keyshortcuts="Alt+O">Sign out</button></p>
   </div>
 </main>
 <!--SITEFOOT-->
@@ -428,7 +447,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html">Home</a></li><li><a href="squad.html">Squad lists</a></li><li><a href="boards.html">Boards</a></li><li><a href="news.html">News</a></li><li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      <ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="register.html" data-sk="R" aria-keyshortcuts="Alt+R">Representative sign-in</a></li><li><a href="keyboard-shortcuts.html" data-sk="K" aria-keyshortcuts="Alt+K">Keyboard shortcuts</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
