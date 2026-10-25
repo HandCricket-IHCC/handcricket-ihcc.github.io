@@ -37,6 +37,10 @@ table { border-collapse: collapse; width: 100%; background: var(--surface); }
 th, td { text-align: left; padding: 8px 10px; border: 1px solid var(--line); }
 th { background: var(--soft); }
 .scroll { overflow-x: auto; }
+progress.pbar { width: 110px; height: 10px; vertical-align: middle; accent-color: #1b5e43; }
+dl dt { font-weight: 700; margin-top: 8px; }
+dl dd { margin: 0 0 0 0; }
+#sqHome ul li, #sbInfo li { margin: 6px 0; }
 dl { margin: 10px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; }
 dt { color: var(--muted); font-weight: 600; }
 dd { margin: 0; overflow-wrap: anywhere; }
@@ -92,11 +96,13 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
       <p id="statLine" role="status"></p>
     </section>
 
+    <p id="noteBanner" hidden style="margin-top:14px"><strong id="noteBannerText"></strong> <button id="noteBannerBtn" type="button" class="alt">Open notes</button></p>
+
     <div class="row" style="margin-top:14px">
       <label>Show section
         <select id="viewSel">
           <option value="squads">Squads of all boards</option>
-          <option value="progress">Squad progress</option>
+          <option value="notes">Notes</option>
           <option value="reps">Board representatives</option>
           <option value="mail">Send email</option>
           <option value="admins">Administrators</option>
@@ -171,36 +177,128 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     </section>
 
     <section id="squadsSec" aria-labelledby="squadsH" hidden>
-      <h2 id="squadsH" tabindex="-1">Squads of all boards</h2>
-      <p id="squadsNote" role="status"></p>
-      <div class="row">
-        <button id="sqReload" type="button" class="alt">Reload</button>
-        <button id="sqCopy" type="button" class="alt">Copy all squads</button>
-        <button id="sqCsv" type="button" class="alt">Download all squads (CSV)</button>
+      <div id="sqHome">
+        <h2 id="squadsH" tabindex="-1">Squads of all boards</h2>
+        <p id="sqLoaded" role="status"></p>
+        <div class="row"><button id="sqReload" type="button" class="alt">Reload</button></div>
+        <h3>Overall status</h3>
+        <ul id="sqOverall"></ul>
+        <h3>Needs attention</h3>
+        <ul id="sqAttn"></ul>
+        <h3>Recent activity</h3>
+        <ul id="sqRecent"></ul>
+        <h3 id="sqTeamsH" tabindex="-1">All teams</h3>
+        <div class="row">
+          <label>Show
+            <select id="sqFilter">
+              <option value="all">All teams</option>
+              <option value="Not started">Not started</option>
+              <option value="In progress">In progress</option>
+              <option value="At risk">At risk</option>
+              <option value="Minimum complete">Minimum complete</option>
+              <option value="Final submitted">Final submitted</option>
+              <option value="locked">Locked or not eligible</option>
+              <option value="No representative">No representative</option>
+            </select>
+          </label>
+          <label>Sort by
+            <select id="sqSort">
+              <option value="order">Board order</option>
+              <option value="few">Fewest players first</option>
+              <option value="many">Most players first</option>
+              <option value="recent">Latest activity first</option>
+              <option value="name">Name A to Z</option>
+            </select>
+          </label>
+        </div>
+        <p id="sqTeamsNote" role="status"></p>
+        <div class="scroll"><table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Progress of every team. Each team can have up to 20 players. At least 12 are needed.</caption>
+          <thead><tr><th scope="col">Team</th><th scope="col">Players</th><th scope="col">Minimum of 12</th><th scope="col">Status</th><th scope="col">Last activity</th><th scope="col">Open</th></tr></thead>
+          <tbody id="sqRows"></tbody>
+        </table></div>
+        <h3>Copy and download</h3>
+        <div class="row">
+          <button id="sqCopyTeams" type="button" class="alt">Copy all teams</button>
+          <button id="sqCopy" type="button" class="alt">Copy all squads</button>
+          <button id="sqCsv" type="button" class="alt">Download all squads (CSV)</button>
+          <button id="remindBtn" type="button" class="alt" data-ownerbtn="1">Send reminder to all teams under 12</button>
+          <button id="voterBtn" type="button" class="alt" data-ownerbtn="1">Download voter list (CSV)</button>
+        </div>
+        <p>Every view of a team, copy and download is recorded in the audit log.</p>
       </div>
-      <p>Every copy, download and view is recorded in the audit log.</p>
-      <div id="sqList"></div>
+
+      <div id="sqBoard" hidden>
+        <h2 id="sbH" tabindex="-1"></h2>
+        <p><button id="sbBack" type="button" class="alt">Back to all teams</button></p>
+        <ul id="sbInfo"></ul>
+        <div class="row">
+          <button id="sbReload" type="button" class="alt">Reload</button>
+          <button id="sbCopy" type="button" class="alt">Copy this squad</button>
+          <button id="sbCsv" type="button" class="alt">Download this squad (CSV)</button>
+          <button id="sbRemind" type="button" class="alt">Send reminder to this representative</button>
+          <button id="sbLock" type="button" class="alt" data-ownerbtn="1" hidden>Unlock this team</button>
+        </div>
+        <div id="sbPlayer" class="card" hidden>
+          <h3 id="spH" tabindex="-1"></h3>
+          <dl id="spList"></dl>
+          <div class="row">
+            <button id="spCopy" type="button">Copy details</button>
+            <button id="spGmail" type="button" class="alt">Copy Gmail</button>
+            <button id="spWa" type="button" class="alt">Copy WhatsApp number</button>
+            <button id="spClose" type="button" class="alt">Close details</button>
+          </div>
+        </div>
+        <h3 id="sbPlayersH" tabindex="-1">Players</h3>
+        <div class="scroll"><table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Players of this team. Numbers 1 to 12 are voters.</caption>
+          <thead><tr><th scope="col">No.</th><th scope="col">Display name</th><th scope="col">Real name</th><th scope="col">Confirmation email</th><th scope="col">Details</th></tr></thead>
+          <tbody id="sbRows"></tbody>
+        </table></div>
+      </div>
     </section>
 
-    <section id="progSec" aria-labelledby="progH" hidden>
-      <h2 id="progH">Squad progress</h2>
-      <p id="progNote" role="status"></p>
-      <div class="row" id="progTools">
-        <button id="remindBtn" type="button" class="alt" data-ownerbtn="1">Send reminder now</button>
-        <button id="voterBtn" type="button" class="alt" data-ownerbtn="1">Download voter list (CSV)</button>
-        <button id="allSquadBtn" type="button" class="alt" data-ownerbtn="1">Download all squads (CSV backup)</button>
-        <button id="progReload" type="button" class="alt">Reload</button>
+    <section id="notesSec" aria-labelledby="notesH" hidden>
+      <h2 id="notesH" tabindex="-1">Notes</h2>
+      <p>Short notes between IHCC administrators. A note is seen only by the people it was sent to. Each person keeps the newest 50 notes; the oldest one goes away when a new one arrives.</p>
+      <p id="notesNote" role="status"></p>
+      <div class="row">
+        <button id="ntNew" type="button">Send a note</button>
+        <button id="ntSentBtn" type="button" class="alt">Show sent notes</button>
+        <button id="ntClear" type="button" class="alt">Clear all notes</button>
+        <button id="ntReload" type="button" class="alt">Reload</button>
       </div>
+      <form id="ntCompose" class="card" hidden novalidate>
+        <h3 id="ntComposeH" tabindex="-1">Send a note</h3>
+        <fieldset>
+          <legend>Send to</legend>
+          <label class="opt"><input type="checkbox" id="ntAll"> Everyone</label>
+          <div id="ntTo"></div>
+        </fieldset>
+        <div class="fieldrow" style="margin-top:12px"><label for="ntBody">Note</label><textarea id="ntBody" maxlength="1000" rows="5"></textarea></div>
+        <p id="ntCount" class="hint">0 of 1000 characters</p>
+        <div class="row"><button id="ntSend" type="submit">Send note</button><button id="ntCancel" type="button" class="alt">Cancel</button></div>
+      </form>
+      <div id="ntRead" class="card" hidden>
+        <h3 id="ntReadH" tabindex="-1"></h3>
+        <p id="ntReadMeta"></p>
+        <p id="ntReadBody" style="white-space:pre-wrap"></p>
+        <button id="ntReadClose" type="button" class="alt">Close note</button>
+      </div>
+      <h3 id="ntListH" tabindex="-1">Received notes</h3>
       <div class="scroll"><table>
-        <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Squad progress of every board</caption>
-        <thead><tr><th scope="col">Board</th><th scope="col">Representative</th><th scope="col">Last sign-in</th><th scope="col">Players</th><th scope="col">Status</th><th scope="col" data-owner="1">Lock or unlock</th></tr></thead>
-        <tbody id="progBody"></tbody>
+        <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Received notes, newest first</caption>
+        <thead><tr><th scope="col">From</th><th scope="col">Time</th><th scope="col">Note</th><th scope="col">Status</th><th scope="col">Open</th></tr></thead>
+        <tbody id="ntRows"></tbody>
       </table></div>
-      <h3 style="margin-top:26px">Players who may be in more than one board</h3>
-      <div class="scroll"><table>
-        <thead><tr><th scope="col">Board</th><th scope="col">Display name</th><th scope="col">Other board</th><th scope="col">Other display name</th><th scope="col">Matched on</th></tr></thead>
-        <tbody id="dupBody"></tbody>
-      </table></div>
+      <div id="ntSentWrap" hidden>
+        <h3 id="ntSentH" tabindex="-1">Sent notes</h3>
+        <div class="scroll"><table>
+          <caption class="sr" style="text-align:left;font-weight:600;padding:6px 0">Notes you sent, newest first</caption>
+          <thead><tr><th scope="col">Time</th><th scope="col">To</th><th scope="col">Note</th></tr></thead>
+          <tbody id="ntSentRows"></tbody>
+        </table></div>
+      </div>
     </section>
 
     <section id="mailSec" aria-labelledby="mailH" hidden>
@@ -345,36 +443,36 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     show("panel");
     var vs = $("viewSel");
     Array.prototype.forEach.call(vs.options, function (o) {
-      var ok = o.value === "squads" ? (me.role === "owner" || me.role === "core")
+      var ok = (o.value === "squads" || o.value === "notes") ? (me.role === "owner" || me.role === "core")
         : o.value === "entries" ? (me.role !== "auditor" && me.role !== "election_officer" && me.role !== "core")
         : o.value === "summary" ? ["owner", "verifier", "auditor", "election_officer"].indexOf(me.role) >= 0
         : o.value === "admins" ? me.role === "owner"
         : o.value === "reps" ? me.role === "owner"
         : o.value === "mail" ? me.role === "owner"
-        : o.value === "progress" ? (me.role === "owner" || me.role === "core")
         : (me.role === "owner" || me.role === "auditor");
       o.disabled = !ok; o.hidden = !ok;
     });
     for (var i = 0; i < vs.options.length; i++) { if (!vs.options[i].disabled) { vs.selectedIndex = i; break; } }
     setView();
     startIdle();
+    if (me.role === "owner" || me.role === "core") { refreshNoteBadge(); if (!window.__noteTimer) window.__noteTimer = setInterval(refreshNoteBadge, 120000); }
     await loadAll();
   }
 
   function setView() {
-    var v = $("viewSel").value;
+    var v = $("viewSel").value, oc = (me.role === "owner" || me.role === "core");
     $("entSec").hidden = v !== "entries"; $("sumSec").hidden = v !== "summary";
     $("statSec").hidden = !(v === "entries" || v === "summary");
-    $("squadsSec").hidden = !(v === "squads" && (me.role === "owner" || me.role === "core"));
-    if (v === "squads" && (me.role === "owner" || me.role === "core")) loadSquads();
+    $("squadsSec").hidden = !(v === "squads" && oc);
+    $("notesSec").hidden = !(v === "notes" && oc);
     $("adminsSec").hidden = !(v === "admins" && me.role === "owner");
     $("repsSec").hidden = !(v === "reps" && me.role === "owner");
     $("mailSec").hidden = !(v === "mail" && me.role === "owner");
-    if (v === "mail" && me.role === "owner") loadMail();
-    $("progSec").hidden = !(v === "progress" && (me.role === "owner" || me.role === "core"));
-    if (v === "reps" && me.role === "owner") loadReps();
-    if (v === "progress" && (me.role === "owner" || me.role === "core")) loadProgress();
     $("auditSec").hidden = !(v === "audit" && (me.role === "owner" || me.role === "auditor"));
+    if (v === "squads" && oc) { showSquadHome(); loadSquads(); }
+    if (v === "notes" && oc) loadNotes();
+    if (v === "reps" && me.role === "owner") loadReps();
+    if (v === "mail" && me.role === "owner") loadMail();
   }
 
   var idleTimer = null, IDLE_MS = 30 * 60 * 1000;
@@ -603,32 +701,6 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     } catch (e) { say("Error: " + errMsg(e), true); }
   }
 
-  async function loadProgress() {
-    try {
-      var rows = await rpc("admin_progress"), body = $("progBody"); body.textContent = "";
-      var owner = me.role === "owner", done = 0, risk = 0;
-      Array.prototype.forEach.call(document.querySelectorAll("[data-owner]"), function (n) { n.hidden = !owner; });
-      Array.prototype.forEach.call(document.querySelectorAll("[data-ownerbtn]"), function (n) { n.hidden = !owner; });
-      rows.forEach(function (r) {
-        var i = r.info || {}, tr = document.createElement("tr");
-        tr.appendChild(th(r.board)); tr.appendChild(td(r.rep_email || "Not set")); tr.appendChild(td(fmt(r.last_sign_in)));
-        tr.appendChild(td(i.count)); tr.appendChild(td(i.status));
-        if (i.completed) done++; if (i.status === "At risk" || i.status === "Under 12: not eligible") risk++;
-        if (owner) {
-          var c = document.createElement("td");
-          if (i.is_final || i.completed) c.appendChild(btn("Unlock", async function () { try { await rpc("admin_set_unlock", { p_board: r.board, p_unlock: true }); say(r.board + " is unlocked."); loadProgress(); } catch (e) { say(errMsg(e), true); } }, "alt", "Unlock " + r.board));
-          else if (i.owner_unlock) c.appendChild(btn("Lock", async function () { try { await rpc("admin_set_unlock", { p_board: r.board, p_unlock: false }); say(r.board + " is locked."); loadProgress(); } catch (e) { say(errMsg(e), true); } }, "alt", "Lock " + r.board));
-          else c.textContent = "Open";
-          tr.appendChild(c);
-        }
-        body.appendChild(tr);
-      });
-      $("progNote").textContent = "Boards completed: " + done + " of " + rows.length + ". Boards at risk or not eligible: " + risk + ".";
-      var d = await rpc("admin_dup_flags"), db = $("dupBody"); db.textContent = "";
-      if (!d.length) { var tr0 = document.createElement("tr"), t0 = td("No player is in more than one board."); t0.colSpan = 5; tr0.appendChild(t0); db.appendChild(tr0); }
-      d.forEach(function (x) { var tr = document.createElement("tr"); [x.board, x.display_name, x.other_board, x.other_display_name, x.match].forEach(function (v) { tr.appendChild(td(v)); }); db.appendChild(tr); });
-    } catch (e) { say("Error: " + errMsg(e), true); }
-  }
   function downloadCsv(rows, cols, name) {
     var lines = [cols.map(function (c) { return csvCell(c[1]); }).join(",")];
     rows.forEach(function (r) { lines.push(cols.map(function (c) { return csvCell(r[c[0]]); }).join(",")); });
@@ -636,7 +708,6 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     var a = document.createElement("a"); a.href = window.URL.createObjectURL(blob); a.download = name + "-" + new Date().toISOString().slice(0, 10) + ".csv";
     document.body.appendChild(a); a.click(); a.remove();
   }
-  $("progReload").addEventListener("click", loadProgress);
   $("remindBtn").addEventListener("click", async function () {
     try { var j = await callFn("admin_reminder"); say("Reminder emails sent to " + j.sent + " board representative" + (j.sent === 1 ? "" : "s") + " with fewer than 12 players."); } catch (e) { say(errMsg(e), true); }
   });
@@ -645,85 +716,369 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
       downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"]], "ihcc-voter-list"); say("The voter list was downloaded (" + rows.length + " voters). This download is recorded in the audit log."); }
     catch (e) { say(errMsg(e), true); }
   });
-  $("allSquadBtn").addEventListener("click", async function () {
-    try { var rows = await rpc("admin_all_squads"); if (!rows.length) { say("There are no players yet.", true); return; }
-      downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"], ["status", "Board status"]], "ihcc-all-squads"); say("The backup was downloaded (" + rows.length + " players). This download is recorded in the audit log."); }
-    catch (e) { say(errMsg(e), true); }
-  });
 
 
   // ---- Squads of all boards (owner and core) ----
-  var sqData = [];
-  function sqLines() {
-    var out = [];
-    sqData.forEach(function (b) {
-      var i = b.info || {};
-      out.push(b.board + " - " + (i.count || 0) + " players - " + (i.status || ""));
-      (b.players || []).forEach(function (p) {
-        out.push(p.number + ". " + p.display_name + " | " + p.real_name + " | " + p.email + " | " + p.whatsapp + " | " + p.city + " | " + p.country + " | " + p.receipt_code + (p.number <= 12 ? " | Voter" : ""));
-      });
-      out.push("");
+  var MINP = 12, MAXP = 20;
+  var SQ = { summary: null, dupC: [], dupN: [], recent: [], board: null, openBtn: null, player: null, playerBtn: null };
+  function isOwner() { return me && me.role === "owner"; }
+  function isOC() { return me && (me.role === "owner" || me.role === "core"); }
+  function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  async function copyText(txt) {
+    try { await navigator.clipboard.writeText(txt); return true; } catch (_) {}
+    var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+    document.body.appendChild(ta); ta.select(); var ok = false;
+    try { ok = document.execCommand("copy"); } catch (_2) {}
+    ta.remove(); return ok;
+  }
+  function timeLeft(deadline) {
+    var ms = new Date(deadline) - Date.now();
+    if (ms <= 0) return "the deadline has passed";
+    var d = Math.floor(ms / 864e5), h = Math.floor((ms % 864e5) / 36e5), m = Math.floor((ms % 36e5) / 6e4);
+    return plural(d, "day", "days") + ", " + plural(h, "hour", "hours") + " and " + plural(m, "minute", "minutes");
+  }
+  function minText(b) { return b.count >= MINP ? "Complete" : "Not met, " + (MINP - b.count) + " more needed"; }
+  function isLockedStatus(st) { return st === "Final submitted" || st === "Auto-locked at deadline" || st === "Not eligible (under 12)"; }
+  function showSquadHome() { $("sqHome").hidden = false; $("sqBoard").hidden = true; }
+
+  async function loadSquads() {
+    try {
+      var res = await Promise.all([rpc("admin_squads_summary"), rpc("admin_dup_flags"), rpc("admin_dup_names"), rpc("admin_recent_activity")]);
+      SQ.summary = res[0]; SQ.dupC = res[1] || []; SQ.dupN = res[2] || []; SQ.recent = res[3] || [];
+      renderSquadHome();
+      $("sqLoaded").textContent = "Loaded at " + new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour: "2-digit", minute: "2-digit" }) + " Pakistan time.";
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+
+  function renderSquadHome() {
+    var B = SQ.summary.boards, T = SQ.summary.totals, ul, i;
+    Array.prototype.forEach.call(document.querySelectorAll("#sqHome [data-ownerbtn]"), function (n) { n.hidden = !isOwner(); });
+    // overall
+    var started = B.filter(function (b) { return b.count > 0; }).length;
+    var minc = B.filter(function (b) { return b.count >= MINP; }).length;
+    var fin = B.filter(function (b) { return b.is_final; }).length;
+    var risk = B.filter(function (b) { return b.status === "At risk" || b.status === "Not eligible (under 12)"; }).length;
+    var withRep = B.filter(function (b) { return b.rep_email; }).length;
+    var signed = B.filter(function (b) { return b.last_sign_in; }).length;
+    ul = $("sqOverall"); ul.textContent = "";
+    [
+      "Players in all teams: " + T.players + ".",
+      "Entries added today: " + T.added_today + ". Changed today: " + T.changed_today + ".",
+      "Teams that started: " + started + " of " + B.length + ".",
+      "Teams with the minimum of " + MINP + " players: " + minc + " of " + B.length + ".",
+      "Teams that submitted the final list: " + fin + " of " + B.length + ".",
+      "Teams at risk or not eligible: " + risk + ".",
+      "Representatives who have signed in: " + signed + " of " + withRep + ".",
+      "Deadline: 31 October 2026, 11:59 PM Pakistan time. Time left: " + timeLeft(T.deadline) + "."
+    ].forEach(function (t) { ul.appendChild(el("li", t)); });
+
+    // needs attention
+    var att = [];
+    B.forEach(function (b) {
+      var nm = b.board, n = b.count;
+      if (!b.rep_email) { att.push({ t: nm + ": no representative is set.", b: nm }); }
+      else if (!b.invite_status) { att.push({ t: nm + ": the invitation email was not sent.", b: nm }); }
+      else if (b.invite_status !== "sent") { att.push({ t: nm + ": the invitation email failed.", b: nm }); }
+      else if (!b.last_sign_in) { att.push({ t: nm + ": the representative has not signed in yet.", b: nm }); }
+      if (b.status === "At risk") att.push({ t: nm + ": at risk. Only " + n + " of " + MINP + " players and the deadline is close.", b: nm });
+      if (b.status === "Not eligible (under 12)") att.push({ t: nm + ": not eligible. Fewer than " + MINP + " players at the deadline.", b: nm });
+      if (n > 0 && n < MINP && !b.is_final && b.last_activity && (Date.now() - new Date(b.last_activity)) > 24 * 36e5) att.push({ t: nm + ": no activity for more than 24 hours. " + n + " of " + MINP + " players.", b: nm });
+      if (b.mail_failed > 0) att.push({ t: nm + ": " + plural(b.mail_failed, "player confirmation email", "player confirmation emails") + " failed. Check the Gmail address.", b: nm });
+    });
+    SQ.dupC.slice(0, 10).forEach(function (d) { att.push({ t: "Same " + d.match + " in two teams: " + d.board + " (" + d.display_name + ") and " + d.other_board + " (" + d.other_display_name + ").", b: d.board }); });
+    if (SQ.dupC.length > 10) att.push({ t: "And " + (SQ.dupC.length - 10) + " more players with the same Gmail or WhatsApp number in two teams.", b: null });
+    SQ.dupN.slice(0, 10).forEach(function (d) { att.push({ t: "Same display name in two teams: " + d.board + " (" + d.display_name + ") and " + d.other_board + " (" + d.other_display_name + ").", b: d.board }); });
+    if (SQ.dupN.length > 10) att.push({ t: "And " + (SQ.dupN.length - 10) + " more players with the same display name in two teams.", b: null });
+    ul = $("sqAttn"); ul.textContent = "";
+    if (!att.length) ul.appendChild(el("li", "Nothing needs attention right now."));
+    att.forEach(function (a) {
+      var l = el("li", a.t);
+      if (a.b) { l.appendChild(document.createTextNode(" ")); l.appendChild(btn("Open", function (ev) { openBoard(a.b, ev.currentTarget); }, "alt", "Open " + a.b)); }
+      ul.appendChild(l);
+    });
+
+    // recent activity
+    ul = $("sqRecent"); ul.textContent = "";
+    if (!SQ.recent.length) ul.appendChild(el("li", "No activity yet."));
+    SQ.recent.forEach(function (r) { ul.appendChild(el("li", fmt(r.at) + ": " + r.board + ", " + r.what + ".")); });
+
+    renderTeams();
+  }
+
+  function renderTeams() {
+    var B = SQ.summary.boards.slice(), f = $("sqFilter").value, so = $("sqSort").value;
+    var shown = B.filter(function (b) {
+      if (f === "all") return true;
+      if (f === "locked") return b.status === "Auto-locked at deadline" || b.status === "Not eligible (under 12)";
+      return b.status === f;
+    });
+    if (so === "few") shown.sort(function (a, b) { return a.count - b.count; });
+    else if (so === "many") shown.sort(function (a, b) { return b.count - a.count; });
+    else if (so === "recent") shown.sort(function (a, b) { return (new Date(b.last_activity || 0)) - (new Date(a.last_activity || 0)); });
+    else if (so === "name") shown.sort(function (a, b) { return a.board.localeCompare(b.board); });
+    var body = $("sqRows"); body.textContent = "";
+    shown.forEach(function (b) {
+      var tr = document.createElement("tr");
+      tr.appendChild(th(b.board));
+      var c = document.createElement("td"); c.appendChild(document.createTextNode(b.count + " of " + MAXP + " "));
+      var pr = document.createElement("progress"); pr.className = "pbar"; pr.max = MAXP; pr.value = b.count; pr.setAttribute("aria-hidden", "true"); c.appendChild(pr); tr.appendChild(c);
+      tr.appendChild(td(minText(b))); tr.appendChild(td(b.status));
+      tr.appendChild(td(b.last_activity ? fmt(b.last_activity) : "None"));
+      var o = document.createElement("td");
+      var ob = btn("Open", function (ev) { openBoard(b.board, ev.currentTarget); }, "alt", "Open " + b.board); ob.setAttribute("data-board", b.board);
+      o.appendChild(ob); tr.appendChild(o);
+      body.appendChild(tr);
+    });
+    $("sqTeamsNote").textContent = "Showing " + shown.length + " of " + B.length + " teams.";
+  }
+  $("sqFilter").addEventListener("change", renderTeams);
+  $("sqSort").addEventListener("change", renderTeams);
+  $("sqReload").addEventListener("click", loadSquads);
+
+  // ----- one team -----
+  async function openBoard(name, fromBtn) {
+    if (fromBtn) SQ.openBtn = fromBtn;
+    try {
+      var d = await rpc("admin_board_detail", { p_board: name });
+      SQ.board = d; SQ.player = null; renderBoard();
+      $("sqHome").hidden = true; $("sqBoard").hidden = false; $("sbH").focus();
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+  function renderBoard() {
+    var d = SQ.board, n = (d.players || []).length;
+    $("sbH").textContent = d.board;
+    var ul = $("sbInfo"); ul.textContent = "";
+    [
+      "Status: " + d.status + ".",
+      "Players: " + n + " of " + MAXP + ". Minimum of " + MINP + ": " + (n >= MINP ? "complete" : "not met, " + (MINP - n) + " more needed") + ".",
+      "Representative: " + (d.rep_email || "not set") + ".",
+      "Invitation: " + (d.invite_status ? (d.invite_status === "sent" ? "sent " + fmt(d.invited_at) : d.invite_status) : "not sent") + ".",
+      "Last sign-in: " + fmt(d.last_sign_in) + ".",
+      "Terms accepted: " + (d.consent_at ? fmt(d.consent_at) : "not yet") + ".",
+      d.is_final ? "Final list submitted: " + fmt(d.final_at) + "." : "Final list: not submitted.",
+      d.reopen_count > 0 ? "Reopened " + plural(d.reopen_count, "time", "times") + " after the final submit." : null
+    ].forEach(function (t) { if (t) ul.appendChild(el("li", t)); });
+    $("sbRemind").hidden = !(d.rep_email && !d.is_final);
+    var lk = $("sbLock"), canUnlock = d.is_final || d.status === "Auto-locked at deadline" || d.status === "Not eligible (under 12)";
+    if (isOwner()) {
+      if (canUnlock) { lk.hidden = false; lk.textContent = "Unlock this team"; lk.dataset.mode = "unlock"; }
+      else if (d.owner_unlock) { lk.hidden = false; lk.textContent = "Lock this team"; lk.dataset.mode = "lock"; }
+      else lk.hidden = true;
+    } else lk.hidden = true;
+    $("sbPlayer").hidden = true;
+    var body = $("sbRows"); body.textContent = "";
+    if (!n) { var tr0 = document.createElement("tr"), c0 = td("No players yet."); c0.colSpan = 5; tr0.appendChild(c0); body.appendChild(tr0); }
+    (d.players || []).forEach(function (p) {
+      var tr = document.createElement("tr");
+      tr.appendChild(td(p.number + (p.number <= MINP ? " (voter)" : " (not a voter)")));
+      tr.appendChild(td(p.display_name)); tr.appendChild(td(p.real_name));
+      tr.appendChild(td(p.mail_status === "sent" ? "Sent" : (p.mail_status === "failed" ? "Failed" : "Not sent")));
+      var c = document.createElement("td");
+      var b = btn("Details", function (ev) { showPlayer(p, ev.currentTarget); }, "alt", "Details of player " + p.number + ", " + p.display_name);
+      c.appendChild(b); tr.appendChild(c); body.appendChild(tr);
+    });
+  }
+  function backToTeams() {
+    var d = SQ.board; showSquadHome();
+    var b = d && document.querySelector('#sqRows [data-board="' + d.board.replace(/"/g, '\\"') + '"]');
+    if (b) b.focus(); else $("sqTeamsH").focus();
+  }
+  $("sbBack").addEventListener("click", backToTeams);
+  $("sbReload").addEventListener("click", function () { if (SQ.board) openBoard(SQ.board.board); });
+
+  function squadText(d) {
+    var out = [d.board + " - " + (d.players || []).length + " players - " + d.status];
+    (d.players || []).forEach(function (p) {
+      out.push(p.number + ". Display name: " + p.display_name + "; Real name: " + p.real_name + "; Gmail: " + p.email + "; WhatsApp: " + p.whatsapp + "; City: " + p.city + "; Country: " + p.country + "; Registration number: " + p.receipt_code + (p.number <= MINP ? "; Voter" : ""));
     });
     return out.join("\n");
   }
-  async function loadSquads() {
+  $("sbCopy").addEventListener("click", async function () {
+    var d = SQ.board; if (!d || !(d.players || []).length) { say("There are no players to copy.", true); return; }
+    if (!(await copyText(squadText(d)))) { say("Copy did not work in this browser. Use Download instead.", true); return; }
+    try { await rpc("admin_log_export", { p_kind: "copy_board", p_target: d.board, p_rows: d.players.length }); } catch (_) {}
+    say("The squad of " + d.board + " was copied (" + plural(d.players.length, "player", "players") + ").");
+  });
+  $("sbCsv").addEventListener("click", async function () {
+    var d = SQ.board; if (!d || !(d.players || []).length) { say("There are no players to download.", true); return; }
+    var rows = d.players.map(function (p) { return { board: d.board, number: p.number, display_name: p.display_name, real_name: p.real_name, email: p.email, whatsapp: p.whatsapp, city: p.city, country: p.country, receipt_code: p.receipt_code }; });
+    downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"]], "ihcc-squad-" + d.board.replace(/[^A-Za-z0-9]+/g, "-").toLowerCase());
+    try { await rpc("admin_log_export", { p_kind: "download_board", p_target: d.board, p_rows: rows.length }); } catch (_) {}
+    say("The squad of " + d.board + " was downloaded (" + plural(rows.length, "player", "players") + ").");
+  });
+  $("sbRemind").addEventListener("click", async function () {
+    var d = SQ.board; if (!d) return;
     try {
-      var rows = await rpc("admin_squads_overview"); sqData = rows;
-      var box = $("sqList"); box.textContent = "";
-      var total = 0, started = 0;
-      rows.forEach(function (b) {
-        var i = b.info || {}, n = (b.players || []).length; total += n; if (n) started++;
-        var h = document.createElement("h3"); h.textContent = b.board + ": " + n + " player" + (n === 1 ? "" : "s") + ", " + (i.status || ""); h.style.marginTop = "22px"; box.appendChild(h);
-        var pr = document.createElement("p");
-        pr.textContent = "Representative: " + (b.rep_email || "not set") + ". Last sign-in: " + fmt(b.last_sign_in) + ". Last change: " + (b.updated_at ? fmt(b.updated_at) : "none") + ".";
-        box.appendChild(pr);
-        if (b.rep_email && !i.is_final) {
-          var rb = btn("Send reminder to this representative", async function () {
-            try { var j = await callFn("admin_remind_one", { board: b.board }); if (j.ok) say("A reminder was sent to " + j.email + "."); else say("The reminder email could not be sent. Please try again later.", true); }
-            catch (e) { say(errMsg(e), true); }
-          }, "alt", "Send reminder to the representative of " + b.board);
-          box.appendChild(rb);
-        }
-        if (!n) { var np = document.createElement("p"); np.textContent = "No players yet."; box.appendChild(np); return; }
-        var wrap = document.createElement("div"); wrap.className = "scroll";
-        var t = document.createElement("table");
-        var cap = document.createElement("caption"); cap.className = "sr"; cap.style.cssText = "text-align:left;font-weight:600;padding:6px 0"; cap.textContent = "Squad list of " + b.board; t.appendChild(cap);
-        var thead = document.createElement("thead"), hr = document.createElement("tr");
-        ["No.", "Display name", "Real name", "Gmail", "WhatsApp", "City", "Country", "Registration number", "Added"].forEach(function (c) { var x = document.createElement("th"); x.scope = "col"; x.textContent = c; hr.appendChild(x); });
-        thead.appendChild(hr); t.appendChild(thead);
-        var tb = document.createElement("tbody");
-        b.players.forEach(function (p) {
-          var tr = document.createElement("tr");
-          [p.number + (p.number <= 12 ? " (voter)" : ""), p.display_name, p.real_name, p.email, p.whatsapp, p.city, p.country, p.receipt_code, fmt(p.created_at)].forEach(function (v) { tr.appendChild(td(v)); });
-          tb.appendChild(tr);
-        });
-        t.appendChild(tb); wrap.appendChild(t); box.appendChild(wrap);
-      });
-      $("squadsNote").textContent = "Boards with players: " + started + " of " + rows.length + ". Players in total: " + total + ".";
-    } catch (e) { say("Error: " + errMsg(e), true); }
+      var j = await callFn("admin_remind_one", { board: d.board });
+      if (j.ok) say("A reminder was sent to " + j.email + "."); else say("The reminder email could not be sent. Please try again later.", true);
+    } catch (e) { say(errMsg(e), true); }
+  });
+  $("sbLock").addEventListener("click", async function () {
+    var d = SQ.board; if (!d) return; var unlock = this.dataset.mode === "unlock";
+    try { await rpc("admin_set_unlock", { p_board: d.board, p_unlock: unlock }); say(d.board + (unlock ? " is unlocked." : " is locked.")); await openBoard(d.board); }
+    catch (e) { say(errMsg(e), true); }
+  });
+
+  // ----- one player -----
+  function showPlayer(p, fromBtn) {
+    SQ.player = p; SQ.playerBtn = fromBtn;
+    $("spH").textContent = "Details of player " + p.number + ": " + p.display_name;
+    var dl = $("spList"); dl.textContent = "";
+    [["Display name", p.display_name], ["Real name", p.real_name], ["Gmail", p.email], ["WhatsApp number", p.whatsapp], ["City", p.city], ["Country", p.country],
+     ["Registration number", p.receipt_code], ["Number in the squad", p.number + (p.number <= MINP ? " (voter)" : " (not a voter)")],
+     ["Added", fmt(p.created_at)], ["Last changed", fmt(p.updated_at)],
+     ["Confirmation email", p.mail_status === "sent" ? "Sent" : (p.mail_status === "failed" ? "Failed. Check the Gmail address." : "Not sent")]
+    ].forEach(function (x) { dl.appendChild(el("dt", x[0])); dl.appendChild(el("dd", x[1])); });
+    $("sbPlayer").hidden = false; $("spH").focus();
   }
-  $("sqReload").addEventListener("click", loadSquads);
+  async function logPlayerCopy() { var d = SQ.board, p = SQ.player; if (d && p) { try { await rpc("admin_log_export", { p_kind: "copy_player", p_target: d.board + " / " + p.receipt_code, p_rows: 1 }); } catch (_) {} } }
+  $("spCopy").addEventListener("click", async function () {
+    var p = SQ.player, d = SQ.board; if (!p) return;
+    var txt = ["Board: " + d.board, "Display name: " + p.display_name, "Real name: " + p.real_name, "Gmail: " + p.email, "WhatsApp number: " + p.whatsapp, "City: " + p.city, "Country: " + p.country, "Registration number: " + p.receipt_code].join("\n");
+    if (!(await copyText(txt))) { say("Copy did not work in this browser.", true); return; }
+    await logPlayerCopy(); say("The details of " + p.display_name + " were copied.", false, function () { return $("spCopy"); });
+  });
+  $("spGmail").addEventListener("click", async function () {
+    var p = SQ.player; if (!p) return;
+    if (!(await copyText(p.email))) { say("Copy did not work in this browser.", true); return; }
+    await logPlayerCopy(); say("The Gmail address of " + p.display_name + " was copied.", false, function () { return $("spGmail"); });
+  });
+  $("spWa").addEventListener("click", async function () {
+    var p = SQ.player; if (!p) return;
+    if (!(await copyText(p.whatsapp))) { say("Copy did not work in this browser.", true); return; }
+    await logPlayerCopy(); say("The WhatsApp number of " + p.display_name + " was copied.", false, function () { return $("spWa"); });
+  });
+  $("spClose").addEventListener("click", function () {
+    $("sbPlayer").hidden = true; var b = SQ.playerBtn;
+    if (b && document.body.contains(b)) b.focus(); else $("sbPlayersH").focus();
+  });
+
+  // ----- copy and download for all teams -----
+  $("sqCopyTeams").addEventListener("click", async function () {
+    if (!SQ.summary) return;
+    var lines = SQ.summary.boards.map(function (b) { return b.board + ": " + b.count + " of " + MAXP + " players. Minimum of " + MINP + ": " + minText(b) + ". Status: " + b.status + "."; });
+    if (!(await copyText(lines.join("\n")))) { say("Copy did not work in this browser.", true); return; }
+    say("The list of all teams was copied.");
+  });
   $("sqCopy").addEventListener("click", async function () {
     try {
-      var rows = await rpc("admin_squads_overview"); sqData = rows;
-      var txt = sqLines(), n = 0; rows.forEach(function (b) { n += (b.players || []).length; });
-      if (!n) { say("There are no players yet.", true); return; }
-      var ok = false;
-      try { await navigator.clipboard.writeText(txt); ok = true; } catch (_) {
-        var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px";
-        document.body.appendChild(ta); ta.select(); try { ok = document.execCommand("copy"); } catch (_2) {} ta.remove();
-      }
-      if (!ok) { say("Copy did not work in this browser. Use Download instead.", true); return; }
-      try { await rpc("admin_log_copy", { p_rows: n }); } catch (_) {}
-      say("All squads were copied (" + n + " players). This is recorded in the audit log.");
+      var rows = await rpc("admin_all_squads_copy"); if (!rows.length) { say("There are no players yet.", true); return; }
+      var out = [], cur = null;
+      rows.forEach(function (r) {
+        if (r.board !== cur) { if (cur) out.push(""); cur = r.board; out.push(r.board + " - " + r.status); }
+        out.push(r.number + ". Display name: " + r.display_name + "; Real name: " + r.real_name + "; Gmail: " + r.email + "; WhatsApp: " + r.whatsapp + "; City: " + r.city + "; Country: " + r.country + "; Registration number: " + r.receipt_code);
+      });
+      if (!(await copyText(out.join("\n")))) { say("Copy did not work in this browser. Use Download instead.", true); return; }
+      say("All squads were copied (" + plural(rows.length, "player", "players") + "). This is recorded in the audit log.");
     } catch (e) { say(errMsg(e), true); }
   });
   $("sqCsv").addEventListener("click", async function () {
-    try { var rows = await rpc("admin_all_squads"); if (!rows.length) { say("There are no players yet.", true); return; }
+    try {
+      var rows = await rpc("admin_all_squads"); if (!rows.length) { say("There are no players yet.", true); return; }
       downloadCsv(rows, [["board", "Board"], ["number", "Number"], ["display_name", "Display name"], ["real_name", "Real name"], ["email", "Gmail"], ["whatsapp", "WhatsApp"], ["city", "City"], ["country", "Country"], ["receipt_code", "Registration number"], ["status", "Board status"]], "ihcc-all-squads");
-      say("All squads were downloaded (" + rows.length + " players). This is recorded in the audit log."); }
-    catch (e) { say(errMsg(e), true); }
+      say("All squads were downloaded (" + plural(rows.length, "player", "players") + "). This is recorded in the audit log.");
+    } catch (e) { say(errMsg(e), true); }
   });
+
+  // ---- Notes between administrators (owner and core) ----
+  var NOTES = { inbox: [], targets: [], openBtn: null };
+  function setNoteBadge(n) {
+    Array.prototype.forEach.call($("viewSel").options, function (o) { if (o.value === "notes") o.textContent = "Notes" + (n ? " (" + n + " new)" : ""); });
+    $("noteBanner").hidden = !n;
+    $("noteBannerText").textContent = n ? "You have " + plural(n, "new note", "new notes") + "." : "";
+  }
+  async function refreshNoteBadge() {
+    if (!isOC()) return;
+    try { setNoteBadge(await rpc("admin_notes_unread")); } catch (_) {}
+  }
+  $("noteBannerBtn").addEventListener("click", function () {
+    $("viewSel").value = "notes"; setView(); $("notesH").focus();
+  });
+  async function loadNotes() {
+    try {
+      var d = await rpc("admin_notes_inbox"); NOTES.inbox = d.notes || []; setNoteBadge(d.unread || 0);
+      var body = $("ntRows"); body.textContent = "";
+      if (!NOTES.inbox.length) { var tr0 = document.createElement("tr"), c0 = td("No notes."); c0.colSpan = 5; tr0.appendChild(c0); body.appendChild(tr0); }
+      NOTES.inbox.forEach(function (n) {
+        var tr = document.createElement("tr");
+        tr.appendChild(th(n.from_name || n.from_email)); tr.appendChild(td(fmt(n.created_at)));
+        tr.appendChild(td(n.body.length > 80 ? n.body.slice(0, 80) + "..." : n.body));
+        tr.appendChild(td(n.read ? "Read" : "New"));
+        var c = document.createElement("td");
+        c.appendChild(btn("Open", function (ev) { readNote(n, ev.currentTarget); }, "alt", "Open the note from " + (n.from_name || n.from_email)));
+        tr.appendChild(c); body.appendChild(tr);
+      });
+      $("notesNote").textContent = NOTES.inbox.length + " of 50 notes kept. " + (d.unread ? plural(d.unread, "new note", "new notes") + "." : "No new notes.");
+    } catch (e) { say("Error: " + errMsg(e), true); }
+  }
+  async function readNote(n, fromBtn) {
+    NOTES.openBtn = fromBtn;
+    $("ntReadH").textContent = "Note from " + (n.from_name || n.from_email);
+    $("ntReadMeta").textContent = n.from_email + ", " + fmt(n.created_at);
+    $("ntReadBody").textContent = n.body;
+    $("ntRead").hidden = false; $("ntReadH").focus();
+    if (!n.read) {
+      try { await rpc("admin_note_mark_read", { p_id: n.id }); n.read = true; fromBtn.closest("tr").children[3].textContent = "Read"; var left = NOTES.inbox.filter(function (x) { return !x.read; }).length; setNoteBadge(left); $("notesNote").textContent = NOTES.inbox.length + " of 50 notes kept. " + (left ? plural(left, "new note", "new notes") + "." : "No new notes."); } catch (_) {}
+    }
+  }
+  $("ntReadClose").addEventListener("click", function () {
+    $("ntRead").hidden = true; var b = NOTES.openBtn; if (b && document.body.contains(b)) b.focus(); else $("ntListH").focus();
+  });
+  $("ntReload").addEventListener("click", loadNotes);
+  $("ntNew").addEventListener("click", async function () {
+    try {
+      NOTES.targets = await rpc("admin_note_targets");
+      if (!NOTES.targets.length) { say("There is no other administrator to send a note to.", true); return; }
+      var box = $("ntTo"); box.textContent = ""; $("ntAll").checked = false;
+      NOTES.targets.forEach(function (t) {
+        var l = document.createElement("label"); l.className = "opt";
+        var c = document.createElement("input"); c.type = "checkbox"; c.value = t.email; c.name = "ntTo";
+        l.appendChild(c); l.appendChild(document.createTextNode(t.name + " (" + (t.role === "owner" ? "owner" : "core") + ", " + t.email + ")")); box.appendChild(l);
+      });
+      $("ntBody").value = ""; $("ntCount").textContent = "0 of 1000 characters";
+      $("ntCompose").hidden = false; $("ntComposeH").focus();
+    } catch (e) { say(errMsg(e), true); }
+  });
+  $("ntAll").addEventListener("change", function () {
+    var on = this.checked; Array.prototype.forEach.call(document.querySelectorAll('input[name="ntTo"]'), function (c) { c.checked = on; });
+  });
+  $("ntBody").addEventListener("input", function () { $("ntCount").textContent = this.value.length + " of 1000 characters"; });
+  $("ntCancel").addEventListener("click", function () { $("ntCompose").hidden = true; $("ntNew").focus(); });
+  $("ntCompose").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var to = Array.prototype.map.call(document.querySelectorAll('input[name="ntTo"]:checked'), function (c) { return c.value; });
+    if (!to.length) { say("Choose at least one administrator.", true, function () { return document.querySelector('input[name="ntTo"]'); }); return; }
+    if (!$("ntBody").value.trim()) { say("Write the note first.", true, function () { return $("ntBody"); }); return; }
+    try {
+      var j = await rpc("admin_note_send", { p_to: to, p_body: $("ntBody").value });
+      $("ntCompose").hidden = true;
+      say("The note was sent to " + plural(j.recipients, "administrator", "administrators") + ".", false, function () { return $("ntNew"); });
+    } catch (e) { say(errMsg(e), true, function () { return $("ntBody"); }); }
+  });
+  $("ntSentBtn").addEventListener("click", async function () {
+    try {
+      var rows = await rpc("admin_notes_sent"), body = $("ntSentRows"); body.textContent = "";
+      if (!rows.length) { var tr0 = document.createElement("tr"), c0 = td("You have not sent any notes."); c0.colSpan = 3; tr0.appendChild(c0); body.appendChild(tr0); }
+      rows.forEach(function (n) {
+        var tr = document.createElement("tr"); tr.appendChild(td(fmt(n.created_at)));
+        tr.appendChild(td(n.to.map(function (t) { return t.name + (t.read ? " (read)" : " (not read yet)"); }).join(", ")));
+        tr.appendChild(td(n.body)); body.appendChild(tr);
+      });
+      $("ntSentWrap").hidden = false; $("ntSentH").focus();
+    } catch (e) { say(errMsg(e), true); }
+  });
+  $("ntClear").addEventListener("click", function () {
+    if (!NOTES.inbox.length) { say("There are no notes to clear."); return; }
+    window.IHCCDialog.show({
+      title: "Clear all " + NOTES.inbox.length + " notes? They will be removed from your list.",
+      buttons: [
+        { label: "Clear all notes", onClick: async function () { try { await rpc("admin_notes_clear_all"); await loadNotes(); } catch (e) { say(errMsg(e), true); } }, focus: function () { return $("ntNew"); } },
+        { label: "Cancel", focus: function () { return $("ntClear"); } }
+      ]
+    });
+  });
+
 
   // ---- Send email (owner only) ----
   var DAILY = 240;
