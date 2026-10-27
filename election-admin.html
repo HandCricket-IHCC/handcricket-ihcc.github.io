@@ -80,6 +80,21 @@
   }
   function vLabel(v) { return v.display_name + ' (' + v.real_name + '), ' + v.board; }
   function isOwner() { return ME && ME.role === 'owner'; }
+  function isHead() { return ME && ME.role === 'election_officer'; }
+  function toPktInput(iso) {
+    if (!iso) return '';
+    var parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Karachi', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(iso));
+    var m = {}; parts.forEach(function (x) { m[x.type] = x.value; });
+    return m.year + '-' + m.month + '-' + m.day + 'T' + m.hour + ':' + m.minute;
+  }
+  function fromPktInput(v) { return v ? v + ':00+05:00' : null; }
+  function pktShow(iso) { return iso ? new Date(iso).toLocaleString('en-GB', { timeZone: 'Asia/Karachi', dateStyle: 'full', timeStyle: 'short' }) + ' Pakistan time' : 'not set'; }
+  function download(name, text) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  }
+  function csvCell(x) { x = (x === null || x === undefined) ? '' : String(x); return '"' + x.replace(/"/g, '""') + '"'; }
 
   function renderSignedOut() {
     app.innerHTML = '';
@@ -147,19 +162,35 @@
     app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Refresh', onclick: renderElection }));
     app.appendChild(el('h2', { text: (e.is_test ? 'TEST: ' : 'REAL: ') + e.title }));
     if (e.is_test) app.appendChild(el('p', null, [el('span', { class: 'badge', text: 'TEST ELECTION' })]));
-    msg('Status: ' + e.status + '. Voter list ' + (e.voters_frozen ? 'is frozen (fixed).' : 'is live (follows the squads).') + ' ' + d.voters_total + ' voters, ' + d.voted_count + ' have voted.');
+    var stEff = d.status_eff || e.status;
+    msg('Status: ' + stEff + (stEff !== e.status ? ' (set by the schedule; the saved status is ' + e.status + ')' : '') + (e.paused ? '. VOTING IS PAUSED' : '') + '. Voter list ' + (e.voters_frozen ? 'is frozen (fixed).' : 'is live (follows the squads).') + ' ' + d.voters_total + ' voters, ' + d.voted_count + ' have voted. More than half are needed for a valid election: at least ' + d.turnout_needed + ' voters.');
 
     // Status
     app.appendChild(el('h3', { text: 'Status' }));
     STATUSES.forEach(function (s) {
-      var b = el('button', { type: 'button', class: s[0] === e.status ? '' : 'secondary', text: (s[0] === e.status ? 'Current: ' : 'Set: ') + s[1], onclick: async function () {
-        if (s[0] === e.status) return;
+      var b = el('button', { type: 'button', class: s[0] === stEff ? '' : 'secondary', text: (s[0] === stEff ? 'Current: ' : 'Set: ') + s[1], onclick: async function () {
+        if (s[0] === stEff) return;
         if (!window.confirm('Change status to "' + s[1] + '"?' + (!e.is_test && s[0] === 'voting' ? ' This freezes the voter list for good.' : ''))) return;
         var r = await rpc('admin_election_status', { p_id: SELECTED, p_status: s[0] });
         if (r) renderElection();
       } });
       app.appendChild(b);
     });
+
+    // Schedule
+    app.appendChild(el('h3', { text: 'Times (Pakistan time)' }));
+    app.appendChild(el('p', { class: 'muted', text: 'When the times are set, nominations close by themselves, and voting opens and closes by itself. A vote outside the times is not accepted. Set the status to Nominations first.' }));
+    var tNom = el('input', { type: 'datetime-local', value: toPktInput(e.nominations_close_at) });
+    var tStart = el('input', { type: 'datetime-local', value: toPktInput(e.voting_starts_at) });
+    var tEnd = el('input', { type: 'datetime-local', value: toPktInput(e.voting_ends_at) });
+    app.appendChild(field('Nominations close at', tNom));
+    app.appendChild(field('Voting opens at', tStart));
+    app.appendChild(field('Voting closes at', tEnd));
+    app.appendChild(el('p', { class: 'muted', text: 'Saved now: nominations close ' + pktShow(e.nominations_close_at) + '. Voting opens ' + pktShow(e.voting_starts_at) + '. Voting closes ' + pktShow(e.voting_ends_at) + '.' }));
+    app.appendChild(el('button', { type: 'button', text: 'Save the times', onclick: async function () {
+      var r = await rpc('admin_election_schedule', { p_id: SELECTED, p_nom_close: fromPktInput(tNom.value), p_vote_start: fromPktInput(tStart.value), p_vote_end: fromPktInput(tEnd.value) });
+      if (r) { msg('The times are saved.', false, true); renderElection(); }
+    } }));
 
     // Voter list
     app.appendChild(el('h3', { text: 'Voter list' }));
@@ -226,6 +257,19 @@
       } }));
     }
 
+    // Nominations in progress
+    var noms = await rpc('admin_nominations', { p_id: SELECTED });
+    app.appendChild(el('h2', { text: 'Nominations by the Team Directors' }));
+    var nl = el('ul', { class: 'plain' });
+    ((noms && noms.data) || []).forEach(function (n) {
+      var t = n.board + ', ' + n.seat + ': ';
+      if (n.revoked_at) t += 'withdrawn or cancelled' + (n.attempt ? ' (attempt ' + n.attempt + ')' : '');
+      else t += (n.nominee || '') + '. Nominee ' + (n.nominee_ok ? 'confirmed' : 'waiting') + '. Proposer ' + (n.proposer_ok ? 'confirmed (' + n.proposer + ')' : 'waiting') + '. Seconder ' + (n.seconder || '') + ', ' + (n.seconder_board || '') + ' ' + (n.seconder_ok ? 'confirmed' : 'waiting') + '. ' + (n.locked_at ? 'LOCKED (attempt ' + n.attempt + ')' : 'Not locked.');
+      nl.appendChild(el('li', { text: t }));
+    });
+    if (!nl.children.length) nl.appendChild(el('li', { class: 'muted', text: 'No nomination yet.' }));
+    app.appendChild(nl);
+
     // Dummy votes (test only)
     if (e.is_test && e.status === 'voting') {
       app.appendChild(el('h2', { text: 'TEST: add dummy votes' }));
@@ -244,6 +288,71 @@
       } }));
     }
 
+    // Head: enter a vote for a member who called
+    var canEnter = (stEff === 'voting' || stEff === 'stage1') && (e.is_test || (isHead() && ME.is_head));
+    if (canEnter) {
+      app.appendChild(el('h2', { text: 'Enter a vote for a member who called (Head only)' }));
+      app.appendChild(el('p', { class: 'muted', text: 'Use this only after you have recorded the call. Write the time of the call and a note. Keep the recording as proof.' }));
+      var evSel = select(voters.map(function (v) { return [v.email, vLabel(v)]; }), 'Choose the member');
+      var evTime = el('input', { type: 'datetime-local', value: toPktInput(new Date().toISOString()) });
+      var evNote = el('input', { type: 'text', maxlength: '300' });
+      app.appendChild(field('Member who called', evSel));
+      app.appendChild(field('Time of the call (Pakistan time)', evTime));
+      app.appendChild(field('Note about the call', evNote));
+      var evSeats = [];
+      d.seats.forEach(function (s) {
+        if (s.candidates.length < 2) return;
+        var cs = select(s.candidates.map(function (c) { return [c.id, c.display_name + ', ' + c.board]; }), 'No vote for this office');
+        app.appendChild(field(s.seat, cs));
+        evSeats.push({ seat: s.seat, sel: cs });
+      });
+      app.appendChild(el('button', { type: 'button', text: 'Enter this vote', onclick: async function () {
+        var choices = evSeats.filter(function (x) { return x.sel.value; }).map(function (x) { return { seat: x.seat, candidate: x.sel.value }; });
+        if (!evSel.value || !choices.length || evNote.value.trim().length < 5) { msg('Choose the member, at least one candidate, and write a note of at least 5 letters.', true, true); return; }
+        if (!window.confirm('Enter this vote for ' + byEmail[evSel.value].display_name + '?')) return;
+        var r = await rpc('admin_vote_enter', { p_election: SELECTED, p_voter_email: evSel.value, p_choices: choices, p_call_time: fromPktInput(evTime.value), p_note: evNote.value.trim() });
+        if (r) { msg('Vote entered for ' + r.data.entered + ' office(s).', false, true); renderElection(); }
+      } }));
+    }
+
+    // Owner emergency
+    if (isOwner() && (stEff === 'voting' || e.paused)) {
+      app.appendChild(el('h2', { text: 'Emergency (Owner only)' }));
+      app.appendChild(el('p', { class: 'muted', text: 'Use only when the voting service fails or is attacked. Write the reason, then announce it in the Main Group at once. Every use is recorded.' }));
+      ['pause', 'resume', 'close'].forEach(function (a) {
+        if (a === 'resume' && !e.paused) return;
+        if (a !== 'resume' && stEff !== 'voting') return;
+        app.appendChild(el('button', { type: 'button', class: 'danger', text: a === 'pause' ? 'Pause voting now' : a === 'resume' ? 'Resume voting' : 'Close voting now', onclick: async function () {
+          var why = window.prompt('Reason (required):', ''); if (why === null) return;
+          if (why.trim().length < 5) { msg('Please write a reason of at least 5 letters.', true, true); return; }
+          if (!window.confirm('Really ' + a + ' the voting?')) return;
+          var r = await rpc('admin_emergency', { p_id: SELECTED, p_action: a, p_note: why.trim() });
+          if (r) { msg('Done: ' + a + '. Please announce it in the Main Group.', false, true); renderElection(); }
+        } }));
+      });
+    }
+
+    // Log and export
+    app.appendChild(el('h2', { text: 'Log of actions' }));
+    app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Show the log', onclick: async function () {
+      var r = await rpc('election_log', { p_id: SELECTED }); if (!r) return;
+      var box = document.getElementById('logbox'); if (box) box.remove();
+      box = el('ul', { class: 'plain', id: 'logbox' });
+      r.data.forEach(function (x) {
+        box.appendChild(el('li', { text: new Date(x.at).toLocaleString('en-GB', { timeZone: 'Asia/Karachi', dateStyle: 'medium', timeStyle: 'medium' }) + ' PKT, ' + x.actor + ', ' + x.action + ' ' + JSON.stringify(x.details || {}) }));
+      });
+      if (!r.data.length) box.appendChild(el('li', { text: 'No action recorded yet.' }));
+      app.appendChild(box);
+      msg('The log has ' + r.data.length + ' entries, shown at the bottom of the page.', false, true);
+    } }));
+    app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Download the results as a CSV file', onclick: async function () {
+      var r = await rpc('election_export', { p_id: SELECTED }); if (!r) return;
+      var rows = [['Office', 'Candidate', 'Candidate board', 'Voter', 'Voter board', 'Time of vote', 'Entered by Head after a call', 'Time of call']];
+      r.data.forEach(function (x) { rows.push([x.seat, x.candidate, x.candidate_board, x.voter, x.voter_board, x.cast_at, x.entered_by_head ? 'yes' : 'no', x.call_time || '']); });
+      download('ihcc_election_results.csv', rows.map(function (row) { return row.map(csvCell).join(','); }).join('\r\n'));
+      msg('The file was downloaded: ' + r.data.length + ' votes.', false, true);
+    } }));
+
     // Who voted
     app.appendChild(el('h2', { text: 'Who has voted (' + d.voted_names.length + ')' }));
     var vu = el('ul', { class: 'plain' });
@@ -251,8 +360,9 @@
       var li = el('li', { text: x.name + ', ' + x.board + ' ' });
       if (x.email.indexOf('dummy-') !== 0) {
         li.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Cancel vote of ' + x.name, onclick: async function () {
-          var note = window.prompt('Reason for cancelling this vote (optional):', '');
+          var note = window.prompt('Reason for cancelling this vote (required):', '');
           if (note === null) return;
+          if (note.trim().length < 5) { msg('Please write a reason of at least 5 letters.', true, true); return; }
           var r = await rpc('admin_vote_cancel', { p_election: SELECTED, p_voter_email: x.email, p_note: note });
           if (r) { msg('Cancelled ' + r.data.cancelled + ' vote(s). The member may vote again if voting is open.', false, true); renderElection(); }
         } }));
@@ -286,6 +396,12 @@
         if (!window.confirm('Delete votes, objections AND candidates of this TEST election?')) return;
         var r = await rpc('admin_test_clear', { p_election: SELECTED, p_candidates: true });
         if (r) { msg('Everything cleared. Status is back to draft.', false, true); renderElection(); }
+      } }));
+      var headIn = el('input', { type: 'text', maxlength: '120' });
+      app.appendChild(field('Election Committee Head: Gmail (must be an election_officer admin)', headIn));
+      app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Make this person the Head', onclick: async function () {
+        if (!headIn.value.trim()) { msg('Write the Gmail first.', true, true); return; }
+        var r = await rpc('admin_set_head', { p_email: headIn.value.trim(), p_head: true }); if (r) msg('Done. This person is now the Head.', false, true);
       } }));
       var vis = d.test_visible === 'true';
       app.appendChild(el('p', { text: 'The TEST sign in is currently ' + (vis ? 'VISIBLE (working)' : 'HIDDEN (switched off)') + ' for voters.' }));
