@@ -4,39 +4,86 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
 <title>IHCC Election</title>
 <style>
-  :root { --bg:#ffffff; --fg:#111111; --muted:#444444; --line:#c9ced6; --brand:#0b5d3b; --warn:#8a1c00; --testbg:#fff3b0; --testfg:#3b2f00; }
+  :root {
+    --bg:#f3f6f4; --card:#ffffff; --fg:#10201a; --muted:#41524a; --line:#cfd8d3;
+    --brand:#0b5d3b; --brand-fg:#ffffff; --brand-soft:#e3f2ea; --accent:#b8860b;
+    --warn:#8a1c00; --warn-soft:#fdeae4; --ok:#0b5d3b;
+    --testbg:#fff3b0; --testfg:#3b2f00; --focus:#ff9f0a; --shadow:0 1px 3px rgba(16,32,26,.12), 0 6px 18px rgba(16,32,26,.06);
+  }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#10151a; --fg:#f2f4f6; --muted:#b9c0c8; --line:#34404b; --brand:#5fd49b; --warn:#ff9d85; --testbg:#4a3d00; --testfg:#fff3b0; }
+    :root {
+      --bg:#0d1512; --card:#15201b; --fg:#f1f6f3; --muted:#b4c3bb; --line:#2f4038;
+      --brand:#5fd49b; --brand-fg:#06210f; --brand-soft:#17332a; --accent:#e5b93c;
+      --warn:#ff9d85; --warn-soft:#3a1a13; --ok:#5fd49b;
+      --testbg:#4a3d00; --testfg:#fff3b0; --focus:#ffb84d; --shadow:none;
+    }
   }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font:18px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:18px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
+  .skip { position:absolute; left:-999px; top:0; background:var(--brand); color:var(--brand-fg); padding:12px 18px; z-index:10; border-radius:0 0 8px 0; }
+  .skip:focus { left:0; }
   #testbar { background:var(--testbg); color:var(--testfg); padding:12px 16px; font-weight:700; text-align:center; border-bottom:3px solid var(--testfg); }
-  main { max-width:760px; margin:0 auto; padding:16px; }
-  h1 { font-size:1.6rem; margin:.6rem 0; }
-  h2 { font-size:1.25rem; margin:1.4rem 0 .4rem; }
-  button { font:inherit; padding:12px 18px; margin:6px 6px 6px 0; border:2px solid var(--brand); background:var(--brand); color:#fff; border-radius:8px; cursor:pointer; }
-  @media (prefers-color-scheme: dark) { button { color:#06210f; } }
-  button.secondary { background:transparent; color:var(--fg); border-color:var(--line); }
-  button:focus-visible, input:focus-visible, textarea:focus-visible { outline:3px solid #ffb400; outline-offset:2px; }
-  fieldset { border:1px solid var(--line); border-radius:10px; margin:14px 0; padding:12px 16px; }
-  legend { font-weight:700; padding:0 6px; }
-  label.opt { display:block; padding:10px 8px; border-radius:8px; cursor:pointer; }
-  label.opt input { width:22px; height:22px; margin-right:10px; vertical-align:middle; }
-  #msg { margin:12px 0; padding:10px 14px; border-left:5px solid var(--brand); background:rgba(127,127,127,.12); border-radius:6px; min-height:1.5em; }
-  #msg.err { border-left-color:var(--warn); color:var(--warn); }
+  header.top { background:var(--brand); color:var(--brand-fg); padding:22px 16px 26px; }
+  header.top .in { max-width:760px; margin:0 auto; }
+  header.top .org { font-size:.85rem; letter-spacing:.14em; text-transform:uppercase; opacity:.9; margin:0 0 4px; }
+  header.top h1 { font-size:1.9rem; line-height:1.2; margin:0; }
+  main { max-width:760px; margin:0 auto; padding:16px 16px 40px; }
+  h2 { font-size:1.3rem; line-height:1.3; margin:0 0 .4rem; }
+  p { margin:.4rem 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; margin:16px 0; box-shadow:var(--shadow); }
+  .card.done { border-color:var(--ok); border-width:2px; background:var(--brand-soft); }
+  .card.bad { border-color:var(--warn); background:var(--warn-soft); }
   .muted { color:var(--muted); }
+  .small { font-size:.92rem; }
+  #msg { margin:16px 0; padding:14px 16px; border-left:6px solid var(--brand); background:var(--card); border-radius:10px; box-shadow:var(--shadow); font-weight:600; min-height:1.6em; }
+  #msg.err { border-left-color:var(--warn); color:var(--warn); background:var(--warn-soft); }
+  #msg:focus { outline:3px solid var(--focus); outline-offset:2px; }
+  button { font:inherit; font-weight:700; min-height:52px; padding:12px 20px; margin:6px 8px 6px 0; border:2px solid var(--brand); background:var(--brand); color:var(--brand-fg); border-radius:12px; cursor:pointer; }
+  button.secondary { background:transparent; color:var(--fg); border-color:var(--line); font-weight:600; }
+  button:active { transform:translateY(1px); }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline:4px solid var(--focus); outline-offset:3px; }
+  dl.who { margin:.6rem 0 0; display:grid; grid-template-columns:1fr; gap:6px; }
+  dl.who div { padding:10px 12px; background:var(--bg); border-radius:10px; }
+  dl.who dt { font-size:.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+  dl.who dd { margin:0; font-weight:700; word-break:break-word; }
+  @media (min-width:560px) { dl.who { grid-template-columns:1fr 1fr; } }
+  .progress { height:12px; border-radius:999px; background:var(--line); overflow:hidden; margin:10px 0 4px; }
+  .progress > span { display:block; height:100%; background:var(--brand); transition:width .4s ease; }
+  .seat h2 { display:flex; align-items:center; gap:10px; }
+  .seat .num { flex:none; width:34px; height:34px; border-radius:50%; background:var(--brand); color:var(--brand-fg); display:inline-flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; }
+  .badge { display:inline-block; padding:3px 12px; border-radius:999px; font-size:.85rem; font-weight:800; background:var(--ok); color:var(--brand-fg); margin-left:auto; }
+  .badge.wait { background:transparent; color:var(--muted); border:2px solid var(--line); }
+  .choices { display:grid; gap:10px; margin:12px 0 6px; }
+  label.opt { display:flex; align-items:center; gap:14px; padding:14px 14px; min-height:64px; border:2px solid var(--line); border-radius:14px; cursor:pointer; background:var(--card); }
+  label.opt:hover { border-color:var(--brand); }
+  label.opt.sel { border-color:var(--brand); background:var(--brand-soft); }
+  label.opt input { flex:none; width:28px; height:28px; margin:0; accent-color:var(--brand); }
+  label.opt .nm { font-weight:700; display:block; }
+  label.opt .sub { display:block; color:var(--muted); font-size:.93rem; }
   ul.plain { list-style:none; padding:0; margin:.3rem 0; }
-  ul.plain li { padding:4px 0; border-bottom:1px solid var(--line); }
-  textarea { width:100%; min-height:90px; font:inherit; padding:8px; border:1px solid var(--line); border-radius:8px; background:transparent; color:var(--fg); }
-  details { margin:4px 0 10px; }
+  ul.plain li { padding:8px 0; border-bottom:1px solid var(--line); }
+  ul.plain li:last-child { border-bottom:0; }
+  textarea { width:100%; min-height:100px; font:inherit; padding:10px; border:2px solid var(--line); border-radius:12px; background:transparent; color:var(--fg); }
+  details { margin:6px 0 10px; }
+  summary { cursor:pointer; padding:8px 0; font-weight:600; }
+  footer.acct { margin-top:28px; padding-top:12px; border-top:1px solid var(--line); }
+  @media (prefers-reduced-motion: reduce) { .progress > span { transition:none; } button:active { transform:none; } }
 </style>
 </head>
 <body>
-<div id="testbar" role="status" hidden>TEST MODE. This is a practice election. Nothing here is real and no result here counts.</div>
-<main>
-  <h1 id="h1">IHCC Election</h1>
+<a class="skip" href="#main">Skip to the voting page</a>
+<div id="testbar" role="status" hidden>TEST MODE, this is a practice election, nothing here is real, and no result here counts.</div>
+<header class="top">
+  <div class="in">
+    <p class="org">International Hand Cricket Council</p>
+    <h1 id="h1">IHCC Election</h1>
+  </div>
+</header>
+<main id="main" tabindex="-1">
   <div id="msg" role="status" aria-live="polite" tabindex="-1"></div>
   <div id="app"></div>
 </main>
@@ -79,25 +126,27 @@
   function applyChrome() {
     var t = isTest();
     document.getElementById('testbar').hidden = !t;
-    document.getElementById('h1').textContent = t ? 'IHCC Election (TEST)' : 'IHCC Election';
-    document.title = t ? 'TEST - IHCC Election' : 'IHCC Election';
+    document.getElementById('h1').textContent = t ? 'IHCC Election, TEST' : 'IHCC Election';
+    document.title = t ? 'TEST, IHCC Election' : 'IHCC Election';
   }
   function errText(e) {
     var m = (e && (e.message || e.error_description)) || 'Something went wrong.';
     return m.replace(/^ERROR:\s*/, '');
   }
+  function card(cls) { return el('section', { class: 'card' + (cls ? ' ' + cls : '') }); }
 
   function renderSignedOut() {
     clearApp();
-    applyChrome();
     document.getElementById('testbar').hidden = true;
     document.getElementById('h1').textContent = 'IHCC Election';
     document.title = 'IHCC Election';
-    msg('Please sign in with the Google account (Gmail) that is on your board squad list.');
-    app.appendChild(el('h2', { text: 'Sign in' }));
-    app.appendChild(el('p', { class: 'muted', text: 'The TEST sign in is for practice only. The Main sign in is for the real election and opens only when IHCC starts it.' }));
-    app.appendChild(el('button', { type: 'button', id: 'btnTest', text: 'TEST Sign in (practice, not real)', onclick: function () { signIn('test'); } }));
-    app.appendChild(el('button', { type: 'button', id: 'btnMain', class: 'secondary', text: 'Main Sign in (real election)', onclick: function () { signIn('main'); } }));
+    msg('Please sign in with the Google account, the Gmail, that is on your board squad list.');
+    var c = card();
+    c.appendChild(el('h2', { text: 'Sign in' }));
+    c.appendChild(el('p', { class: 'muted', text: 'The TEST sign in is for practice only. The Main sign in is for the real election, and it opens only when IHCC starts it.' }));
+    c.appendChild(el('button', { type: 'button', id: 'btnTest', text: 'TEST Sign in, practice, not real', onclick: function () { signIn('test'); } }));
+    c.appendChild(el('button', { type: 'button', id: 'btnMain', class: 'secondary', text: 'Main Sign in, real election', onclick: function () { signIn('main'); } }));
+    app.appendChild(c);
   }
 
   function signIn(mode) {
@@ -109,41 +158,76 @@
     sb.auth.signOut().then(function () { SESSION = null; renderSignedOut(); });
   }
 
-  function topBar() {
-    var email = (SESSION && SESSION.user && SESSION.user.email) || '';
-    var box = el('div', null, [
-      el('p', { class: 'muted', text: 'Signed in as ' + email + '. Mode: ' + (isTest() ? 'TEST (practice)' : 'Main (real)') + '.' }),
-      el('button', { type: 'button', class: 'secondary', text: isTest() ? 'Switch to Main election (no new sign in)' : 'Switch to TEST election (no new sign in)',
+  function accountFooter() {
+    return el('footer', { class: 'acct' }, [
+      el('p', { class: 'muted small', text: 'Mode, ' + (isTest() ? 'TEST, practice' : 'Main, real') + '.' }),
+      el('button', { type: 'button', class: 'secondary', text: isTest() ? 'Switch to Main election, no new sign in' : 'Switch to TEST election, no new sign in',
         onclick: function () { setMode(isTest() ? 'main' : 'test'); load(); } }),
       el('button', { type: 'button', class: 'secondary', text: 'Sign out', onclick: signOut })
     ]);
-    return box;
   }
 
-  async function load() {
+  async function load(afterMsg) {
     clearApp();
     applyChrome();
-    app.appendChild(topBar());
     msg('Loading...');
     var r = await sb.rpc('elect_current', { p_test: isTest() });
     if (r.error) { msg(errText(r.error), true, true); return; }
     var d = r.data || {};
     CUR = d;
     if (d.state === 'signed_out') { renderSignedOut(); return; }
-    if (d.state === 'test_off') { msg('The TEST election is not available right now.', false, true); return; }
+    if (d.state === 'test_off') { msg('The TEST election is not available right now.', false, true); app.appendChild(accountFooter()); return; }
     if (d.state === 'none') {
       msg(isTest() ? 'No TEST election is open right now. Please wait for IHCC to tell you.' : 'The election has not started yet. Nothing is open here for now.', false, true);
+      app.appendChild(accountFooter());
       return;
     }
     if (d.state === 'not_listed') {
-      msg('This Gmail is not on the voting list. Only the first 12 players of each board squad can vote. If you think this is a mistake, contact IHCC.', true, true);
+      msg('This Gmail is not on the voting list. Only the first 12 players of each board squad can vote. If you think this is a mistake, please contact IHCC.', true, true);
+      app.appendChild(accountFooter());
       return;
     }
     if (d.state !== 'ok') { msg('Unexpected state. Please reload.', true, true); return; }
-    await renderElection(d);
+    await renderElection(d, afterMsg);
   }
 
-  async function renderElection(d) {
+  function pktText(iso) { return new Date(iso).toLocaleString('en-GB', { timeZone: 'Asia/Karachi', dateStyle: 'full', timeStyle: 'short' }) + ', Pakistan time'; }
+  function localText(iso) {
+    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (x) {}
+    return new Date(iso).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' }) + (tz ? ', ' + tz : '');
+  }
+  // Spoken label with commas, so a screen reader pauses between the parts.
+  function candLabel(c) {
+    var parts = [c.display_name];
+    if (c.real_name) parts.push(c.real_name);
+    if (c.board) parts.push(c.board);
+    return parts.join(', ');
+  }
+
+  function identityCard(v) {
+    var email = (SESSION && SESSION.user && SESSION.user.email) || '';
+    var c = card();
+    c.appendChild(el('h2', { text: 'You are voting as' }));
+    var dl = el('dl', { class: 'who' });
+    [['Display name', v.display_name], ['Real name', v.real_name], ['Board', v.board], ['Gmail', email]].forEach(function (p) {
+      dl.appendChild(el('div', null, [el('dt', { text: p[0] }), el('dd', { text: p[1] || '-' })]));
+    });
+    c.appendChild(dl);
+    return c;
+  }
+
+  function scheduleCard(e) {
+    if (!(e.voting_starts_at && e.voting_ends_at)) return null;
+    var c = card();
+    c.appendChild(el('h2', { text: 'Voting time' }));
+    c.appendChild(el('p', { text: 'Opens, ' + pktText(e.voting_starts_at) + '.' }));
+    c.appendChild(el('p', { text: 'Closes, ' + pktText(e.voting_ends_at) + '.' }));
+    c.appendChild(el('p', { class: 'muted small', text: 'In your own time, opens ' + localText(e.voting_starts_at) + ', closes ' + localText(e.voting_ends_at) + '. The page opens and closes by itself.' }));
+    if (e.paused) c.appendChild(el('p', { text: 'Voting is paused by IHCC for now. Please wait for the announcement in the Main Group.' }));
+    return c;
+  }
+
+  async function renderElection(d, afterMsg) {
     var e = d.election, v = d.voter || {};
     var both = await Promise.all([
       sb.rpc('elect_ballot', { p_election: e.id }),
@@ -153,125 +237,141 @@
     var ballot = both[0].data;
     var res = both[1].error ? null : both[1].data;
 
-    app.appendChild(el('h2', { text: (isTest() ? 'TEST: ' : '') + e.title }));
-    app.appendChild(el('p', { text: 'You are on the voting list as ' + (v.display_name || '') + ' (' + (v.board || '') + ').' }));
-    if (e.voting_starts_at && e.voting_ends_at) {
-      app.appendChild(el('p', { text: 'Voting opens: ' + pktText(e.voting_starts_at) + '. Voting closes: ' + pktText(e.voting_ends_at) + '.' }));
-      app.appendChild(el('p', { class: 'muted', text: 'In your own time: opens ' + localText(e.voting_starts_at) + ', closes ' + localText(e.voting_ends_at) + '. The page opens and closes by itself.' }));
-    }
-    if (e.paused) app.appendChild(el('p', { text: 'Voting is paused by IHCC for now. Please wait for the announcement in the Main Group.' }));
+    app.appendChild(el('h2', { text: (isTest() ? 'TEST, ' : '') + e.title, style: 'margin-top:8px' }));
+    app.appendChild(identityCard(v));
+    var sc = scheduleCard(e);
+    if (sc) app.appendChild(sc);
 
     var status = e.status;
     if (status === 'nominations') {
       msg(T('Voting has not started yet. These are the candidates so far.'), false, true);
       renderCandidatesOnly(ballot);
     } else if (status === 'voting') {
-      var info = res && res.stage === 'voting' ? (res.voted_count + ' of ' + res.total_voters + ' voting members have voted so far.') : '';
-      msg(T('Voting is open. ' + info + ' Your vote is final: once you submit it, it cannot be changed.'), false, true);
+      var info = res && res.stage === 'voting' ? (res.voted_count + ' of ' + res.total_voters + ' voting members have voted so far. ') : '';
+      msg(afterMsg || T('Voting is open. ' + info + 'Your vote is final, once you submit it, it cannot be changed.'), false, true);
       renderBallot(e, ballot);
     } else if (status === 'stage1') {
-      msg(T('Voting is closed. This is stage one: only the names of people who voted are shown, not who they voted for.'), false, true);
+      msg(T('Voting is closed. This is stage one, only the names of people who voted are shown, not who they voted for.'), false, true);
       renderStage1(e, res);
     } else if (status === 'closed') {
       msg(T('The election is closed. These are the results.'), false, true);
       renderClosed(res);
     }
-  }
-
-  function pktText(iso) { return new Date(iso).toLocaleString('en-GB', { timeZone: 'Asia/Karachi', dateStyle: 'full', timeStyle: 'short' }) + ' Pakistan time'; }
-  function localText(iso) {
-    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (x) {}
-    return new Date(iso).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' }) + (tz ? ' (' + tz + ')' : '');
-  }
-  function candLabel(c) {
-    return c.display_name + (c.real_name ? ' (' + c.real_name + ')' : '') + ', ' + c.board;
+    app.appendChild(accountFooter());
   }
 
   function renderCandidatesOnly(ballot) {
-    (ballot.seats || []).forEach(function (s) {
-      app.appendChild(el('h2', { text: s.seat }));
-      if (!s.candidates.length) { app.appendChild(el('p', { class: 'muted', text: 'No candidate yet.' })); return; }
+    (ballot.seats || []).forEach(function (s, idx) {
+      var c = card('seat');
+      c.appendChild(el('h2', null, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]));
+      if (!s.candidates.length) { c.appendChild(el('p', { class: 'muted', text: 'No candidate yet.' })); app.appendChild(c); return; }
       var ul = el('ul', { class: 'plain' });
-      s.candidates.forEach(function (c) { ul.appendChild(el('li', { text: candLabel(c) })); });
-      app.appendChild(ul);
-      if (s.unopposed) app.appendChild(el('p', { class: 'muted', text: 'Only one candidate so far for this seat.' }));
+      s.candidates.forEach(function (x) { ul.appendChild(el('li', { text: candLabel(x) })); });
+      c.appendChild(ul);
+      if (s.unopposed) c.appendChild(el('p', { class: 'muted', text: 'Only one candidate so far for this seat.' }));
+      app.appendChild(c);
     });
   }
 
   function renderBallot(e, ballot) {
-    var contested = (ballot.seats || []).filter(function (s) { return s.candidates.length > 1; });
+    var seats = ballot.seats || [];
+    var contested = seats.filter(function (s) { return s.candidates.length > 1; });
     if (contested.length) {
       var done = contested.filter(function (s) { return s.my_vote; });
-      app.appendChild(el('h2', { text: 'My votes' }));
-      app.appendChild(el('p', { text: 'You have voted for ' + done.length + ' of ' + contested.length + ' seats. You may vote for the remaining seats any time before voting closes. You do not have to vote for every seat.' }));
+      var left = contested.length - done.length;
+      var pc = card();
+      pc.appendChild(el('h2', { text: 'My votes' }));
+      pc.appendChild(el('p', { id: 'prog', text: 'You have voted for ' + done.length + ' of ' + contested.length + ' seats' + (left ? ', ' + left + ' remaining.' : '. All done, thank you.') + ' Voting for every seat is not compulsory.' }));
+      var bar = el('div', { class: 'progress', 'aria-hidden': 'true' }, [el('span', { style: 'width:' + Math.round(100 * done.length / contested.length) + '%' })]);
+      pc.appendChild(bar);
       var sum = el('ul', { class: 'plain' });
       contested.forEach(function (s) {
         var mine = s.my_vote ? s.candidates.filter(function (c) { return c.id === s.my_vote; })[0] : null;
-        sum.appendChild(el('li', { text: s.seat + ': ' + (mine ? 'voted for ' + candLabel(mine) : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'not voted yet')) }));
+        sum.appendChild(el('li', { text: s.seat + ', ' + (mine ? 'you voted for ' + candLabel(mine) : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'not voted yet')) }));
       });
-      app.appendChild(sum);
+      pc.appendChild(sum);
+      app.appendChild(pc);
     }
-    (ballot.seats || []).forEach(function (s, idx) {
-      var fs = el('fieldset');
-      fs.appendChild(el('legend', { text: s.seat }));
+    seats.forEach(function (s, idx) {
+      var name = 'seat' + idx;
+      var hid = name + '_h';
+      var c = card('seat');
+      var h = el('h2', { id: hid }, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]);
+      c.appendChild(h);
       if (!s.candidates.length) {
-        fs.appendChild(el('p', { class: 'muted', text: 'No candidate for this seat. Nothing to vote on.' }));
-        app.appendChild(fs); return;
+        c.appendChild(el('p', { class: 'muted', text: 'No candidate for this seat. Nothing to vote on.' }));
+        app.appendChild(c); return;
       }
       if (s.unopposed) {
-        fs.appendChild(el('p', { text: candLabel(s.candidates[0]) + ' is the only candidate and is elected without a contest. No vote is needed.' }));
-        app.appendChild(fs); return;
+        c.appendChild(el('p', { text: candLabel(s.candidates[0]) + ', is the only candidate and is elected without a contest. No vote is needed.' }));
+        app.appendChild(c); return;
       }
-      var name = 'seat' + idx;
       if (s.my_vote) {
-        var mine = s.candidates.filter(function (c) { return c.id === s.my_vote; })[0];
-        fs.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted: ' + (mine ? candLabel(mine) : '') + '. A vote cannot be changed.' }));
-        app.appendChild(fs); return;
+        var mine = s.candidates.filter(function (x) { return x.id === s.my_vote; })[0];
+        c.className = 'card seat done';
+        h.appendChild(el('span', { class: 'badge', text: 'Voted' }));
+        c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted, ' + (mine ? candLabel(mine) : '') + '. A vote cannot be changed.' }));
+        app.appendChild(c); return;
       }
       if (s.my_vote_cancelled) {
-        fs.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' was cancelled by the Election Committee. Please contact the Committee.' }));
-        app.appendChild(fs); return;
+        c.className = 'card seat bad';
+        c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' was cancelled by the Election Committee. Please contact the Committee.' }));
+        app.appendChild(c); return;
       }
-      s.candidates.forEach(function (c, i) {
+      h.appendChild(el('span', { class: 'badge wait', text: 'Not voted' }));
+      c.appendChild(el('p', { class: 'muted', id: name + '_s', text: 'Choose one candidate, then press the submit button. Your vote is final and cannot be changed.' }));
+      var group = el('div', { class: 'choices', role: 'radiogroup', 'aria-labelledby': hid, 'aria-describedby': name + '_s' });
+      s.candidates.forEach(function (x, i) {
         var id = name + '_' + i;
-        var inp = el('input', { type: 'radio', name: name, id: id, value: c.id });
-        if (s.my_vote === c.id) inp.checked = true;
-        fs.appendChild(el('label', { class: 'opt', for: id }, [inp, candLabel(c)]));
+        var inp = el('input', { type: 'radio', name: name, id: id, value: x.id, 'aria-label': s.seat + ', ' + candLabel(x) });
+        var lab = el('label', { class: 'opt', for: id }, [
+          inp,
+          el('span', null, [
+            el('span', { class: 'nm', text: x.display_name }),
+            el('span', { class: 'sub', text: [x.real_name, x.board].filter(Boolean).join(', ') })
+          ])
+        ]);
+        inp.addEventListener('change', function () {
+          group.querySelectorAll('label.opt').forEach(function (l) { l.classList.remove('sel'); });
+          lab.classList.add('sel');
+        });
+        group.appendChild(lab);
       });
-      var status = el('p', { class: 'muted', id: name + '_s', text: 'You have not voted for this seat yet. Your vote is final and cannot be changed.' });
-      fs.appendChild(status);
+      c.appendChild(group);
       var btn = el('button', { type: 'button', text: T('Submit my final vote for ' + s.seat), onclick: async function () {
-        var chosen = fs.querySelector('input[name="' + name + '"]:checked');
+        var chosen = group.querySelector('input[name="' + name + '"]:checked');
         if (!chosen) { msg('Please choose a candidate for ' + s.seat + ' first.', true, true); return; }
-        var label = fs.querySelector('label[for="' + chosen.id + '"]').textContent;
+        var cand = s.candidates.filter(function (x) { return x.id === chosen.value; })[0];
+        var label = candLabel(cand);
         if (!window.confirm(T('Submit your FINAL vote for ' + s.seat + ': ' + label + '? It cannot be changed after this.'))) return;
+        btn.disabled = true;
         msg('Submitting...');
         var r = await sb.rpc('elect_cast', { p_election: e.id, p_seat: s.seat, p_candidate: chosen.value });
-        if (r.error) { msg(errText(r.error), true, true); return; }
-        fs.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
-        btn.remove();
-        status.textContent = 'Your vote for ' + s.seat + ' is submitted: ' + label + '. A vote cannot be changed.';
-        msg(T('Your vote for ' + s.seat + ' is submitted: ' + label), false, true);
+        if (r.error) { btn.disabled = false; msg(errText(r.error), true, true); return; }
+        await load(T('Your vote for ' + s.seat + ' is submitted, ' + label + '. A vote cannot be changed.'));
       } });
-      fs.appendChild(btn);
-      app.appendChild(fs);
+      c.appendChild(btn);
+      app.appendChild(c);
     });
-    app.appendChild(el('p', { class: 'muted', text: 'Voting is open, not secret: after the election the list of who voted for whom is published.' }));
+    app.appendChild(el('p', { class: 'muted small', text: 'Voting is open, not secret. After the election, the list of who voted for whom is published.' }));
   }
 
   function renderStage1(e, res) {
-    app.appendChild(el('h2', { text: 'Who has voted' }));
+    var c = card();
+    c.appendChild(el('h2', { text: 'Who has voted' }));
     if (res && res.voted) {
-      app.appendChild(el('p', { text: res.voted.length + ' of ' + res.total_voters + ' voting members voted.' }));
+      c.appendChild(el('p', { text: res.voted.length + ' of ' + res.total_voters + ' voting members voted.' }));
       var ul = el('ul', { class: 'plain' });
       res.voted.forEach(function (x) { ul.appendChild(el('li', { text: x.name + ', ' + x.board })); });
-      app.appendChild(ul);
+      c.appendChild(ul);
     }
-    app.appendChild(el('h2', { text: 'A vote under my name was not mine' }));
-    app.appendChild(el('p', { class: 'muted', text: 'If your name is on this list but you did not vote, tell the Election Committee here within 24 hours.' }));
+    app.appendChild(c);
+    var c2 = card();
+    c2.appendChild(el('h2', { text: 'A vote under my name was not mine' }));
+    c2.appendChild(el('p', { class: 'muted', text: 'If your name is on this list but you did not vote, tell the Election Committee here within 24 hours.' }));
     var ta = el('textarea', { id: 'objNote', 'aria-label': 'Your message to the Election Committee', maxlength: '500' });
-    app.appendChild(ta);
-    app.appendChild(el('button', { type: 'button', text: T('Send my report'), onclick: async function () {
+    c2.appendChild(ta);
+    c2.appendChild(el('button', { type: 'button', text: T('Send my report'), onclick: async function () {
       var note = ta.value.trim();
       if (!note) { msg('Please write a short message first.', true, true); return; }
       var r = await sb.rpc('elect_object', { p_election: e.id, p_note: note });
@@ -279,30 +379,33 @@
       ta.value = '';
       msg(T('Your report was sent to the Election Committee.'), false, true);
     } }));
+    app.appendChild(c2);
   }
 
   function renderClosed(res) {
-    if (!res || res.stage !== 'closed') { app.appendChild(el('p', { text: 'Results are not available.' })); return; }
-    (res.seats || []).forEach(function (s) {
-      app.appendChild(el('h2', { text: s.seat }));
-      if (!s.candidates.length) { app.appendChild(el('p', { class: 'muted', text: 'No candidate.' })); return; }
+    if (!res || res.stage !== 'closed') { var c0 = card(); c0.appendChild(el('p', { text: 'Results are not available.' })); app.appendChild(c0); return; }
+    (res.seats || []).forEach(function (s, idx) {
+      var c = card('seat');
+      c.appendChild(el('h2', null, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]));
+      if (!s.candidates.length) { c.appendChild(el('p', { class: 'muted', text: 'No candidate.' })); app.appendChild(c); return; }
       if (s.unopposed) {
-        app.appendChild(el('p', { text: s.candidates[0].display_name + ' (' + s.candidates[0].board + ') was elected without a contest.' }));
-        return;
+        c.appendChild(el('p', { text: s.candidates[0].display_name + ', ' + s.candidates[0].board + ', was elected without a contest.' }));
+        app.appendChild(c); return;
       }
       var ul = el('ul', { class: 'plain' });
-      s.candidates.forEach(function (c, i) {
+      s.candidates.forEach(function (x, i) {
         var li = el('li');
-        li.appendChild(el('strong', { text: (i === 0 ? 'Most votes: ' : '') + c.display_name + ', ' + c.board + ': ' + c.votes + ' votes' }));
+        li.appendChild(el('strong', { text: (i === 0 ? 'Most votes, ' : '') + x.display_name + ', ' + x.board + ', ' + x.votes + ' votes' }));
         var det = el('details');
-        det.appendChild(el('summary', { text: 'See who voted for ' + c.display_name }));
+        det.appendChild(el('summary', { text: 'See who voted for ' + x.display_name }));
         var inner = el('ul', { class: 'plain' });
-        (c.voters || []).forEach(function (x) { inner.appendChild(el('li', { text: x.name + ', ' + x.board })); });
+        (x.voters || []).forEach(function (y) { inner.appendChild(el('li', { text: y.name + ', ' + y.board })); });
         det.appendChild(inner);
         li.appendChild(det);
         ul.appendChild(li);
       });
-      app.appendChild(ul);
+      c.appendChild(ul);
+      app.appendChild(c);
     });
   }
 
