@@ -203,6 +203,15 @@
     return new Date(iso).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' }) + (tz ? ', ' + tz : '');
   }
   // Spoken label with commas, so a screen reader pauses between the parts.
+  function fmtVoteTime(iso) {
+    try {
+      var d = new Date(iso);
+      var o = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' };
+      var local = d.toLocaleString('en-GB', o);
+      var pk = d.toLocaleString('en-GB', Object.assign({ timeZone: 'Asia/Karachi' }, o));
+      return local === pk ? local + ' Pakistan time' : local + ' your time, ' + pk + ' Pakistan time';
+    } catch (e) { return String(iso); }
+  }
   function candLabel(c) {
     var parts = [c.display_name];
     if (c.real_name) parts.push(c.real_name);
@@ -293,7 +302,7 @@
       var sum = el('ul', { class: 'plain' });
       contested.forEach(function (s) {
         var mine = s.my_vote ? s.candidates.filter(function (c) { return c.id === s.my_vote; })[0] : null;
-        sum.appendChild(el('li', { text: s.seat + ', ' + (mine ? 'you voted for ' + candLabel(mine) : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'not voted yet')) }));
+        sum.appendChild(el('li', { text: s.seat + ', ' + (mine ? 'you voted for ' + candLabel(mine) + (s.my_vote_at ? ', on ' + fmtVoteTime(s.my_vote_at) : '') : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'not voted yet')) }));
       });
       pc.appendChild(sum);
       app.appendChild(pc);
@@ -379,7 +388,7 @@
         var mine = s.candidates.filter(function (x) { return x.id === s.my_vote; })[0];
         c.className = 'card seat done';
         h.appendChild(el('span', { class: 'badge', text: 'Voted' }));
-        c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted, ' + (mine ? candLabel(mine) : '') + '. A vote cannot be changed.' }));
+        c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted, ' + (mine ? candLabel(mine) : '') + (s.my_vote_at ? ', on ' + fmtVoteTime(s.my_vote_at) : '') + '. A vote cannot be changed.' }));
       } else {
         c.className = 'card seat bad';
         c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' was cancelled by the Election Committee. Please contact the Committee.' }));
