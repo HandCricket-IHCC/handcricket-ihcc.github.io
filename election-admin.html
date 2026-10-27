@@ -218,10 +218,12 @@
         var li = el('li');
         var pr = byEmail[c.proposer], se = byEmail[c.seconder];
         li.appendChild(document.createTextNode(c.display_name + ' (' + c.real_name + '), ' + c.board + '. Votes: ' + c.votes + '. Proposer: ' + (pr ? pr.display_name : c.proposer) + '. Seconder: ' + (se ? se.display_name + ' (' + se.board + ')' : c.seconder) + '. '));
-        if (e.status === 'draft' || e.status === 'nominations') {
+        if ((e.status === 'draft' || e.status === 'nominations') && isOwner()) {
           li.appendChild(el('button', { type: 'button', class: 'danger', text: 'Remove ' + c.display_name, onclick: async function () {
+            var why = e.is_test ? 'test' : window.prompt('Reason for removing ' + c.display_name + ' (required, it is written in the log):', '');
+            if (why === null) return;
             if (!window.confirm('Remove candidate ' + c.display_name + '?')) return;
-            var r = await rpc('admin_candidate_remove', { p_id: c.id }); if (r) renderElection();
+            var r = await rpc('admin_candidate_remove', { p_id: c.id, p_reason: why }); if (r) renderElection();
           } }));
         }
         cu.appendChild(li);
@@ -229,8 +231,8 @@
       app.appendChild(cu);
     });
 
-    if (e.status === 'draft' || e.status === 'nominations') {
-      app.appendChild(el('h3', { text: 'Add a candidate' }));
+    if ((e.status === 'draft' || e.status === 'nominations') && isOwner()) {
+      app.appendChild(el('h3', { text: 'Add a candidate directly (Owner only)' }));
       var seatSel = select(d.seats.map(function (s) { return [s.seat, s.seat]; }), 'Choose a seat');
       var candSel = select(voters.map(function (v) { return [v.email, vLabel(v)]; }), 'Choose the candidate');
       var propSel = select([], 'Choose the proposer (same board)');
@@ -252,7 +254,9 @@
       app.appendChild(field('Seconder', secSel));
       app.appendChild(el('button', { type: 'button', text: 'Add candidate', onclick: async function () {
         if (!seatSel.value || !candSel.value || !propSel.value || !secSel.value) { msg('Please fill all four fields.', true, true); return; }
-        var r = await rpc('admin_candidate_save', { p_election: SELECTED, p_seat: seatSel.value, p_candidate: candSel.value, p_proposer: propSel.value, p_seconder: secSel.value });
+        var why2 = e.is_test ? 'test' : window.prompt('Why are you adding this candidate directly (not through the nominations page)? A reason is required and is written in the log:', '');
+        if (why2 === null) return;
+        var r = await rpc('admin_candidate_save', { p_election: SELECTED, p_seat: seatSel.value, p_candidate: candSel.value, p_proposer: propSel.value, p_seconder: secSel.value, p_reason: why2 });
         if (r) { renderElection(); }
       } }));
     }
@@ -271,7 +275,7 @@
     app.appendChild(nl);
 
     // Dummy votes (test only)
-    if (e.is_test && e.status === 'voting') {
+    if (e.is_test && e.status === 'voting' && isOwner()) {
       app.appendChild(el('h2', { text: 'TEST: add dummy votes' }));
       var dSeat = select(d.seats.map(function (s) { return [s.seat, s.seat]; }), 'Choose a seat');
       var dCand = select([], 'Choose a candidate');
@@ -289,7 +293,7 @@
     }
 
     // Head: enter a vote for a member who called
-    var canEnter = (stEff === 'voting' || stEff === 'stage1') && (e.is_test || (isHead() && ME.is_head));
+    var canEnter = (stEff === 'voting' || stEff === 'stage1') && (e.is_test ? isOwner() : (isHead() && ME.is_head));
     if (canEnter) {
       app.appendChild(el('h2', { text: 'Enter a vote for a member who called (Head only)' }));
       app.appendChild(el('p', { class: 'muted', text: 'Use this only after you have recorded the call. Write the time of the call and a note. Keep the recording as proof.' }));
