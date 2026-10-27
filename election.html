@@ -155,6 +155,11 @@
 
     app.appendChild(el('h2', { text: (isTest() ? 'TEST: ' : '') + e.title }));
     app.appendChild(el('p', { text: 'You are on the voting list as ' + (v.display_name || '') + ' (' + (v.board || '') + ').' }));
+    if (e.voting_starts_at && e.voting_ends_at) {
+      app.appendChild(el('p', { text: 'Voting opens: ' + pktText(e.voting_starts_at) + '. Voting closes: ' + pktText(e.voting_ends_at) + '.' }));
+      app.appendChild(el('p', { class: 'muted', text: 'In your own time: opens ' + localText(e.voting_starts_at) + ', closes ' + localText(e.voting_ends_at) + '. The page opens and closes by itself.' }));
+    }
+    if (e.paused) app.appendChild(el('p', { text: 'Voting is paused by IHCC for now. Please wait for the announcement in the Main Group.' }));
 
     var status = e.status;
     if (status === 'nominations') {
@@ -173,6 +178,11 @@
     }
   }
 
+  function pktText(iso) { return new Date(iso).toLocaleString('en-GB', { timeZone: 'Asia/Karachi', dateStyle: 'full', timeStyle: 'short' }) + ' Pakistan time'; }
+  function localText(iso) {
+    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (x) {}
+    return new Date(iso).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' }) + (tz ? ' (' + tz + ')' : '');
+  }
   function candLabel(c) {
     return c.display_name + (c.real_name ? ' (' + c.real_name + ')' : '') + ', ' + c.board;
   }
@@ -272,6 +282,15 @@
     });
   }
 
+  setInterval(async function () {
+    if (!SESSION || !CUR || !CUR.election) return;
+    try {
+      var r = await sb.rpc('elect_current', { p_test: isTest() });
+      if (r.error || !r.data || !r.data.election) return;
+      var n = r.data.election, o = CUR.election;
+      if (n.status !== o.status || !!n.paused !== !!o.paused || n.id !== o.id) { load(); }
+    } catch (x) {}
+  }, 30000);
   sb.auth.onAuthStateChange(function (ev, sess) { SESSION = sess; });
   sb.auth.getSession().then(function (r) {
     SESSION = r.data && r.data.session;
