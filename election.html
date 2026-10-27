@@ -64,6 +64,12 @@
   label.opt input { flex:none; width:28px; height:28px; margin:0; accent-color:var(--brand); }
   label.opt .nm { font-weight:700; display:block; }
   label.opt .sub { display:block; color:var(--muted); font-size:.93rem; }
+  .field { margin:16px 0; }
+  .flabel { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.1rem; margin-bottom:8px; }
+  .flabel .num { flex:none; width:34px; height:34px; border-radius:50%; background:var(--brand); color:var(--brand-fg); display:inline-flex; align-items:center; justify-content:center; font-size:1rem; }
+  select { width:100%; min-height:58px; font:inherit; font-weight:600; padding:12px 14px; border:2px solid var(--line); border-radius:12px; background:var(--card); color:var(--fg); }
+  select:focus-visible { outline:4px solid var(--focus); outline-offset:3px; border-color:var(--brand); }
+  [hidden] { display:none !important; }
   ul.plain { list-style:none; padding:0; margin:.3rem 0; }
   ul.plain li { padding:8px 0; border-bottom:1px solid var(--line); }
   ul.plain li:last-child { border-bottom:0; }
@@ -276,14 +282,14 @@
   function renderBallot(e, ballot) {
     var seats = ballot.seats || [];
     var contested = seats.filter(function (s) { return s.candidates.length > 1; });
+    var pending = contested.filter(function (s) { return !s.my_vote && !s.my_vote_cancelled; });
     if (contested.length) {
       var done = contested.filter(function (s) { return s.my_vote; });
-      var left = contested.length - done.length;
+      var left = pending.length;
       var pc = card();
       pc.appendChild(el('h2', { text: 'My votes' }));
-      pc.appendChild(el('p', { id: 'prog', text: 'You have voted for ' + done.length + ' of ' + contested.length + ' seats' + (left ? ', ' + left + ' remaining.' : '. All done, thank you.') + ' Voting for every seat is not compulsory.' }));
-      var bar = el('div', { class: 'progress', 'aria-hidden': 'true' }, [el('span', { style: 'width:' + Math.round(100 * done.length / contested.length) + '%' })]);
-      pc.appendChild(bar);
+      pc.appendChild(el('p', { id: 'prog', text: 'You have voted for ' + done.length + ' of ' + contested.length + ' seats' + (left ? ', ' + left + ' remaining.' : '. All done, thank you.') }));
+      pc.appendChild(el('div', { class: 'progress', 'aria-hidden': 'true' }, [el('span', { style: 'width:' + Math.round(100 * done.length / contested.length) + '%' })]));
       var sum = el('ul', { class: 'plain' });
       contested.forEach(function (s) {
         var mine = s.my_vote ? s.candidates.filter(function (c) { return c.id === s.my_vote; })[0] : null;
@@ -292,65 +298,92 @@
       pc.appendChild(sum);
       app.appendChild(pc);
     }
+
+    var ballotCard = null, reviewCard = null, selects = [];
+    if (pending.length) {
+      ballotCard = card('ballot');
+      ballotCard.appendChild(el('h2', { id: 'ballotH', tabindex: '-1', text: 'Your ballot' }));
+      ballotCard.appendChild(el('p', { class: 'muted', text: 'Choose one candidate for every seat below, then press Review. You will see all your choices once more before the final submit. Your votes are final and cannot be changed.' }));
+      pending.forEach(function (s, i) {
+        var sid = 'sel' + i;
+        var f = el('div', { class: 'field' });
+        f.appendChild(el('label', { for: sid, class: 'flabel' }, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(i + 1) }), el('span', { text: s.seat })]));
+        var sel = el('select', { id: sid, 'aria-required': 'true' });
+        sel.appendChild(el('option', { value: '', text: 'Choose a candidate' }));
+        s.candidates.forEach(function (c) { sel.appendChild(el('option', { value: c.id, text: candLabel(c) })); });
+        f.appendChild(sel);
+        ballotCard.appendChild(f);
+        selects.push({ seat: s, sel: sel });
+      });
+      var reviewBtn = el('button', { type: 'button', id: 'btnReview', text: 'Review my votes', onclick: function () {
+        var missing = selects.filter(function (x) { return !x.sel.value; });
+        if (missing.length) {
+          msg('Please choose a candidate for every seat. Still missing, ' + missing.map(function (x) { return x.seat.seat; }).join(', ') + '.', true, true);
+          missing[0].sel.focus();
+          return;
+        }
+        var list = reviewCard.querySelector('ul');
+        list.innerHTML = '';
+        selects.forEach(function (x) {
+          var c = x.seat.candidates.filter(function (k) { return k.id === x.sel.value; })[0];
+          list.appendChild(el('li', null, [el('strong', { text: x.seat.seat }), el('span', { text: ', ' + candLabel(c) })]));
+        });
+        ballotCard.hidden = true;
+        reviewCard.hidden = false;
+        msg(T('Please check your choices. Nothing is submitted yet.'));
+        document.getElementById('reviewH').focus();
+      } });
+      ballotCard.appendChild(reviewBtn);
+      app.appendChild(ballotCard);
+
+      reviewCard = card('ballot');
+      reviewCard.hidden = true;
+      reviewCard.appendChild(el('h2', { id: 'reviewH', tabindex: '-1', text: 'Review your votes' }));
+      reviewCard.appendChild(el('p', { class: 'muted', text: 'These are your choices. After the final submit, they cannot be changed.' }));
+      reviewCard.appendChild(el('ul', { class: 'plain' }));
+      var back = el('button', { type: 'button', class: 'secondary', text: 'Go back and change', onclick: function () {
+        reviewCard.hidden = true;
+        ballotCard.hidden = false;
+        msg(T('You can change your choices. Nothing is submitted yet.'));
+        selects[0].sel.focus();
+      } });
+      var fin = el('button', { type: 'button', id: 'btnFinal', text: T('Final submit, cannot be changed'), onclick: async function () {
+        if (!window.confirm(T('Last check. Submit your FINAL votes for all seats? They cannot be changed after this.'))) return;
+        fin.disabled = true; back.disabled = true;
+        msg('Submitting...');
+        var choices = selects.map(function (x) { return { seat: x.seat.seat, candidate: x.sel.value }; });
+        var r = await sb.rpc('elect_cast_ballot', { p_election: e.id, p_choices: choices });
+        if (r.error) {
+          fin.disabled = false; back.disabled = false;
+          msg(errText(r.error) + ' If you are not sure, reload the page to see whether your votes were saved.', true, true);
+          return;
+        }
+        await load(T('All your votes are submitted. Thank you. A vote cannot be changed.'));
+      } });
+      reviewCard.appendChild(back);
+      reviewCard.appendChild(fin);
+      app.appendChild(reviewCard);
+    }
+
     seats.forEach(function (s, idx) {
-      var name = 'seat' + idx;
-      var hid = name + '_h';
+      var already = s.my_vote || s.my_vote_cancelled || s.unopposed || !s.candidates.length;
+      if (!already) return;
       var c = card('seat');
-      var h = el('h2', { id: hid }, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]);
+      var h = el('h2', null, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]);
       c.appendChild(h);
       if (!s.candidates.length) {
         c.appendChild(el('p', { class: 'muted', text: 'No candidate for this seat. Nothing to vote on.' }));
-        app.appendChild(c); return;
-      }
-      if (s.unopposed) {
+      } else if (s.unopposed) {
         c.appendChild(el('p', { text: candLabel(s.candidates[0]) + ', is the only candidate and is elected without a contest. No vote is needed.' }));
-        app.appendChild(c); return;
-      }
-      if (s.my_vote) {
+      } else if (s.my_vote) {
         var mine = s.candidates.filter(function (x) { return x.id === s.my_vote; })[0];
         c.className = 'card seat done';
         h.appendChild(el('span', { class: 'badge', text: 'Voted' }));
         c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted, ' + (mine ? candLabel(mine) : '') + '. A vote cannot be changed.' }));
-        app.appendChild(c); return;
-      }
-      if (s.my_vote_cancelled) {
+      } else {
         c.className = 'card seat bad';
         c.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' was cancelled by the Election Committee. Please contact the Committee.' }));
-        app.appendChild(c); return;
       }
-      h.appendChild(el('span', { class: 'badge wait', text: 'Not voted' }));
-      c.appendChild(el('p', { class: 'muted', id: name + '_s', text: 'Choose one candidate, then press the submit button. Your vote is final and cannot be changed.' }));
-      var group = el('div', { class: 'choices', role: 'radiogroup', 'aria-labelledby': hid, 'aria-describedby': name + '_s' });
-      s.candidates.forEach(function (x, i) {
-        var id = name + '_' + i;
-        var inp = el('input', { type: 'radio', name: name, id: id, value: x.id, 'aria-label': s.seat + ', ' + candLabel(x) });
-        var lab = el('label', { class: 'opt', for: id }, [
-          inp,
-          el('span', null, [
-            el('span', { class: 'nm', text: x.display_name }),
-            el('span', { class: 'sub', text: [x.real_name, x.board].filter(Boolean).join(', ') })
-          ])
-        ]);
-        inp.addEventListener('change', function () {
-          group.querySelectorAll('label.opt').forEach(function (l) { l.classList.remove('sel'); });
-          lab.classList.add('sel');
-        });
-        group.appendChild(lab);
-      });
-      c.appendChild(group);
-      var btn = el('button', { type: 'button', text: T('Submit my final vote for ' + s.seat), onclick: async function () {
-        var chosen = group.querySelector('input[name="' + name + '"]:checked');
-        if (!chosen) { msg('Please choose a candidate for ' + s.seat + ' first.', true, true); return; }
-        var cand = s.candidates.filter(function (x) { return x.id === chosen.value; })[0];
-        var label = candLabel(cand);
-        if (!window.confirm(T('Submit your FINAL vote for ' + s.seat + ': ' + label + '? It cannot be changed after this.'))) return;
-        btn.disabled = true;
-        msg('Submitting...');
-        var r = await sb.rpc('elect_cast', { p_election: e.id, p_seat: s.seat, p_candidate: chosen.value });
-        if (r.error) { btn.disabled = false; msg(errText(r.error), true, true); return; }
-        await load(T('Your vote for ' + s.seat + ' is submitted, ' + label + '. A vote cannot be changed.'));
-      } });
-      c.appendChild(btn);
       app.appendChild(c);
     });
     app.appendChild(el('p', { class: 'muted small', text: 'Voting is open, not secret. After the election, the list of who voted for whom is published.' }));
