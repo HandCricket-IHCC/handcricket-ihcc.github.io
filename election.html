@@ -167,7 +167,7 @@
       renderCandidatesOnly(ballot);
     } else if (status === 'voting') {
       var info = res && res.stage === 'voting' ? (res.voted_count + ' of ' + res.total_voters + ' voting members have voted so far.') : '';
-      msg(T('Voting is open. ' + info + ' You can change your vote until voting closes.'), false, true);
+      msg(T('Voting is open. ' + info + ' Your vote is final: once you submit it, it cannot be changed.'), false, true);
       renderBallot(e, ballot);
     } else if (status === 'stage1') {
       msg(T('Voting is closed. This is stage one: only the names of people who voted are shown, not who they voted for.'), false, true);
@@ -199,6 +199,18 @@
   }
 
   function renderBallot(e, ballot) {
+    var contested = (ballot.seats || []).filter(function (s) { return s.candidates.length > 1; });
+    if (contested.length) {
+      var done = contested.filter(function (s) { return s.my_vote; });
+      app.appendChild(el('h2', { text: 'My votes' }));
+      app.appendChild(el('p', { text: 'You have voted for ' + done.length + ' of ' + contested.length + ' seats. You may vote for the remaining seats any time before voting closes. You do not have to vote for every seat.' }));
+      var sum = el('ul', { class: 'plain' });
+      contested.forEach(function (s) {
+        var mine = s.my_vote ? s.candidates.filter(function (c) { return c.id === s.my_vote; })[0] : null;
+        sum.appendChild(el('li', { text: s.seat + ': ' + (mine ? 'voted for ' + candLabel(mine) : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'not voted yet')) }));
+      });
+      app.appendChild(sum);
+    }
     (ballot.seats || []).forEach(function (s, idx) {
       var fs = el('fieldset');
       fs.appendChild(el('legend', { text: s.seat }));
@@ -211,25 +223,37 @@
         app.appendChild(fs); return;
       }
       var name = 'seat' + idx;
+      if (s.my_vote) {
+        var mine = s.candidates.filter(function (c) { return c.id === s.my_vote; })[0];
+        fs.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' is submitted: ' + (mine ? candLabel(mine) : '') + '. A vote cannot be changed.' }));
+        app.appendChild(fs); return;
+      }
+      if (s.my_vote_cancelled) {
+        fs.appendChild(el('p', { text: 'Your vote for ' + s.seat + ' was cancelled by the Election Committee. Please contact the Committee.' }));
+        app.appendChild(fs); return;
+      }
       s.candidates.forEach(function (c, i) {
         var id = name + '_' + i;
         var inp = el('input', { type: 'radio', name: name, id: id, value: c.id });
         if (s.my_vote === c.id) inp.checked = true;
         fs.appendChild(el('label', { class: 'opt', for: id }, [inp, candLabel(c)]));
       });
-      var status = el('p', { class: 'muted', id: name + '_s', text: s.my_vote ? 'You have voted for this seat.' : 'You have not voted for this seat yet.' });
+      var status = el('p', { class: 'muted', id: name + '_s', text: 'You have not voted for this seat yet. Your vote is final and cannot be changed.' });
       fs.appendChild(status);
-      fs.appendChild(el('button', { type: 'button', text: T('Save my vote for ' + s.seat), onclick: async function () {
+      var btn = el('button', { type: 'button', text: T('Submit my final vote for ' + s.seat), onclick: async function () {
         var chosen = fs.querySelector('input[name="' + name + '"]:checked');
         if (!chosen) { msg('Please choose a candidate for ' + s.seat + ' first.', true, true); return; }
         var label = fs.querySelector('label[for="' + chosen.id + '"]').textContent;
-        if (!window.confirm(T('Save your vote for ' + s.seat + ': ' + label + '?'))) return;
-        msg('Saving...');
+        if (!window.confirm(T('Submit your FINAL vote for ' + s.seat + ': ' + label + '? It cannot be changed after this.'))) return;
+        msg('Submitting...');
         var r = await sb.rpc('elect_cast', { p_election: e.id, p_seat: s.seat, p_candidate: chosen.value });
         if (r.error) { msg(errText(r.error), true, true); return; }
-        status.textContent = 'You have voted for this seat.';
-        msg(T('Your vote for ' + s.seat + ' is saved: ' + label), false, true);
-      } }));
+        fs.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
+        btn.remove();
+        status.textContent = 'Your vote for ' + s.seat + ' is submitted: ' + label + '. A vote cannot be changed.';
+        msg(T('Your vote for ' + s.seat + ' is submitted: ' + label), false, true);
+      } });
+      fs.appendChild(btn);
       app.appendChild(fs);
     });
     app.appendChild(el('p', { class: 'muted', text: 'Voting is open, not secret: after the election the list of who voted for whom is published.' }));
