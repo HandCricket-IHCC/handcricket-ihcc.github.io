@@ -266,8 +266,8 @@
       msg(afterMsg || T('Voting is open. ' + info + 'Your vote is final, once you submit it, it cannot be changed.'), false, true);
       renderBallot(e, ballot);
     } else if (status === 'stage1') {
-      msg(T('Voting is closed. This is stage one, only the names of people who voted are shown, not who they voted for.'), false, true);
-      renderStage1(e, res);
+      msg(T('Voting is closed. This is stage one, only the number of people who voted is shown, not their names and not who they voted for.'), false, true);
+      renderStage1(e, res, ballot);
     } else if (status === 'closed') {
       msg(T('The election is closed. These are the results.'), false, true);
       renderClosed(res);
@@ -395,22 +395,28 @@
       }
       app.appendChild(c);
     });
-    app.appendChild(el('p', { class: 'muted small', text: 'Voting is open, not secret. After the election, the list of who voted for whom is published.' }));
+    app.appendChild(el('p', { class: 'muted small', text: 'Other voters cannot see who you voted for, and you cannot see who they voted for. Only the totals are published.' }));
   }
 
-  function renderStage1(e, res) {
+  function renderStage1(e, res, ballot) {
+    var mc = card();
+    mc.appendChild(el('h2', { text: 'My votes' }));
+    var mul = el('ul', { class: 'plain' });
+    ((ballot && ballot.seats) || []).filter(function (s) { return s.candidates.length > 1; }).forEach(function (s) {
+      var mine = s.my_vote ? s.candidates.filter(function (x) { return x.id === s.my_vote; })[0] : null;
+      mul.appendChild(el('li', { text: s.seat + ', ' + (mine ? 'you voted for ' + candLabel(mine) + (s.my_vote_at ? ', on ' + fmtVoteTime(s.my_vote_at) : '') : (s.my_vote_cancelled ? 'your vote was cancelled by the Election Committee' : 'you did not vote')) }));
+    });
+    mc.appendChild(mul);
+    app.appendChild(mc);
     var c = card();
-    c.appendChild(el('h2', { text: 'Who has voted' }));
-    if (res && res.voted) {
-      c.appendChild(el('p', { text: res.voted.length + ' of ' + res.total_voters + ' voting members voted.' }));
-      var ul = el('ul', { class: 'plain' });
-      res.voted.forEach(function (x) { ul.appendChild(el('li', { text: x.name + ', ' + x.board })); });
-      c.appendChild(ul);
+    c.appendChild(el('h2', { text: 'How many have voted' }));
+    if (res && res.total_voters != null) {
+      c.appendChild(el('p', { text: res.voted_count + ' of ' + res.total_voters + ' voting members have voted. Names are not shown.' }));
     }
     app.appendChild(c);
     var c2 = card();
     c2.appendChild(el('h2', { text: 'A vote under my name was not mine' }));
-    c2.appendChild(el('p', { class: 'muted', text: 'If your name is on this list but you did not vote, tell the Election Committee here within 24 hours.' }));
+    c2.appendChild(el('p', { class: 'muted', text: 'Look at the My votes card above. If it says you voted but you did not vote, tell the Election Committee here within 24 hours.' }));
     var ta = el('textarea', { id: 'objNote', 'aria-label': 'Your message to the Election Committee', maxlength: '500' });
     c2.appendChild(ta);
     c2.appendChild(el('button', { type: 'button', text: T('Send my report'), onclick: async function () {
@@ -438,12 +444,6 @@
       s.candidates.forEach(function (x, i) {
         var li = el('li');
         li.appendChild(el('strong', { text: (i === 0 ? 'Most votes, ' : '') + x.display_name + ', ' + x.board + ', ' + x.votes + ' votes' }));
-        var det = el('details');
-        det.appendChild(el('summary', { text: 'See who voted for ' + x.display_name }));
-        var inner = el('ul', { class: 'plain' });
-        (x.voters || []).forEach(function (y) { inner.appendChild(el('li', { text: y.name + ', ' + y.board })); });
-        det.appendChild(inner);
-        li.appendChild(det);
         ul.appendChild(li);
       });
       c.appendChild(ul);
