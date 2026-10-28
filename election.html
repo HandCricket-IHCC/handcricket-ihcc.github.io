@@ -312,7 +312,7 @@
     if (pending.length) {
       ballotCard = card('ballot');
       ballotCard.appendChild(el('h2', { id: 'ballotH', tabindex: '-1', text: 'Your ballot' }));
-      ballotCard.appendChild(el('p', { class: 'muted', text: 'Choose one candidate for every seat below, then press Review. You will see all your choices once more before the final submit. Your votes are final and cannot be changed.' }));
+      ballotCard.appendChild(el('p', { class: 'muted', text: 'Choose one candidate for every seat below, then press Submit my votes. You will see your choices once more, and you can still go back. Your votes are final and cannot be changed after you confirm.' }));
       pending.forEach(function (s, i) {
         var sid = 'sel' + i;
         var f = el('div', { class: 'field' });
@@ -324,7 +324,7 @@
         ballotCard.appendChild(f);
         selects.push({ seat: s, sel: sel });
       });
-      var reviewBtn = el('button', { type: 'button', id: 'btnReview', text: 'Review my votes', onclick: function () {
+      var reviewBtn = el('button', { type: 'button', id: 'btnReview', text: 'Submit my votes', onclick: function () {
         var missing = selects.filter(function (x) { return !x.sel.value; });
         if (missing.length) {
           msg('Please choose a candidate for every seat. Still missing, ' + missing.map(function (x) { return x.seat.seat; }).join(', ') + '.', true, true);
@@ -339,7 +339,7 @@
         });
         ballotCard.hidden = true;
         reviewCard.hidden = false;
-        msg(T('Please check your choices. Nothing is submitted yet.'));
+        msg(T('Please check your choices. Your votes are not submitted until you press Yes, submit my votes.'));
         document.getElementById('reviewH').focus();
       } });
       ballotCard.appendChild(reviewBtn);
@@ -347,17 +347,16 @@
 
       reviewCard = card('ballot');
       reviewCard.hidden = true;
-      reviewCard.appendChild(el('h2', { id: 'reviewH', tabindex: '-1', text: 'Review your votes' }));
-      reviewCard.appendChild(el('p', { class: 'muted', text: 'These are your choices. After the final submit, they cannot be changed.' }));
+      reviewCard.appendChild(el('h2', { id: 'reviewH', tabindex: '-1', text: 'Check your votes' }));
+      reviewCard.appendChild(el('p', { class: 'muted', text: 'These are your choices. If you press Yes, submit my votes, they are final and cannot be changed.' }));
       reviewCard.appendChild(el('ul', { class: 'plain' }));
-      var back = el('button', { type: 'button', class: 'secondary', text: 'Go back and change', onclick: function () {
+      var back = el('button', { type: 'button', class: 'secondary', text: 'No, go back and change', onclick: function () {
         reviewCard.hidden = true;
         ballotCard.hidden = false;
         msg(T('You can change your choices. Nothing is submitted yet.'));
         selects[0].sel.focus();
       } });
-      var fin = el('button', { type: 'button', id: 'btnFinal', text: T('Final submit, cannot be changed'), onclick: async function () {
-        if (!window.confirm(T('Last check. Submit your FINAL votes for all seats? They cannot be changed after this.'))) return;
+      var fin = el('button', { type: 'button', id: 'btnFinal', text: T('Yes, submit my votes, final'), onclick: async function () {
         fin.disabled = true; back.disabled = true;
         msg('Submitting...');
         var choices = selects.map(function (x) { return { seat: x.seat.seat, candidate: x.sel.value }; });
