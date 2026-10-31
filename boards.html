@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="The 15 Member Boards of IHCC and the progress of their squad lists.">
+<meta name="description" content="The 13 Member Boards of IHCC and the progress of their squad lists.">
 <meta name="theme-color" content="#0f3324">
 <title>Boards - IHCC</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="International Hand Cricket Council">
 <meta property="og:title" content="Boards - IHCC">
-<meta property="og:description" content="The 15 Member Boards of IHCC and the progress of their squad lists.">
+<meta property="og:description" content="The 13 Member Boards of IHCC and the progress of their squad lists.">
 <meta property="og:image" content="https://handcricket-ihcc.github.io/IHCC_logo.png">
 <meta property="og:url" content="https://handcricket-ihcc.github.io/boards.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -287,7 +287,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
         <h1>The Member Boards</h1>
       </div>
     </div>
-    <p class="lede">The 15 Member Boards of IHCC and the progress of their squad lists.</p>
+    <p class="lede">The 13 Member Boards of IHCC and the progress of their squad lists.</p>
   </div>
 </header>
 
@@ -338,29 +338,40 @@ details p { margin: 0 0 16px; color: var(--muted); }
     "USA Hand Cricket Board": ["\uD83C\uDDFA\uD83C\uDDF8", "#3c3b6e"],
     "Germany Hand Cricket Board": ["\uD83C\uDDE9\uD83C\uDDEA", "#c9a100"],
     "Nepal Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDF5", "#dc143c"],
-    "Scotland Hand Cricket Board": ["\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74\uDB40\uDC7F", "#0b4f9c"],
-    "Zimbabwe Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDFC", "#b08900"],
     "India Hand Cricket Board": ["\uD83C\uDDEE\uD83C\uDDF3", "#e07b00"]
   };
+  var DISPLAY = {
+    "New Zealand Hand Cricket Board": "New Zealand Hand Cricket", "England Hand Cricket Board": "England and Wales Hand Cricket Board",
+    "Pakistan Hand Cricket Board": "Pakistan Hand Cricket Board", "Bangladesh Hand Cricket Board": "Bangladesh Hand Cricket Board",
+    "Afghanistan Hand Cricket Board": "Afghanistan Hand Cricket Board", "Australia Hand Cricket Board": "Hand Cricket Australia",
+    "Sri Lanka Hand Cricket Board": "Sri Lanka Hand Cricket", "South Africa Hand Cricket Board": "Hand Cricket South Africa",
+    "UAE Hand Cricket Board": "Emirates Hand Cricket Board", "USA Hand Cricket Board": "USA Hand Cricket",
+    "Germany Hand Cricket Board": "German Hand Cricket Federation", "Nepal Hand Cricket Board": "Hand Cricket Association of Nepal",
+    "India Hand Cricket Board": "Board of Control for Hand Cricket in India"
+  };
   var names = Object.keys(BOARD_STYLE);
+  var OPEN = [], LAST = null;
   var list = document.getElementById("list");
   function draw(rows) {
+    LAST = rows;
     list.textContent = "";
     var done = 0, by = {};
     (rows || []).forEach(function (r) { by[r.board] = r; });
     names.forEach(function (n) {
       var r = by[n], c = r ? r.count : 0, st = r ? r.state : null; if (st === "Completed") done++;
       var li = document.createElement("li"); li.className = "bcard"; li.style.setProperty("--bc", BOARD_STYLE[n][1]);
-      var t = document.createElement("strong"); t.textContent = BOARD_STYLE[n][0] + " " + n;
+      var t = document.createElement("strong"); t.textContent = BOARD_STYLE[n][0] + " " + DISPLAY[n];
+      if (r && OPEN.indexOf(r.new_code) > -1) { var lk = document.createElement("a"); lk.href = "board.html?board=" + encodeURIComponent(r.new_code); lk.textContent = "Open the board page"; lk.setAttribute("aria-label", "Open the board page of " + DISPLAY[n]); lk.style.fontWeight = "700"; li.__lk = lk; }
       var s = document.createElement("span"); s.textContent = rows ? st : "Not available right now.";
       var bar = document.createElement("div"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
       var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(c / MIN * 100)) + "%"; bar.appendChild(i);
-      li.appendChild(t); li.appendChild(s); li.appendChild(bar); list.appendChild(li);
+      li.appendChild(t); li.appendChild(s); if (li.__lk) li.appendChild(li.__lk); li.appendChild(bar); list.appendChild(li);
     });
-    document.getElementById("summ").textContent = rows ? (done + " of 15 boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
+    document.getElementById("summ").textContent = rows ? (done + " of " + names.length + " boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
   }
   draw(null);
   fetch(API, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" }).then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) draw(d); }).catch(function () {});
+  fetch(API.replace("public_board_progress", "public_open_boards"), { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" }).then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) { OPEN = d.map(function (x) { return x.code; }); if (LAST) draw(LAST); } }).catch(function () {});
 })();
 </script>
 </body>
