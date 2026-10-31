@@ -50,6 +50,8 @@
   var SELECTED = null;
   var STATUSES = [['draft', 'Draft'], ['nominations', 'Nominations'], ['voting', 'Voting open'], ['stage1', 'Stage one (names only)'], ['closed', 'Closed (results)']];
 
+  var DISPLAY_NAMES = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
+  function dispBoard(n) { return DISPLAY_NAMES[n] || n; }
   function el(tag, attrs, kids) {
     var n = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -78,7 +80,7 @@
     opts.forEach(function (o) { s.appendChild(el('option', { value: o[0], text: o[1] })); });
     return s;
   }
-  function vLabel(v) { return v.display_name + ' (' + v.real_name + '), ' + v.board; }
+  function vLabel(v) { return v.display_name + ' (' + v.real_name + '), ' + dispBoard(v.board); }
   function isOwner() { return ME && ME.role === 'owner'; }
   function isHead() { return ME && ME.role === 'election_officer'; }
   function toPktInput(iso) {
@@ -195,7 +197,7 @@
     // Voter list
     app.appendChild(el('h3', { text: 'Voter list' }));
     var ul = el('ul', { class: 'plain' });
-    d.voters_by_board.forEach(function (b) { ul.appendChild(el('li', { text: b.board + ': ' + b.count + ' voters' })); });
+    d.voters_by_board.forEach(function (b) { ul.appendChild(el('li', { text: dispBoard(b.board) + ': ' + b.count + ' voters' })); });
     app.appendChild(ul);
     if (!e.voters_frozen) {
       app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Freeze the voter list now', onclick: async function () {
@@ -217,7 +219,7 @@
       s.candidates.forEach(function (c) {
         var li = el('li');
         var pr = byEmail[c.proposer], se = byEmail[c.seconder];
-        li.appendChild(document.createTextNode(c.display_name + ' (' + c.real_name + '), ' + c.board + '. Votes: ' + c.votes + '. Proposer: ' + (pr ? pr.display_name : c.proposer) + '. Seconder: ' + (se ? se.display_name + ' (' + se.board + ')' : c.seconder) + '. '));
+        li.appendChild(document.createTextNode(c.display_name + ' (' + c.real_name + '), ' + dispBoard(c.board) + '. Votes: ' + c.votes + '. Proposer: ' + (pr ? pr.display_name : c.proposer) + '. Seconder: ' + (se ? se.display_name + ' (' + se.board + ')' : c.seconder) + '. '));
         if ((e.status === 'draft' || e.status === 'nominations') && isOwner()) {
           li.appendChild(el('button', { type: 'button', class: 'danger', text: 'Remove ' + c.display_name, onclick: async function () {
             var why = e.is_test ? 'test' : window.prompt('Reason for removing ' + c.display_name + ' (required, it is written in the log):', '');
@@ -306,7 +308,7 @@
       var evSeats = [];
       d.seats.forEach(function (s) {
         if (s.candidates.length < 2) return;
-        var cs = select(s.candidates.map(function (c) { return [c.id, c.display_name + ', ' + c.board]; }), 'No vote for this office');
+        var cs = select(s.candidates.map(function (c) { return [c.id, c.display_name + ', ' + dispBoard(c.board)]; }), 'No vote for this office');
         app.appendChild(field(s.seat, cs));
         evSeats.push({ seat: s.seat, sel: cs });
       });
@@ -361,7 +363,7 @@
     app.appendChild(el('h2', { text: 'Who has voted (' + d.voted_names.length + ')' }));
     var vu = el('ul', { class: 'plain' });
     d.voted_names.forEach(function (x) {
-      var li = el('li', { text: x.name + ', ' + x.board + ' ' });
+      var li = el('li', { text: x.name + ', ' + dispBoard(x.board) + ' ' });
       if (x.email.indexOf('dummy-') !== 0) {
         li.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Cancel vote of ' + x.name, onclick: async function () {
           var note = window.prompt('Reason for cancelling this vote (required):', '');
