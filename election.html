@@ -107,6 +107,8 @@
   var SESSION = null;
   var CUR = null;
 
+  var DISPLAY_NAMES = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
+  function dispBoard(n) { return DISPLAY_NAMES[n] || n; }
   function el(tag, attrs, kids) {
     var n = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -215,7 +217,7 @@
   function candLabel(c) {
     var parts = [c.display_name];
     if (c.real_name) parts.push(c.real_name);
-    if (c.board) parts.push(c.board);
+    if (c.board) parts.push(dispBoard(c.board));
     return parts.join(', ');
   }
 
@@ -224,7 +226,7 @@
     var c = card();
     c.appendChild(el('h2', { text: 'You are voting as' }));
     var dl = el('dl', { class: 'who' });
-    [['Display name', v.display_name], ['Real name', v.real_name], ['Board', v.board], ['Gmail', email]].forEach(function (p) {
+    [['Display name', v.display_name], ['Real name', v.real_name], ['Board', dispBoard(v.board)], ['Gmail', email]].forEach(function (p) {
       dl.appendChild(el('div', null, [el('dt', { text: p[0] }), el('dd', { text: p[1] || '-' })]));
     });
     c.appendChild(dl);
@@ -436,13 +438,13 @@
       c.appendChild(el('h2', null, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]));
       if (!s.candidates.length) { c.appendChild(el('p', { class: 'muted', text: 'No candidate.' })); app.appendChild(c); return; }
       if (s.unopposed) {
-        c.appendChild(el('p', { text: s.candidates[0].display_name + ', ' + s.candidates[0].board + ', was elected without a contest.' }));
+        c.appendChild(el('p', { text: s.candidates[0].display_name + ', ' + dispBoard(s.candidates[0].board) + ', was elected without a contest.' }));
         app.appendChild(c); return;
       }
       var ul = el('ul', { class: 'plain' });
       s.candidates.forEach(function (x, i) {
         var li = el('li');
-        li.appendChild(el('strong', { text: (i === 0 ? 'Most votes, ' : '') + x.display_name + ', ' + x.board + ', ' + x.votes + ' votes' }));
+        li.appendChild(el('strong', { text: (i === 0 ? 'Most votes, ' : '') + x.display_name + ', ' + dispBoard(x.board) + ', ' + x.votes + ' votes' }));
         ul.appendChild(li);
       });
       c.appendChild(ul);
