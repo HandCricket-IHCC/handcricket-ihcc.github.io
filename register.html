@@ -304,7 +304,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
         <h1>Board squad list</h1>
       </div>
     </div>
-    <p class="lede">For board representatives only. Sign in with your Google account to enter the squad of your board.</p>
+    <p class="lede">The squad submission period is over. The squads are shown on the board pages.</p>
     <p class="deadline"><span>Last date:</span> 31 October 2026, 11:59 PM Pakistan time</p>
   </div>
 </header>
@@ -313,7 +313,14 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   <p id="msg" class="msgbox" role="status" aria-live="polite" hidden></p>
   <p id="doneMsg" class="msgbox" hidden></p>
 
-  <section id="loadingView" aria-live="polite"><p>Checking your sign-in. Please wait.</p></section>
+  <section id="closedView" aria-labelledby="closedTitle">
+    <h2 id="closedTitle" tabindex="-1">Squad lists are closed</h2>
+    <p>The squad submission period is over, and this page is now closed. The squad of every Member Board is shown on its own board page. Any change to a name or a WhatsApp number is made by IHCC Management.</p>
+    <p><a href="boards.html">Open the Boards page</a></p>
+    <p>To ask for a change, write to <a href="mailto:handcricket.ihcc@gmail.com">handcricket.ihcc@gmail.com</a>.</p>
+  </section>
+
+  <section id="loadingView" hidden aria-live="polite"><p>Checking your sign-in. Please wait.</p></section>
 
   <section id="loginView" hidden aria-labelledby="loginTitle">
     <h2 id="loginTitle">Sign in</h2>
@@ -494,6 +501,8 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   function show(view) {
     ["loadingView", "loginView", "deniedView", "repView"].forEach(function (v) { $(v).hidden = v !== view; });
   }
+  var DISPLAY_NAMES = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
+  function dispBoard(n) { return DISPLAY_NAMES[n] || n; }
   function el(tag, attrs, text) {
     var e = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
@@ -536,7 +545,9 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   }
   var clientAtLoad = Date.now();
 
+  var CLOSED = true; /* squad submission is closed; set to false to open the old form again */
   async function start() {
+    if (CLOSED) { return; }
     if (starting) return; starting = true;
     try {
       var s = await Promise.race([sb.auth.getSession(), new Promise(function (res) { setTimeout(function () { res(null); }, 12000); })]);
@@ -566,7 +577,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
 
   function render(focusSpec) {
     var n = players.length, min = 12, max = 20;
-    $("boardName").textContent = me.board;
+    $("boardName").textContent = dispBoard(me.board);
     $("whoLine").textContent = "Signed in as " + me.email + ".";
     var l = left(me.deadline, me.now);
     $("deadlineLine").textContent = l ? "Last date: " + pkt(me.deadline) + ". Time left: " + l + "." : "The last date has passed (" + pkt(me.deadline) + ").";
@@ -815,9 +826,9 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   });
   $("dlBtn").addEventListener("click", function () {
     var d = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Karachi", day: "numeric", month: "long", year: "numeric" }).format(new Date());
-    var head = me.board + "\nDate: " + d + "\nStatus: " + (me.is_final || (!me.editable && players.length >= 12) ? "Final" : "Not final") + "\n\n";
+    var head = dispBoard(me.board) + "\nDate: " + d + "\nStatus: " + (me.is_final || (!me.editable && players.length >= 12) ? "Final" : "Not final") + "\n\n";
     var blob = new Blob([head + listText() + "\n"], { type: "text/plain;charset=utf-8" });
-    var a = el("a"); a.href = URL.createObjectURL(blob); a.download = me.board + " squad list.txt";
+    var a = el("a"); a.href = URL.createObjectURL(blob); a.download = dispBoard(me.board) + " squad list.txt";
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
     notify("The squad list file was downloaded.", false, [{ label: "Close", focus: function () { return $("dlBtn"); } }]);
   });
@@ -825,7 +836,7 @@ button.alt.danger { border-color: var(--error); color: var(--error); }
   // final submit
   $("finalBtn").addEventListener("click", function () {
     $("finalPanel").hidden = false; $("finalBtn").hidden = true;
-    $("finalQ").textContent = "Are you sure you want to submit the final list of " + players.length + " players for the " + me.board + "? After this the list is locked. Before the deadline you can reopen it.";
+    $("finalQ").textContent = "Are you sure you want to submit the final list of " + players.length + " players for the " + dispBoard(me.board) + "? After this the list is locked. Before the deadline you can reopen it.";
     $("finalConsentText").textContent = CONSENT;
     $("finalChk").checked = false; $("finalType").value = ""; $("finalGo").disabled = true;
     $("finalQ").focus();
