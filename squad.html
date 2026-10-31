@@ -278,7 +278,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
   <div id="closedNote" class="closed" hidden role="status">Registration is closed. The last date was 31 October 2026, 11:59 PM Pakistan time.</div>
   <div id="startView">
     <section class="progress" id="progressSec" aria-label="Boards progress" hidden>
-      <p class="pnum"><strong id="doneNum">0</strong> of 15 boards have completed their squad list.</p>
+      <p class="pnum"><strong id="doneNum">0</strong> of <span id="totNum">13</span> boards have completed their squad list.</p>
       <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
 
@@ -304,9 +304,9 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </section>
 
     <section aria-labelledby="start">
-      <h2 id="start">Are you a board representative?</h2>
-      <p>Sign in with the Gmail address that the IHCC Owner added for your board.</p>
-      <p><a class="cta" id="cta" href="register.html">Board representative sign-in</a></p>
+      <h2 id="start">Where are the squads now?</h2>
+      <p>Squad submission is closed. The squad of every Member Board is shown on its own board page, with the display name and the real name of each player.</p>
+      <p><a class="cta" id="cta" href="boards.html">Open the Boards page</a></p>
     </section>
 
     <section aria-labelledby="faq">
@@ -361,7 +361,7 @@ details p { margin: 0 0 16px; color: var(--muted); }
     if (!Array.isArray(d)) return;
     var done = 0, dots = document.getElementById("dots"); dots.textContent = "";
     d.forEach(function (r) { var i = document.createElement("i"); if (r.state === "Completed") { done++; i.className = "on"; } dots.appendChild(i); });
-    document.getElementById("doneNum").textContent = done;
+    document.getElementById("doneNum").textContent = done; document.getElementById("totNum").textContent = d.length;
     document.getElementById("progressSec").hidden = false;
   }).catch(function () {});
 })();
