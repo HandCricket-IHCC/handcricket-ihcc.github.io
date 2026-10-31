@@ -108,6 +108,7 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
           <option value="mail">Send email</option>
           <option value="admins">Administrators</option>
           <option value="audit">Audit log</option>
+          <option value="boardtools">Board tools</option>
           <option value="entries">Old registrations (closed)</option>
           <option value="summary">Old boards summary (closed)</option>
         </select>
@@ -383,6 +384,57 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
       </div>
     </section>
 
+        <section id="btSec" aria-labelledby="btH" hidden>
+      <h2 id="btH">Board tools</h2>
+      <p class="muted">Tools for the Owner to watch and look after the board pages. Every action is written in the audit log and in the Activity list of that board.</p>
+
+      <h3>1. Activity of the boards</h3>
+      <label for="btActBoard">Board</label> <select id="btActBoard"></select>
+      <button type="button" id="btActGo">Show the latest activity</button>
+      <ul id="btActList"></ul>
+
+      <h3>2. Hide an announcement</h3>
+      <label for="btAnnBoard">Board</label> <select id="btAnnBoard"></select>
+      <button type="button" id="btAnnGo">Show the live announcements</button>
+      <label for="btAnnReason">Reason for hiding</label> <input type="text" id="btAnnReason" maxlength="200">
+      <ul id="btAnnList"></ul>
+
+      <h3>3. Remove a logo</h3>
+      <label for="btLogoBoard">Board</label> <select id="btLogoBoard"></select>
+      <label for="btLogoReason">Reason</label> <input type="text" id="btLogoReason" maxlength="200">
+      <button type="button" id="btLogoGo">Remove the logo</button>
+
+      <h3>4. Replace a leader</h3>
+      <p class="muted small">The new person must be a player of the squad (first 12 for Director and Deputy), and the three leaders must be different people. The old person's WhatsApp setting is cleared.</p>
+      <label for="btLdBoard">Board</label> <select id="btLdBoard"></select>
+      <label for="btLdRole">Role</label> <select id="btLdRole"><option value="director">Team Director</option><option value="deputy">Deputy Director</option><option value="media">Media Manager</option></select>
+      <label for="btLdEmail">New leader's Gmail</label> <input type="email" id="btLdEmail" autocomplete="off">
+      <button type="button" id="btLdGo">Replace the leader</button>
+
+      <h3>5. Silence watch</h3>
+      <label for="btSilDays">Days without leader activity</label> <input type="number" id="btSilDays" value="30" min="1" max="365">
+      <button type="button" id="btSilGo">Check quiet boards</button>
+      <ul id="btSilList"></ul>
+
+      <h3>6. Player appeals</h3>
+      <label for="btApBoard">Board</label> <select id="btApBoard"></select>
+      <label for="btApPlayer">Player</label> <input type="text" id="btApPlayer" maxlength="100">
+      <label for="btApText">Appeal</label> <textarea id="btApText" maxlength="2000"></textarea>
+      <button type="button" id="btApAdd">Record the appeal</button>
+      <label for="btApDecision">Decision (used when you press Close an appeal)</label> <input type="text" id="btApDecision" maxlength="300">
+      <button type="button" id="btApGo">Show all appeals</button>
+      <ul id="btApList"></ul>
+
+      <h3>7. Squad history</h3>
+      <label for="btHiBoard">Board</label> <select id="btHiBoard"></select>
+      <button type="button" id="btHiGo">Show the squad history</button>
+      <ul id="btHiList"></ul>
+
+      <h3>8. Backup</h3>
+      <p class="muted small">Downloads one file with the leaders, About texts, announcements, logos, activity, squad history and appeals of all boards.</p>
+      <button type="button" id="btBackup">Download the board backup</button>
+    </section>
+
     <section id="auditSec" aria-labelledby="audH" hidden>
       <h2 id="audH">Audit log</h2>
       <div class="scroll"><table>
@@ -470,6 +522,7 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
         : o.value === "admins" ? me.role === "owner"
         : o.value === "reps" ? me.role === "owner"
         : o.value === "mail" ? me.role === "owner"
+        : o.value === "boardtools" ? me.role === "owner"
         : (me.role === "owner" || me.role === "auditor");
       o.disabled = !ok; o.hidden = !ok;
     });
@@ -489,6 +542,8 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     $("adminsSec").hidden = !(v === "admins" && me.role === "owner");
     $("repsSec").hidden = !(v === "reps" && me.role === "owner");
     $("mailSec").hidden = !(v === "mail" && me.role === "owner");
+    $("btSec").hidden = !(v === "boardtools" && me.role === "owner");
+    if (v === "boardtools" && me.role === "owner") btInit();
     $("auditSec").hidden = !(v === "audit" && (me.role === "owner" || me.role === "auditor"));
     if (v === "squads" && oc) { showSquadHome(); loadSquads(); }
     if (v === "notes" && oc) loadNotes();
@@ -1267,6 +1322,90 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
     }, true);
   })();
 
+  /* ---- Board tools (Owner) ---- */
+  var DISP = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
+  function dispB(n) { return DISP[n] || n; }
+  var btReady = false;
+  function btInit() {
+    if (btReady) return; btReady = true;
+    ["btActBoard", "btAnnBoard", "btLogoBoard", "btLdBoard", "btApBoard", "btHiBoard"].forEach(function (id) {
+      var sel = $(id);
+      if (id === "btActBoard") { var o0 = document.createElement("option"); o0.value = ""; o0.textContent = "All boards"; sel.appendChild(o0); }
+      BOARDS.forEach(function (b) { var o = document.createElement("option"); o.value = b; o.textContent = dispB(b); sel.appendChild(o); });
+    });
+  }
+  function fmtT(t) { return new Date(t).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Karachi" }) + " PKT"; }
+  var BT_ROLE = { director: "Team Director", deputy: "Deputy Director", media: "Media Manager", owner: "IHCC Owner" };
+  function fillList(id, items, empty) {
+    var ul = $(id); ul.textContent = "";
+    if (!items.length) { var li = document.createElement("li"); li.textContent = empty; ul.appendChild(li); return; }
+    items.forEach(function (x) { ul.appendChild(x); });
+  }
+  function detailText(d) {
+    if (!d) return "";
+    var o = [];
+    if (d.text) o.push("Text: " + d.text);
+    if (d.old != null || d.new != null) o.push("Before: " + (d.old || "(empty)") + ". After: " + (d.new || "(empty)"));
+    if (d.reason) o.push("Reason: " + d.reason);
+    if (d.alt) o.push("Description: " + d.alt);
+    return o.length ? " (" + o.join(". ") + ")" : "";
+  }
+  async function guard(fn) { try { await fn(); } catch (e) { say(errMsg(e), true); } }
+  function btWire() {
+    $("btActGo").addEventListener("click", function () { guard(async function () {
+      var rows = await rpc("admin_board_activity", { p_board: $("btActBoard").value || null, p_limit: 100 });
+      fillList("btActList", rows.map(function (a) { var li = document.createElement("li"); li.textContent = fmtT(a.at) + " · " + dispB(a.board) + " · " + (BT_ROLE[a.role] || a.role) + ": " + a.action + detailText(a.detail); return li; }), "No activity yet.");
+      sayLive("Showing " + rows.length + " activity lines.");
+    }); });
+    $("btAnnGo").addEventListener("click", function () { guard(async function () {
+      var board = $("btAnnBoard").value, items = [], off = 0, more = true;
+      while (more && off < 30) { var r = await rpc("public_board_announcements", { p_board: board, p_offset: off }); items = items.concat(r.items); off += r.items.length; more = r.more && r.items.length > 0; }
+      fillList("btAnnList", items.map(function (a) {
+        var li = document.createElement("li"); li.textContent = fmtT(a.at) + " · " + (BT_ROLE[a.role] || a.role) + ": " + a.body + " ";
+        li.appendChild(btn("Hide", function () { guard(async function () {
+          await rpc("admin_hide_announcement", { p_id: a.id, p_reason: $("btAnnReason").value, p_hide: true });
+          say("The announcement is hidden.", false); $("btAnnGo").click();
+        }); }, "alt", "Hide this announcement: " + a.body.slice(0, 40)));
+        return li;
+      }), "No live announcements for this board.");
+    }); });
+    $("btLogoGo").addEventListener("click", function () { guard(async function () {
+      await rpc("admin_remove_logo", { p_board: $("btLogoBoard").value, p_reason: $("btLogoReason").value });
+      say("The logo is removed.", false); $("btLogoReason").value = "";
+    }); });
+    $("btLdGo").addEventListener("click", function () { guard(async function () {
+      await rpc("admin_replace_leader", { p_board: $("btLdBoard").value, p_role: $("btLdRole").value, p_email: $("btLdEmail").value });
+      say("The leader is replaced.", false); $("btLdEmail").value = "";
+    }); });
+    $("btSilGo").addEventListener("click", function () { guard(async function () {
+      var rows = await rpc("admin_silent_boards", { p_days: parseInt($("btSilDays").value, 10) || 30 });
+      fillList("btSilList", rows.map(function (r) { var li = document.createElement("li"); li.textContent = dispB(r.board) + ": " + (r.last_activity ? "last leader activity " + r.days + " days ago (" + fmtT(r.last_activity) + ")" : "no leader activity yet"); return li; }), "No quiet boards.");
+    }); });
+    function loadAppeals() { return guard(async function () {
+      var rows = await rpc("admin_appeal_list");
+      fillList("btApList", rows.map(function (a) {
+        var li = document.createElement("li"); li.textContent = "#" + a.id + " · " + dispB(a.board) + " · " + a.player + " · " + a.status + ": " + a.body + (a.resolution ? " Decision: " + a.resolution : "") + " ";
+        if (a.status === "open") li.appendChild(btn("Close", function () { guard(async function () { await rpc("admin_appeal_resolve", { p_id: a.id, p_resolution: $("btApDecision").value }); say("The appeal is closed.", false); loadAppeals(); }); }, "alt", "Close appeal number " + a.id));
+        return li;
+      }), "No appeals.");
+    }); }
+    $("btApGo").addEventListener("click", loadAppeals);
+    $("btApAdd").addEventListener("click", function () { guard(async function () {
+      await rpc("admin_appeal_add", { p_board: $("btApBoard").value, p_player: $("btApPlayer").value, p_body: $("btApText").value });
+      $("btApPlayer").value = ""; $("btApText").value = ""; say("The appeal is recorded.", false); loadAppeals();
+    }); });
+    $("btHiGo").addEventListener("click", function () { guard(async function () {
+      var rows = await rpc("admin_squad_history", { p_board: $("btHiBoard").value });
+      fillList("btHiList", rows.map(function (h) { var li = document.createElement("li"); li.textContent = fmtT(h.at) + " · " + (BT_ROLE[h.role] || h.role || "") + " · " + h.kind + " " + JSON.stringify(h.detail || {}); return li; }), "No squad history yet.");
+    }); });
+    $("btBackup").addEventListener("click", function () { guard(async function () {
+      var d = await rpc("admin_board_backup");
+      var blob = new Blob([JSON.stringify(d, null, 1)], { type: "application/json" });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ihcc-board-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); say("The backup file is downloaded.", false);
+    }); });
+  }
+  btWire();
   $("viewSel").addEventListener("change", setView);
   $("fSearch").addEventListener("input", render);
   $("reloadBtn").addEventListener("click", loadAll);
