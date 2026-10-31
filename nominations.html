@@ -50,6 +50,8 @@
   try { MODE = localStorage.getItem('ihcc_el_mode') === 'main' ? 'main' : 'test'; } catch (e) {}
   var SESSION = null;
 
+  var DISPLAY_NAMES = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
+  function dispBoard(n) { return DISPLAY_NAMES[n] || n; }
   function el(tag, attrs, kids) {
     var n = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -152,9 +154,9 @@
     } else {
       var tu = el('ul', { class: 'plain' });
       d.tasks.forEach(function (t) {
-        var text = t.role === 'nominee' ? 'You are named as the nominee for ' + t.seat + ' of the ' + t.board + '.'
-                 : t.role === 'proposer' ? 'Proposer needed: ' + t.nominee + ' of the ' + t.board + ' is nominated for ' + t.seat + '. Any other Voting Member of the same board may propose.'
-                 : 'You are named as the seconder of ' + t.nominee + ' of the ' + t.board + ' for ' + t.seat + '.';
+        var text = t.role === 'nominee' ? 'You are named as the nominee for ' + t.seat + ' of the ' + dispBoard(t.board) + '.'
+                 : t.role === 'proposer' ? 'Proposer needed: ' + t.nominee + ' of the ' + dispBoard(t.board) + ' is nominated for ' + t.seat + '. Any other Voting Member of the same board may propose.'
+                 : 'You are named as the seconder of ' + t.nominee + ' of the ' + dispBoard(t.board) + ' for ' + t.seat + '.';
         var li = el('li', { text: text + ' ' });
         if (open) li.appendChild(el('button', { type: 'button', text: T('Confirm as ' + t.role), onclick: async function () {
           if (!window.confirm(T('Confirm as ' + t.role + ' for ' + t.nominee + ', ' + t.seat + '?'))) return;
@@ -223,8 +225,8 @@
           var label = v.display_name + (v.real_name ? ' (' + v.real_name + ')' : '');
           if (v.board === d.director_board) nomSel.appendChild(el('option', { value: v.email, text: label }));
           else {
-            if (!groups[v.board]) { groups[v.board] = el('optgroup', { label: v.board }); secSel.appendChild(groups[v.board]); }
-            groups[v.board].appendChild(el('option', { value: v.email, text: label + ', ' + v.board }));
+            if (!groups[v.board]) { groups[v.board] = el('optgroup', { label: dispBoard(v.board) }); secSel.appendChild(groups[v.board]); }
+            groups[v.board].appendChild(el('option', { value: v.email, text: label + ', ' + dispBoard(v.board) }));
           }
         });
         app.appendChild(field('Office', seatSel));
@@ -247,7 +249,7 @@
     if (!d.locked.length) app.appendChild(el('p', { class: 'muted', text: 'No nomination is locked yet.' }));
     var lu = el('ul', { class: 'plain' });
     d.locked.forEach(function (n) {
-      lu.appendChild(el('li', { text: n.seat + ': ' + n.nominee + (n.nominee_real ? ' (' + n.nominee_real + ')' : '') + ', ' + n.board }));
+      lu.appendChild(el('li', { text: n.seat + ': ' + n.nominee + (n.nominee_real ? ' (' + n.nominee_real + ')' : '') + ', ' + dispBoard(n.board) }));
     });
     app.appendChild(lu);
     app.appendChild(el('p', { class: 'muted', text: 'Only locked nominations are shown. A nomination still being confirmed is not shown to others.' }));
