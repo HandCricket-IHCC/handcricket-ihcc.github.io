@@ -30,6 +30,8 @@
   ul.plain { list-style:none; padding:0; margin:.3rem 0; }
   ul.plain li { padding:6px 0; border-bottom:1px solid var(--line); }
   .box { border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin:10px 0; }
+  nav.ql { max-width:760px; margin:20px auto 30px; padding:0 16px; }
+  nav.ql a { display:inline-block; padding:12px 14px; min-height:44px; margin-right:6px; }
 </style>
 </head>
 <body>
@@ -39,6 +41,26 @@
   <div id="msg" role="status" aria-live="polite" tabindex="-1"></div>
   <div id="app"></div>
 </main>
+<nav class="ql" aria-label="Site links"><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a> <a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a> <a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a> <a href="keyboard-shortcuts.html" data-sk="K" aria-keyshortcuts="Alt+K">Keyboard shortcuts</a></nav>
+<script>
+/* Keyboard shortcuts: Alt + key (Windows and Linux). Uses the physical key, so it works with any keyboard language. */
+(function () {
+  if (/Mac|iPhone|iPad/.test(navigator.platform || "")) return;
+  function shown(n) { return !!(n.offsetWidth || n.offsetHeight || n.getClientRects().length) && !n.disabled; }
+  document.addEventListener("keydown", function (e) {
+    if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat) return;
+    var m = /^Key([A-Z])$/.exec(e.code || ""); if (!m) return;
+    if (document.querySelector("dialog[open], .ihcc-wrap")) return;
+    var list = document.querySelectorAll('[data-sk="' + m[1] + '"]');
+    for (var i = 0; i < list.length; i++) {
+      if (!shown(list[i])) continue;
+      e.preventDefault();
+      if (/^(SELECT|INPUT|TEXTAREA)$/.test(list[i].tagName) || list[i].hasAttribute("data-sk-focus")) list[i].focus(); else list[i].click();
+      return;
+    }
+  }, true);
+})();
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
