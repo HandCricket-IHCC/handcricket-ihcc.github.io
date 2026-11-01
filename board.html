@@ -129,7 +129,7 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav" data-sk="M" aria-keyshortcuts="Alt+M">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" aria-current="page" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="admin.html" class="adminlink">Admin</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" aria-current="page" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li></ul></nav>
   </div>
 </div>
 <script>
@@ -237,7 +237,7 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
     </div>
     <nav aria-label="Footer">
       <p class="fh">Explore</p>
-      <ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="keyboard-shortcuts.html" data-sk="K" aria-keyshortcuts="Alt+K">Keyboard shortcuts</a></li></ul>
+      <ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="faq.html" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li><li><a href="keyboard-shortcuts.html" data-sk="K" aria-keyshortcuts="Alt+K">Keyboard shortcuts</a></li></ul>
     </nav>
     <div>
       <p class="fh">Contact</p>
@@ -297,9 +297,9 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
     if (!data.leaders_set) { var nl = el("div", "card"); nl.appendChild(el("p", "", "The Team Director, Deputy Director and Media Manager of this board are not recorded yet. They will appear here after the board holds its internal election and reports it to IHCC.")); box.appendChild(nl); }
     data.leaders.forEach(function (L) {
       var a = el("article", "card leader"); a.setAttribute("aria-label", ROLE_NAME[L.role]);
-      a.appendChild(el("span", "role", ROLE_NAME[L.role]));
-      a.appendChild(el("span", "dn", L.display_name));
-      var dl = el("dl"); dl.appendChild(el("dt", "", "Real name")); dl.appendChild(el("dd", "", L.real_name)); a.appendChild(dl);
+      a.appendChild(el("span", "role", ROLE_NAME[L.role])); a.appendChild(document.createTextNode(" "));
+      a.appendChild(el("span", "dn", L.display_name)); a.appendChild(document.createTextNode(" "));
+      var dl = el("dl"); dl.appendChild(el("dt", "", "Real name")); dl.appendChild(document.createTextNode(" ")); dl.appendChild(el("dd", "", L.real_name)); a.appendChild(dl); a.appendChild(document.createTextNode(" "));
       if (L.wa) {
         var msg = "Assalam o Alaikum, I am contacting you from the IHCC " + data.board + " page.";
         var w = el("a", "wa", "Chat on WhatsApp"); w.href = "https://wa.me/" + encodeURIComponent(L.wa) + "?text=" + encodeURIComponent(msg);
@@ -311,12 +311,12 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
 
     var ol = $("teamList"); ol.textContent = "";
     data.squad.forEach(function (p) {
-      var li = el("li"); li.appendChild(el("span", "n", String(p.position))).setAttribute("aria-hidden", "true");
-      var names = el("span", "names"); names.appendChild(el("span", "dn", p.display_name)); names.appendChild(el("span", "rn", "Real name: " + p.real_name)); li.appendChild(names);
+      var li = el("li"); li.appendChild(el("span", "n", String(p.position))).setAttribute("aria-hidden", "true"); li.appendChild(document.createTextNode(" "));
+      var names = el("span", "names"); names.appendChild(el("span", "dn", p.display_name)); names.appendChild(document.createTextNode(" ")); names.appendChild(el("span", "rn", "Real name: " + p.real_name)); li.appendChild(names);
       var label = p.position + ", Display name, " + p.display_name + ". Real name, " + p.real_name;
-      if (p.captain) { li.appendChild(el("span", "tag", "Captain")); label += ". Captain"; }
-      if (p.vice) { li.appendChild(el("span", "tag", "Vice Captain")); label += ". Vice Captain"; }
-      if (p.role) { li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
+      if (p.captain) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", "Captain")); label += ". Captain"; }
+      if (p.vice) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", "Vice Captain")); label += ". Vice Captain"; }
+      if (p.role) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
       li.setAttribute("aria-label", label); ol.appendChild(li);
     });
 
