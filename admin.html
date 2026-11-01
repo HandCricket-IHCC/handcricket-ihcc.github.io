@@ -1296,7 +1296,7 @@ pre.mailpre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; mar
   // ----- Keyboard shortcuts: Alt + key (Windows and Linux). Uses the physical key, so it works with any keyboard language. -----
   (function () {
     if (/Mac|iPhone|iPad/.test(navigator.platform || "")) return;
-    var VIEWS = ["squads", "notes", "reps", "mail", "admins", "audit", "entries", "summary"];
+    var VIEWS = ["squads", "notes", "reps", "mail", "admins", "audit", "entries", "summary", "boardtools"];
     function shown(n) { return !!(n.offsetWidth || n.offsetHeight || n.getClientRects().length) && !n.disabled; }
     document.addEventListener("keydown", function (e) {
       if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat || !me) return;
