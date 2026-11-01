@@ -6,11 +6,11 @@
 <meta name="description" content="Squad lists of the Member Boards of the International Hand Cricket Council.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0f3324">
-<title>Squad Registration - IHCC</title>
+<title>Squad Lists - IHCC</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="International Hand Cricket Council">
-<meta property="og:title" content="Squad Registration - IHCC">
+<meta property="og:title" content="Squad Lists - IHCC">
 <meta property="og:description" content="Squad lists of the Member Boards of the International Hand Cricket Council.">
 <meta property="og:image" content="https://handcricket-ihcc.github.io/IHCC_logo.png">
 <meta property="og:url" content="https://handcricket-ihcc.github.io/squad.html">
@@ -268,14 +268,12 @@ details p { margin: 0 0 16px; color: var(--muted); }
         <h1>Squad Lists</h1>
       </div>
     </div>
-    <p class="lede">Each Member Board sends its squad list through its board representative. Players do not fill in a form themselves.</p>
-    <p class="deadline"><span>Last date:</span> 31 October 2026, 11:59 PM Pakistan time</p>
+    <p class="lede">The squad lists are final. The squad of every Member Board is on its own board page.</p>
+    <p class="deadline"><span>Closed:</span> 31 October 2026, 11:59 PM Pakistan time</p>
   </div>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
-  <p class="countdown" id="countdown" role="status"></p>
-  <div id="closedNote" class="closed" hidden role="status">Registration is closed. The last date was 31 October 2026, 11:59 PM Pakistan time.</div>
   <div id="startView">
     <section class="progress" id="progressSec" aria-label="Boards progress" hidden>
       <p class="pnum"><strong id="doneNum">0</strong> of <span id="totNum">13</span> boards have completed their squad list.</p>
@@ -283,29 +281,17 @@ details p { margin: 0 0 16px; color: var(--muted); }
     </section>
 
     <section aria-labelledby="how">
-      <h2 id="how">How it works</h2>
+      <h2 id="how">How the squads were made</h2>
       <ol class="steps">
-        <li><strong>The IHCC Owner names one representative for each board.</strong> <span>The representative gets an email invitation on his Gmail address.</span></li>
-        <li><strong>The representative signs in with Google.</strong> <span>He sees only his own board and adds the players one at a time.</span></li>
-        <li><strong>The representative presses Final submit.</strong> <span>The board needs 12 to 20 players. The first 12 are the voters.</span></li>
+        <li><strong>Each board sent its squad list through one board representative.</strong> <span>The representative signed in with Google and added the players one at a time.</span></li>
+        <li><strong>A board needs 12 to 20 players.</strong> <span>The first 12 are the voting members.</span></li>
+        <li><strong>Now the squads are on the board pages.</strong> <span>Each board page shows the display name and the real name of every player. The leaders of the board look after the page.</span></li>
       </ol>
-    </section>
-
-    <section aria-labelledby="ready">
-      <h2 id="ready">What the representative needs for each player</h2>
-      <ul class="checklist">
-        <li>The display name: the name of a male cricketer of the board's country who has played at least one international match (T20, ODI or Test). Male and female players both use it.</li>
-        <li>The real name, written correctly.</li>
-        <li>The WhatsApp number with the country code.</li>
-        <li>The Gmail address of the player. The same address is used for voting, so it must be correct.</li>
-        <li>The city and the country where the player lives.</li>
-      </ul>
-      <p>Every player gets a confirmation email with his details and a registration number.</p>
     </section>
 
     <section aria-labelledby="start">
       <h2 id="start">Where are the squads now?</h2>
-      <p>Squad submission is closed. The squad of every Member Board is shown on its own board page, with the display name and the real name of each player.</p>
+      <p>Squad submission is closed. The squad of every Member Board is shown on its own board page, with the display name and the real name of each player. Nothing else about a player is public.</p>
       <p><a class="cta" id="cta" href="boards.html">Open the Boards page</a></p>
     </section>
 
@@ -321,11 +307,11 @@ details p { margin: 0 0 16px; color: var(--muted); }
       </details>
       <details>
         <summary>What if my details are wrong, or I did not agree to be added?</summary>
-        <p>Reply to the email you received, or write to IHCC at handcricket.ihcc@gmail.com with your registration number.</p>
+        <p>Write to IHCC at handcricket.ihcc@gmail.com with your registration number.</p>
       </details>
       <details>
         <summary>Who can see the details?</summary>
-        <p>Only IHCC management. The public sees only the progress of each board: not started, the number of players submitted, or completed. No names or details are shown.</p>
+        <p>The public sees only the display name and the real name of each player, on the page of the board. Your Gmail address, WhatsApp number, city and country are never public.</p>
       </details>
     </section>
   </div>
@@ -364,15 +350,6 @@ details p { margin: 0 0 16px; color: var(--muted); }
     document.getElementById("doneNum").textContent = done; document.getElementById("totNum").textContent = d.length;
     document.getElementById("progressSec").hidden = false;
   }).catch(function () {});
-})();
-</script>
-<script>
-(function () {
-  var el = document.getElementById("countdown"); if (!el) return;
-  var end = Date.parse("2026-10-31T18:59:59Z"), ms = end - Date.now();
-  if (ms <= 0) { el.textContent = "Squad lists are closed."; return; }
-  var days = Math.ceil(ms / 86400000);
-  el.textContent = days > 1 ? "Squad lists close in " + days + " days: 31 October 2026, 11:59 PM Pakistan time." : "Last day: squad lists close today at 11:59 PM Pakistan time.";
 })();
 </script>
 </body>
