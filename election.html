@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
@@ -116,7 +118,7 @@
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-js-2.45.4.min.js"></script>
 <script>
 (function () {
   var SB_URL = 'https://krkrpcnovdobnscknfnw.supabase.co';
@@ -421,6 +423,26 @@
     app.appendChild(el('p', { class: 'muted small', text: 'Other voters cannot see who you voted for, and you cannot see who they voted for. Only the totals are published.' }));
   }
 
+  function quorumCard(q) {
+    if (!q) return null;
+    var c = card();
+    c.appendChild(el('h2', { text: 'Turnout' }));
+    c.appendChild(el('p', { text: q.voted + ' of ' + q.total + ' voting members voted, which is ' + q.percent + ' percent. More than half, at least ' + q.needed + ' voters, are needed for the election to be valid.' }));
+    c.appendChild(el('p', { text: q.ok ? 'The turnout is enough. The election is valid.' : 'The turnout is not enough. The voting will be repeated on Sunday, ' + q.repeat_date + ', from 6:00 AM to 6:00 PM, Pakistan time.' }));
+    if (q.boards && q.boards.length) {
+      c.appendChild(el('h3', { text: 'Votes by board' }));
+      c.appendChild(el('p', { class: 'muted small', text: 'If fewer than ' + q.board_min + ' of the 12 voting members of a board voted, the Director of that board cannot vote in the election of the CEO, CFO and Women\'s Director. Only counts are shown, never names.' }));
+      var bl = el('ul', { class: 'plain' });
+      q.boards.forEach(function (b) {
+        bl.appendChild(el('li', { text: dispBoard(b.board) + ', ' + b.voted + ' of ' + b.total + ' voted. ' + (b.ok ? 'Director can vote.' : 'Director cannot vote in the CEO, CFO and Women\'s Director election.') }));
+      });
+      c.appendChild(bl);
+      var low = q.boards.filter(function (b) { return !b.ok; }).length;
+      c.appendChild(el('p', { text: low ? (low + ' board(s) are below ' + q.board_min + '.') : 'All boards reached ' + q.board_min + ' or more.' }));
+    }
+    return c;
+  }
+
   function renderStage1(e, res, ballot) {
     var mc = card();
     mc.appendChild(el('h2', { text: 'My votes' }));
@@ -437,6 +459,8 @@
       c.appendChild(el('p', { text: res.voted_count + ' of ' + res.total_voters + ' voting members have voted. Names are not shown.' }));
     }
     app.appendChild(c);
+    var qc = quorumCard(res && res.quorum);
+    if (qc) app.appendChild(qc);
     var c2 = card();
     c2.appendChild(el('h2', { text: 'A vote under my name was not mine' }));
     c2.appendChild(el('p', { class: 'muted', text: 'Look at the My votes card above. If it says you voted but you did not vote, tell the Election Committee here within 24 hours.' }));
@@ -455,6 +479,8 @@
 
   function renderClosed(res) {
     if (!res || res.stage !== 'closed') { var c0 = card(); c0.appendChild(el('p', { text: 'Results are not available.' })); app.appendChild(c0); return; }
+    var qc = quorumCard(res.quorum);
+    if (qc) app.appendChild(qc);
     (res.seats || []).forEach(function (s, idx) {
       var c = card('seat');
       c.appendChild(el('h2', null, [el('span', { class: 'num', 'aria-hidden': 'true', text: String(idx + 1) }), s.seat]));
