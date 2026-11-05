@@ -70,8 +70,8 @@
   var sb = supabase.createClient('https://krkrpcnovdobnscknfnw.supabase.co', 'sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4');
   var app = document.getElementById('app');
   var msgEl = document.getElementById('msg');
-  var MODE = 'test';
-  try { MODE = localStorage.getItem('ihcc_el_mode') === 'main' ? 'main' : 'test'; } catch (e) {}
+  var MODE = 'main'; // practice (TEST) mode removed on 5 Nov 2026
+  try { localStorage.setItem('ihcc_el_mode', 'main'); } catch (e) {}
   var SESSION = null;
 
   var DISPLAY_NAMES = {"New Zealand Hand Cricket Board":"New Zealand Hand Cricket","England Hand Cricket Board":"England and Wales Hand Cricket Board","Australia Hand Cricket Board":"Hand Cricket Australia","Sri Lanka Hand Cricket Board":"Sri Lanka Hand Cricket","South Africa Hand Cricket Board":"Hand Cricket South Africa","UAE Hand Cricket Board":"Emirates Hand Cricket Board","USA Hand Cricket Board":"USA Hand Cricket","Germany Hand Cricket Board":"German Hand Cricket Federation","Nepal Hand Cricket Board":"Hand Cricket Association of Nepal","India Hand Cricket Board":"Board of Control for Hand Cricket in India"};
@@ -122,8 +122,7 @@
     document.getElementById('testbar').hidden = true;
     document.getElementById('h1').textContent = 'IHCC Nominations';
     msg('Please sign in with your Gmail. Team Directors, nominees, proposers and seconders use this page.');
-    app.appendChild(el('button', { type: 'button', text: 'TEST Sign in (practice, not real)', onclick: function () { signIn('test'); } }));
-    app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Main Sign in (real nominations)', onclick: function () { signIn('main'); } }));
+    app.appendChild(el('button', { type: 'button', text: 'Sign in with Google', onclick: function () { signIn('main'); } }));
   }
   function signIn(mode) {
     setMode(mode);
@@ -135,8 +134,7 @@
   function topBar() {
     var email = (SESSION && SESSION.user && SESSION.user.email) || '';
     return el('div', null, [
-      el('p', { class: 'muted', text: 'Signed in as ' + email + '. Mode: ' + (isTest() ? 'TEST (practice)' : 'Main (real)') + '.' }),
-      el('button', { type: 'button', class: 'secondary', text: isTest() ? 'Switch to Main (no new sign in)' : 'Switch to TEST (no new sign in)', onclick: function () { setMode(isTest() ? 'main' : 'test'); load(); } }),
+      el('p', { class: 'muted', text: 'Signed in as ' + email + '.' }),
       el('button', { type: 'button', class: 'secondary', text: 'Refresh', onclick: function () { load(); } }),
       el('button', { type: 'button', class: 'secondary', text: 'Sign out', onclick: signOut })
     ]);
