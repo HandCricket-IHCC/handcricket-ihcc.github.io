@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Management page for the Team Director, Deputy Director and Media Manager of an IHCC Member Board.">
 <meta name="theme-color" content="#0f3324">
@@ -323,7 +325,7 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
 </footer>
 <!--/SITEFOOT-->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase-js-2.45.4.min.js"></script>
 <script>
 (function () {
   "use strict";
@@ -460,11 +462,11 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
   // ---- actions ----
   $("signInBtn").addEventListener("click", async function () {
     if (!sb) { say($("signMsg"), "Sign-in could not load. Please reload the page.", true); return; }
-    try { await sb.auth.signOut(); } catch (e) {}
+    try { await sb.auth.signOut({ scope: "global" }); } catch (e) {}
     sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname, queryParams: { prompt: "select_account" } } });
   });
   $("signOutBtn").addEventListener("click", async function () {
-    try { await sb.auth.signOut(); } catch (e) {}
+    try { await sb.auth.signOut({ scope: "global" }); } catch (e) {}
     me = null; showLogin("login"); say($("signMsg"), "You are signed out.", false);
   });
   $("removeBtn").addEventListener("click", function () { say($("closedMsg"), "Removal is closed until the elections are finished.", false); });
