@@ -126,8 +126,8 @@
   var sb = supabase.createClient(SB_URL, SB_KEY);
   var app = document.getElementById('app');
   var msgEl = document.getElementById('msg');
-  var MODE = 'test';
-  try { MODE = localStorage.getItem('ihcc_el_mode') === 'main' ? 'main' : 'test'; } catch (e) {}
+  var MODE = 'main'; // practice (TEST) mode removed on 5 Nov 2026; only the real election exists
+  try { localStorage.setItem('ihcc_el_mode', 'main'); } catch (e) {}
   var SESSION = null;
   var CUR = null;
 
@@ -175,9 +175,8 @@
     msg('Please sign in with the Google account, the Gmail, that is on your board squad list.');
     var c = card();
     c.appendChild(el('h2', { text: 'Sign in' }));
-    c.appendChild(el('p', { class: 'muted', text: 'The TEST sign in is for practice only. The Main sign in is for the real election, and it opens only when IHCC starts it.' }));
-    c.appendChild(el('button', { type: 'button', id: 'btnTest', text: 'TEST Sign in, practice, not real', onclick: function () { signIn('test'); } }));
-    c.appendChild(el('button', { type: 'button', id: 'btnMain', class: 'secondary', text: 'Main Sign in, real election', onclick: function () { signIn('main'); } }));
+    c.appendChild(el('p', { class: 'muted', text: 'This sign in is for the real election. It opens only when IHCC starts it.' }));
+    c.appendChild(el('button', { type: 'button', id: 'btnMain', text: 'Sign in with Google', onclick: function () { signIn('main'); } }));
     app.appendChild(c);
   }
 
@@ -192,9 +191,6 @@
 
   function accountFooter() {
     return el('footer', { class: 'acct' }, [
-      el('p', { class: 'muted small', text: 'Mode, ' + (isTest() ? 'TEST, practice' : 'Main, real') + '.' }),
-      el('button', { type: 'button', class: 'secondary', text: isTest() ? 'Switch to Main election, no new sign in' : 'Switch to TEST election, no new sign in',
-        onclick: function () { setMode(isTest() ? 'main' : 'test'); load(); } }),
       el('button', { type: 'button', class: 'secondary', text: 'Sign out', onclick: signOut })
     ]);
   }
