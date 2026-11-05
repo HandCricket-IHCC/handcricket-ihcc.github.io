@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>IHCC Election Admin</title>
@@ -62,7 +64,7 @@
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-js-2.45.4.min.js"></script>
 <script>
 (function () {
   var sb = supabase.createClient('https://krkrpcnovdobnscknfnw.supabase.co', 'sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4');
@@ -138,7 +140,7 @@
     if (['owner', 'core', 'election_officer'].indexOf(ME.role) < 0) { msg('Your admin role cannot manage elections.', true, true); return; }
     await renderHome();
   }
-  function signOut() { sb.auth.signOut().then(renderSignedOut); }
+  function signOut() { sb.auth.signOut({ scope: "global" }).then(renderSignedOut); }
 
   async function renderHome() {
     app.innerHTML = '';
@@ -160,15 +162,11 @@
     app.appendChild(el('h2', { text: 'Create an election' }));
     var title = el('input', { type: 'text', maxlength: '120' });
     app.appendChild(field('Title', title));
-    var chk = el('input', { type: 'checkbox', checked: 'checked' });
-    var chkWrap = el('div', null, [el('label', { for: 'isTest' }, [chk, 'This is a TEST election'])]);
-    chk.setAttribute('id', 'isTest');
-    app.appendChild(chkWrap);
     app.appendChild(el('button', { type: 'button', text: 'Create election', onclick: async function () {
       var t = title.value.trim();
       if (t.length < 2) { msg('Please write a title.', true, true); return; }
-      if (!chk.checked && !window.confirm('You are creating a REAL election. Continue?')) return;
-      var r = await rpc('admin_election_create', { p_title: t, p_is_test: chk.checked });
+      if (!window.confirm('You are creating a REAL election. Continue?')) return;
+      var r = await rpc('admin_election_create', { p_title: t, p_is_test: false });
       if (!r) return;
       SELECTED = r.data.id;
       renderElection();
@@ -298,24 +296,6 @@
     if (!nl.children.length) nl.appendChild(el('li', { class: 'muted', text: 'No nomination yet.' }));
     app.appendChild(nl);
 
-    // Dummy votes (test only)
-    if (e.is_test && e.status === 'voting' && isOwner()) {
-      app.appendChild(el('h2', { text: 'TEST: add dummy votes' }));
-      var dSeat = select(d.seats.map(function (s) { return [s.seat, s.seat]; }), 'Choose a seat');
-      var dCand = select([], 'Choose a candidate');
-      dSeat.addEventListener('change', function () {
-        dCand.innerHTML = ''; dCand.appendChild(el('option', { value: '', text: 'Choose a candidate' }));
-        d.seats.forEach(function (s) { if (s.seat === dSeat.value) s.candidates.forEach(function (c) { dCand.appendChild(el('option', { value: c.id, text: c.display_name + ', ' + c.board })); }); });
-      });
-      var dCount = el('input', { type: 'number', min: '1', max: '200', value: '5' });
-      app.appendChild(field('Seat', dSeat)); app.appendChild(field('Candidate', dCand)); app.appendChild(field('How many dummy votes', dCount));
-      app.appendChild(el('button', { type: 'button', text: 'Add TEST dummy votes', onclick: async function () {
-        if (!dSeat.value || !dCand.value) { msg('Choose a seat and a candidate.', true, true); return; }
-        var r = await rpc('admin_dummy_votes', { p_election: SELECTED, p_seat: dSeat.value, p_candidate: dCand.value, p_count: parseInt(dCount.value, 10) || 1 });
-        if (r) { renderElection(); }
-      } }));
-    }
-
     // Head: enter a vote for a member who called
     var canEnter = (stEff === 'voting' || stEff === 'stage1') && (e.is_test ? isOwner() : (isHead() && ME.is_head));
     if (canEnter) {
@@ -413,28 +393,13 @@
     app.appendChild(ou);
 
     // Owner tools
-    if (isOwner() && e.is_test) {
-      app.appendChild(el('h2', { text: 'Owner tools (TEST only)' }));
-      app.appendChild(el('button', { type: 'button', class: 'danger', text: 'Clear TEST votes and objections (keep candidates)', onclick: async function () {
-        if (!window.confirm('Delete all votes and objections of this TEST election?')) return;
-        var r = await rpc('admin_test_clear', { p_election: SELECTED, p_candidates: false });
-        if (r) { msg('Cleared: ' + r.data.votes_deleted + ' votes, ' + r.data.objections_deleted + ' objections.', false, true); renderElection(); }
-      } }));
-      app.appendChild(el('button', { type: 'button', class: 'danger', text: 'Clear everything of this TEST election (votes and candidates)', onclick: async function () {
-        if (!window.confirm('Delete votes, objections AND candidates of this TEST election?')) return;
-        var r = await rpc('admin_test_clear', { p_election: SELECTED, p_candidates: true });
-        if (r) { msg('Everything cleared. Status is back to draft.', false, true); renderElection(); }
-      } }));
+    if (isOwner()) {
+      app.appendChild(el('h2', { text: 'Owner tools' }));
       var headIn = el('input', { type: 'text', maxlength: '120' });
       app.appendChild(field('Election Committee Head: Gmail (must be an election_officer admin)', headIn));
       app.appendChild(el('button', { type: 'button', class: 'secondary', text: 'Make this person the Head', onclick: async function () {
         if (!headIn.value.trim()) { msg('Write the Gmail first.', true, true); return; }
         var r = await rpc('admin_set_head', { p_email: headIn.value.trim(), p_head: true }); if (r) msg('Done. This person is now the Head.', false, true);
-      } }));
-      var vis = d.test_visible === 'true';
-      app.appendChild(el('p', { text: 'The TEST sign in is currently ' + (vis ? 'VISIBLE (working)' : 'HIDDEN (switched off)') + ' for voters.' }));
-      app.appendChild(el('button', { type: 'button', class: 'secondary', text: vis ? 'Switch OFF the TEST sign in for voters' : 'Switch ON the TEST sign in for voters', onclick: async function () {
-        var r = await rpc('admin_test_visible_set', { p_on: !vis }); if (r) renderElection();
       } }));
     }
   }
