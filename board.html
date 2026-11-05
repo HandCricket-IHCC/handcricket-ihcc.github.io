@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Board page of an IHCC Member Board: leaders and squad.">
 <meta name="theme-color" content="#0f3324">
@@ -252,7 +254,7 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
 </footer>
 <!--/SITEFOOT-->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase-js-2.45.4.min.js"></script>
 <script>
 (function () {
   "use strict";
