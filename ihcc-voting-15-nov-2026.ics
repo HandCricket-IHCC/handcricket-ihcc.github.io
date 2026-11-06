@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//IHCC//Elections 2026//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:ihcc-voting-2026@handcricket-ihcc.github.io
+DTSTAMP:20261106T070000Z
+DTSTART:20261115T010000Z
+DTEND:20261115T130000Z
+SUMMARY:IHCC election voting day
+DESCRIPTION:Voting is open from 6:00 AM to 6:00 PM Pakistan time. If not more than half of the voters take part\, voting is repeated on 22 November 2026. Open https://handcricket-ihcc.github.io/elections.html
+URL:https://handcricket-ihcc.github.io/elections.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
