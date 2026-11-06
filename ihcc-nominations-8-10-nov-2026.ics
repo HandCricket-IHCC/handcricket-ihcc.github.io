@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//IHCC//Elections 2026//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:ihcc-nominations-2026@handcricket-ihcc.github.io
+DTSTAMP:20261106T070000Z
+DTSTART;VALUE=DATE:20261108
+DTEND;VALUE=DATE:20261111
+SUMMARY:IHCC election nominations (8 to 10 November)
+DESCRIPTION:Nominations close at 11:59 PM Pakistan time on 10 November 2026. Open https://handcricket-ihcc.github.io/elections.html
+URL:https://handcricket-ihcc.github.io/elections.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
