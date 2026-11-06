@@ -1,0 +1,73 @@
+.cta { display: block; text-align: center; text-decoration: none; padding: 18px 20px; border-radius: 14px; font: 700 26px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase; background: linear-gradient(180deg, var(--brand), color-mix(in srgb, var(--brand) 82%, #000)); color: var(--brand-fg); box-shadow: 0 6px 18px rgba(27,94,67,.3); }
+.cta:hover { filter: brightness(1.08); }
+.cta:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.cta[aria-disabled=true] { opacity: .6; }
+.lead { font-size: 20px; max-width: 60ch; }
+.cards { display: grid; gap: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+.tile h3 { font: 700 26px/1.1 var(--font-display); margin: 0 0 6px; }
+.tile p { margin: 0 0 12px; color: var(--muted); }
+.tile .tag { display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 15px; font-weight: 700; background: var(--brand-soft); color: var(--brand); margin-bottom: 10px; }
+.tile .tag.soon { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.tile a.btn { display: inline-block; text-decoration: none; padding: 12px 22px; border-radius: 10px; font-weight: 700; background: var(--brand); color: var(--brand-fg); }
+.tile a.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.boards { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.boards li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-weight: 600; }
+.consent { display: flex; gap: 14px; align-items: flex-start; margin-top: 12px; padding: 16px; background: var(--brand-soft); border-radius: 12px; }
+.hero.home { padding: 40px 0 76px; }
+.hero.home .wrap, main.home { max-width: 960px; }
+.hero.home .tagline { font: 700 clamp(26px, 5.5vw, 38px)/1.1 var(--font-display); letter-spacing: .04em; color: var(--gold); margin: 16px 0 0; }
+.hero.home .lede { font-size: 20px; }
+.heroacts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.btn1, .btn2 { display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 12px; font: 700 20px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+.btn1 { background: var(--gold); color: #0c2e21; }
+.btn2 { border: 2px solid rgba(255,255,255,.7); color: var(--band-fg); }
+.btn1:hover { filter: brightness(1.08); }
+.btn2:hover { background: rgba(255,255,255,.12); }
+.btn1:focus-visible, .btn2:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+main.home { padding-bottom: 10px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: -34px; position: relative; z-index: 2; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); }
+.stat b { display: block; font: 700 40px/1 var(--font-display); color: var(--brand); }
+.stat span { color: var(--muted); }
+.formats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.formats li { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); border-top: 5px solid var(--gold); }
+.formats strong { display: block; font: 700 34px/1 var(--font-display); color: var(--brand); }
+.formats span { color: var(--muted); }
+.bgrid { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.bcard { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--bc, var(--brand)); border-radius: 12px; padding: 12px 14px; }
+.bcard .fl { display: block; width: 36px; height: 27px; border-radius: 4px; margin-bottom: 8px; box-shadow: 0 0 0 1px rgba(0,0,0,.2); object-fit: cover; }
+.bcard strong { display: block; font-size: 18px; }
+.bcard .st { display: block; color: var(--muted); font-size: 16px; margin: 2px 0 8px; }
+.timeline { margin: 0; padding: 0 0 0 30px; list-style: none; border-left: 4px solid var(--line); }
+.timeline li { position: relative; margin: 0 0 18px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.timeline li::before { content: ""; position: absolute; left: -43px; top: 16px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); border: 4px solid var(--line); }
+.timeline li.done::before { background: var(--brand); border-color: var(--brand); }
+.timeline li.now::before { background: var(--gold); border-color: var(--gold); }
+.timeline .when { display: inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 15px; background: var(--brand-soft); color: var(--brand); margin-bottom: 4px; }
+.timeline strong { display: block; font-size: 19px; }
+.timeline span.d { color: var(--muted); }
+.newsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.newsgrid article { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); }
+.newsgrid h3 { font: 700 24px/1.15 var(--font-display); margin: 4px 0 8px; }
+.newsgrid time { color: var(--muted); font-size: 15px; font-weight: 600; }
+.newsgrid p { margin: 0; color: var(--muted); }
+.more { margin-top: 14px; }
+.more a, .tile a.txt { color: var(--brand); font-weight: 700; }
+.follow { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.follow a.btn { display: block; text-align: center; text-decoration: none; padding: 16px 18px; border-radius: 12px; font-weight: 700; background: var(--brand); color: var(--brand-fg); }
+.follow a.btn:focus-visible, .more a:focus-visible, .tile a.txt:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.partner { border-left: 6px solid var(--gold); }
+.bc-afghanistan { --bc: #b01e2d; }
+.bc-australia { --bc: #b8860b; }
+.bc-bangladesh { --bc: #006a4e; }
+.bc-england { --bc: #c8102e; }
+.bc-germany { --bc: #c9a100; }
+.bc-india { --bc: #e07b00; }
+.bc-nepal { --bc: #dc143c; }
+.bc-new-zealand { --bc: #1d4e89; }
+.bc-pakistan { --bc: #01411c; }
+.bc-south-africa { --bc: #007749; }
+.bc-sri-lanka { --bc: #8d153a; }
+.bc-uae { --bc: #00732f; }
+.bc-usa { --bc: #3c3b6e; }
