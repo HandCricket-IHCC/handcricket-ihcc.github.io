@@ -1,5 +1,6 @@
 /* IHCC shared confirmation dialog, version 1.
-   Use on any page:  <script src="dialog.js?v=1"></script>
+   Use on any page:  <script src="dialog.js?v=2"></script>
+     and  <link rel="stylesheet" href="dialog.css?v=2">
    Then call:
      IHCCDialog.show({
        title: "Player added. An email was sent to the player.",   // read out when the dialog opens
@@ -23,22 +24,7 @@
   var nativeOk = typeof HTMLDialogElement === "function" && "showModal" in document.createElement("dialog");
 
   function css() {
-    if (document.getElementById("ihcc-dialog-css")) return;
-    var s = document.createElement("style");
-    s.id = "ihcc-dialog-css";
-    s.textContent =
-      ".ihcc-dlg{border:3px solid #14213d;border-radius:16px;padding:20px;width:min(92vw,520px);box-sizing:border-box;" +
-      "background:Canvas;color:CanvasText;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}" +
-      ".ihcc-dlg.bad{border-color:#b00020}" +
-      ".ihcc-dlg::backdrop{background:rgba(0,0,0,.55)}" +
-      ".ihcc-wrap{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:99999}" +
-      ".ihcc-dlg h2{margin:0 0 16px;font-size:20px;line-height:1.35;font-weight:700}" +
-      ".ihcc-dlg h2:focus{outline:none}" +
-      ".ihcc-dlg button{display:block;width:100%;box-sizing:border-box;min-height:48px;margin:8px 0 0;padding:12px 14px;" +
-      "font:inherit;font-weight:600;text-align:center;border-radius:10px;border:2px solid #14213d;background:#14213d;color:#fff;cursor:pointer}" +
-      ".ihcc-dlg button.alt{background:Canvas;color:CanvasText}" +
-      ".ihcc-dlg button:focus-visible{outline:3px solid #e8c97a;outline-offset:2px}";
-    document.head.appendChild(s);
+    /* The styles live in dialog.css, which each page loads next to dialog.js (the CSP blocks styles added by script). */
   }
 
   function resolve(f) {
