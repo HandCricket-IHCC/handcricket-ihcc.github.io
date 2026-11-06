@@ -1,0 +1,41 @@
+.consent { display: flex; gap: 14px; align-items: center; margin-top: 8px; padding: 16px; background: var(--brand-soft); border-radius: 12px; }
+.board-chip { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
+.board-chip .flag { font-size: 34px; line-height: 1; }
+.board-chip .swatch { width: 14px; align-self: stretch; border-radius: 8px; flex: none; }
+.board-info { border-left: 8px solid var(--bc, var(--brand)); }
+.bar > i { background: linear-gradient(90deg, var(--bc, var(--brand)), var(--gold)); }
+.receipt { margin: 18px 0; padding: 18px; border-radius: 14px; border: 2px dashed var(--gold); background: var(--surface); text-align: center; }
+.receipt .lbl { margin: 0 0 6px; color: var(--muted); font-weight: 600; }
+.receipt .code { display: block; font: 700 clamp(30px, 8vw, 44px)/1.1 var(--font-display); letter-spacing: .08em; color: var(--brand); user-select: all; }
+.receipt button { margin-top: 12px; min-height: 48px; padding: 0 20px; font: 700 18px/1 var(--font-body); border-radius: 10px; border: 2px solid var(--brand); background: transparent; color: var(--brand); cursor: pointer; }
+.receipt button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.spark { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 30; }
+.spark i { position: absolute; top: -12px; width: 10px; height: 14px; border-radius: 2px; animation: fall 2.4s ease-in forwards; }
+@keyframes fall { to { transform: translateY(105vh) rotate(540deg); opacity: .9; } }
+@media (prefers-reduced-motion: reduce) { .spark { display: none; } }
+.back { font-weight: 700; color: var(--brand); }
+.ctext { margin: 16px 0 0; font-weight: 600; }
+.small { color: var(--muted); font-size: 16px; }
+.msgbox { margin: 20px 0 0; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--brand); background: var(--brand-soft); font-weight: 600; }
+.msgbox.bad { border-color: var(--error); color: var(--error); background: var(--surface); }
+.countdown { margin: 10px 0 0; font-weight: 700; }
+.warnbox { margin: 14px 0 0; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--error); color: var(--error); font-weight: 700; background: var(--surface); }
+.statebox { margin: 14px 0 0; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--gold); background: var(--surface); font-weight: 600; }
+.statebox p { margin: 0 0 10px; }
+.progress .bar { margin-top: 10px; }
+button.alt { min-height: 48px; padding: 0 20px; font: 700 17px/1 var(--font-body); border-radius: 10px; border: 2px solid var(--brand); background: transparent; color: var(--brand); cursor: pointer; }
+button.alt:hover { background: var(--brand-soft); }
+button.alt.wide { width: 100%; margin-top: 12px; min-height: 52px; }
+button.alt.danger { border-color: var(--error); color: var(--error); }
+.toolrow { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 0; }
+.plist { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.plist li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.plist li.voter { border-left: 8px solid var(--gold); }
+.plist .line { margin: 0 0 10px; font-weight: 600; overflow-wrap: anywhere; }
+.plist .line:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.plist .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.plist .acts button { min-height: 44px; padding: 0 14px; font: 700 16px/1 var(--font-body); border-radius: 10px; border: 2px solid var(--brand); background: transparent; color: var(--brand); cursor: pointer; }
+.plist .acts button.danger { border-color: var(--error); color: var(--error); }
+.plist .acts button[disabled] { opacity: .45; cursor: not-allowed; }
+.plist .confirm { margin: 0 0 10px; font-weight: 700; }
+.field input:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
