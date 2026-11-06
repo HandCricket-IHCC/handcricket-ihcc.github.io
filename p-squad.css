@@ -1,0 +1,5 @@
+.cta { display: block; text-align: center; text-decoration: none; padding: 18px 20px; border-radius: 14px; font: 700 26px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase; background: linear-gradient(180deg, var(--brand), color-mix(in srgb, var(--brand) 82%, #000)); color: var(--brand-fg); box-shadow: 0 6px 18px rgba(27,94,67,.3); }
+.cta:hover { filter: brightness(1.08); }
+.cta:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.cta[aria-disabled=true] { opacity: .6; }
+.consent { display: flex; gap: 14px; align-items: flex-start; margin-top: 12px; padding: 16px; background: var(--brand-soft); border-radius: 12px; }
