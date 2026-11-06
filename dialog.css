@@ -1,0 +1,10 @@
+/* IHCC shared dialog styles (moved out of dialog.js so the page CSP does not need unsafe-inline for styles). Load with dialog.js. */
+.ihcc-dlg{border:3px solid #14213d;border-radius:16px;padding:20px;width:min(92vw,520px);box-sizing:border-box;background:Canvas;color:CanvasText;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.ihcc-dlg.bad{border-color:#b00020}
+.ihcc-dlg::backdrop{background:rgba(0,0,0,.55)}
+.ihcc-wrap{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:99999}
+.ihcc-dlg h2{margin:0 0 16px;font-size:20px;line-height:1.35;font-weight:700}
+.ihcc-dlg h2:focus{outline:none}
+.ihcc-dlg button{display:block;width:100%;box-sizing:border-box;min-height:48px;margin:8px 0 0;padding:12px 14px;font:inherit;font-weight:600;text-align:center;border-radius:10px;border:2px solid #14213d;background:#14213d;color:#fff;cursor:pointer}
+.ihcc-dlg button.alt{background:Canvas;color:CanvasText}
+.ihcc-dlg button:focus-visible{outline:3px solid #e8c97a;outline-offset:2px}
