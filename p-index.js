@@ -5,7 +5,7 @@
     var by = {}, done = 0, total = 0;
     rows.forEach(function (r) { by[String(r.board).replace(/ Hand Cricket Board$/, "")] = r; });
     document.querySelectorAll("#bgrid .bcard").forEach(function (li) {
-      var r = by[li.getAttribute("data-board")]; if (!r) return;
+      var r = by[li.getAttribute("data-board")]; if (!r) { li.style.display = "none"; li.setAttribute("aria-hidden", "true"); return; }
       var c = r.count || 0; total += c; var full = c >= MIN; if (full) done++;
       li.querySelector(".st").textContent = full ? "Squad list complete: " + c + " players" : (c === 0 ? "Squad list: not started" : "Squad list: " + c + " of " + MIN + " players");
       li.querySelector(".bar i").style.width = Math.min(100, Math.round(c / MIN * 100)) + "%";
