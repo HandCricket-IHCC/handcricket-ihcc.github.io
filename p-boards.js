@@ -35,6 +35,7 @@
     var done = 0, by = {};
     (rows || []).forEach(function (r) { by[r.board] = r; });
     names.forEach(function (n) {
+      if (rows && !by[n]) return;
       var r = by[n], c = r ? r.count : 0, st = r ? r.state : null; if (st === "Completed") done++;
       var li = document.createElement("li"); li.className = "bcard"; li.style.setProperty("--bc", BOARD_STYLE[n][1]);
       var t = document.createElement("strong"); t.textContent = BOARD_STYLE[n][0] + " " + DISPLAY[n];
@@ -44,7 +45,7 @@
       var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(c / MIN * 100)) + "%"; bar.appendChild(i);
       li.appendChild(t); li.appendChild(s); if (li.__lk) li.appendChild(li.__lk); li.appendChild(bar); list.appendChild(li);
     });
-    document.getElementById("summ").textContent = rows ? (done + " of " + names.length + " boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
+    document.getElementById("summ").textContent = rows ? (done + " of " + (rows || []).length + " boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
   }
   draw(null);
   fetch(API, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" }).then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) draw(d); }).catch(function () {});
