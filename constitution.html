@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="site.css?v=20261106a">
 <link rel="stylesheet" href="site-more.css?v=20261107a">
 <link rel="stylesheet" href="notice.css?v=20261107a">
-<link rel="stylesheet" href="doc.css?v=20261114a">
+<link rel="stylesheet" href="doc.css?v=20261114b">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
@@ -33,7 +33,7 @@
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav" data-sk="M" aria-keyshortcuts="Alt+M">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="constitution.html" aria-current="page">Constitution</a></li><li><a href="rulebook.html">Rule Book</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="constitution.html" aria-current="page" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="constitution.html">Constitution</a></li><li><a href="rulebook.html">Rule Book</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="constitution.html" aria-current="page" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li></ul></nav>
   </div>
 </div>
 <script src="menu.js?v=20261106a"></script>
@@ -62,8 +62,12 @@
   </div>
 </header>
 
-<main id="main" class="wrap docpage" tabindex="-1">
-<section class="draftbox" aria-labelledby="dbx"><h2 id="dbx">DRAFT: not yet in force</h2><p>Version: Draft 6, 14 November 2026. The last day for changes is 30 November 2026. The Directors vote on the final text on 1 December 2026, and it comes into force on 3 December 2026.</p><p>Draft 6 (14 November 2026). This draft builds the decisions of the review of players, registration and leaving (Decisions 1 to 22), of the review of discipline, elections and finance (Decisions 23 to 40) and of the later reviews (Decisions 41 to 60) directly into the main text. They are not amendments, because the Constitution is still being made. [Locked] after a number means the Boards decided it in a meeting. Words in square brackets are still to be decided. New clauses added in this draft carry a letter after the number (for example 8.1A) so that the earlier numbers do not move. When the text is final, all clauses will be renumbered in one clean pass and every reference will be corrected. The detailed rules are in the IHCC Rule Book. The Constitution comes into force on 3 December 2026. The last day for changes to this draft is 30 November 2026 (clause <a href="#c-32-1">32.1</a>).</p><p>Words in <span class="tbd">[square brackets]</span> are still to be decided. <span class="lk">[Locked]</span> after a number means the Boards decided it in a meeting.</p><p><a href="constitution-draft-6.txt" download>Download this draft as a plain text file</a>. <a href="rulebook.html">Read the Rule Book draft</a></p></section>
+<main id="main" class="wrap docpage" tabindex="-1" data-doc="c">
+<section class="draftbox" aria-labelledby="dbx"><h2 id="dbx">DRAFT: not yet in force</h2><p>This is a DRAFT. The text is still being made and changes every day. The last day for changes is 30 November 2026. The Directors vote on the final text on 1 December 2026, and it comes into force on 3 December 2026.</p><p>Words in <span class="tbd">[square brackets]</span> are still to be decided. <span class="lk">[Locked]</span> after a number means the Boards decided it in a meeting.</p><p><a href="constitution-draft.txt" download>Download this draft as a plain text file</a>. <a href="rulebook.html">Read the Rule Book draft</a></p></section><section class="doctools" aria-labelledby="toolsH"><h2 id="toolsH">Find a clause</h2>
+<form id="dsearch" role="search" class="sform"><div><label for="dq">Search the text</label><input id="dq" type="text" autocomplete="off" aria-describedby="dstat"></div><button class="go" type="submit">Search</button></form>
+<form id="djump" class="sform"><div><label for="dn">Go to clause number, for example 8.19</label><input id="dn" type="text" inputmode="decimal" autocomplete="off"></div><button class="go" type="submit">Go</button><button class="go" type="button" id="dcopy">Copy link</button></form>
+<p id="dstat" role="status" aria-live="polite" class="field-hint"></p>
+<ol id="dres" class="sres"></ol></section>
 <nav aria-labelledby="tocH" class="doctoc"><h2 id="tocH">Contents</h2><ul>
 <li><a href="#ch-i">Chapter I: Foundation</a>
 <ul class="toc2">
@@ -148,6 +152,7 @@
 <p class="sub">(n) "Reserve account" means the account of IHCC in which badges are kept under clause <a href="#c-9-13">9.13</a>.</p>
 <p class="cl" id="c-1-5"><span class="num">1.5</span> The numbers "more than half" and "more than two-thirds" are always worked out from the number of Member Boards, Directors or Voting Members at the time.</p>
 <p class="cl" id="c-1-6"><span class="num">1.6</span> All dates and times in this Constitution are in Pakistan time.</p>
+<p class="pn"><a href="#art-2">Next: Article 2</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-2">Article 2: Objects</h3>
 <p class="cl" id="c-2-1"><span class="num">2.1</span> To promote and develop Hand Cricket among blind players around the world through an organized system of Member Boards.</p>
 <p class="cl" id="c-2-2"><span class="num">2.2</span> To keep justice, equality and fair play among Member Boards.</p>
@@ -155,6 +160,7 @@
 <p class="cl" id="c-2-4"><span class="num">2.4</span> To protect the trust and respect of players, including their verified identities.</p>
 <p class="cl" id="c-2-5"><span class="num">2.5</span> To run IHCC openly, honestly and with the advice of its members.</p>
 <p class="cl" id="c-2-6"><span class="num">2.6</span> To support deserving players, for example with premium or verification badges.</p>
+<p class="pn"><a href="#art-1">Previous: Article 1</a> <a href="#art-3">Next: Article 3</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-3">Article 3: The Constitution and the Rule Book</h3>
 <p class="cl" id="c-3-1"><span class="num">3.1</span> IHCC has two documents. This Constitution holds the main Articles. The IHCC Rule Book holds the detailed rules.</p>
 <p class="cl" id="c-3-2"><span class="num">3.2</span> An Article of this Constitution can be amended only under <a href="#art-30">Article 30</a>, by more than two-thirds of all Directors.</p>
@@ -163,6 +169,7 @@
 <p class="cl" id="c-3-5"><span class="num">3.5</span> Where this Constitution says that a matter is decided in the Rule Book, that decision is binding on every member, officer and Member Board.</p>
 <p class="cl" id="c-3-6"><span class="num">3.6</span> The Rule Book is published on the official IHCC website and in the Main Group. A change takes effect when it is published, or on a later date that it states.</p>
 <p class="cl" id="c-3-7"><span class="num">3.7</span> Every Article, clause, Chapter and rule has a number, so that it can be referred to exactly. An Article of this Constitution is cited as "<a href="#art-11">Article 11</a>" or "clause <a href="#c-11-5">11.5</a>". The Rule Book is cited as "Rule Book Chapter 7" or "Rule Book rule <a href="rulebook.html#r-7-3">7.3</a>".</p>
+<p class="pn"><a href="#art-2">Previous: Article 2</a> <a href="#art-4">Next: Article 4</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-4">Article 4: Languages and interpretation</h3>
 <p class="cl" id="c-4-1"><span class="num">4.1</span> This Constitution is written in English. The English text is the original and the one to be followed.</p>
 <p class="cl" id="c-4-2"><span class="num">4.2</span> Translations in Hindi, Urdu and Roman Urdu may be made. They are for understanding only. If they differ from the English text, the English text applies.</p>
@@ -170,6 +177,7 @@
 <p class="cl" id="c-4-4"><span class="num">4.4</span> A word in the masculine form includes the feminine, and a word in the singular includes the plural, unless the meaning is clear otherwise.</p>
 <p class="cl" id="c-4-5"><span class="num">4.5</span> "In writing" includes an email, and a form on the official IHCC website filled in after signing in with the member's own account. Where this Constitution allows the General Secretary to be told or asked "in any way", a message on WhatsApp is also enough.</p>
 <p class="cl" id="c-4-6"><span class="num">4.6</span> A word defined in clause <a href="#c-1-4">1.4</a> has the same meaning in the Rule Book.</p>
+<p class="pn"><a href="#art-3">Previous: Article 3</a> <a href="#art-5">Next: Article 5</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-ii">Chapter II: Members</h2>
 <h3 id="art-5">Article 5: Member Boards</h3>
 <p class="cl" id="c-5-1"><span class="num">5.1</span> IHCC begins with twelve Member Boards, subject to <a href="#art-32">Article 32</a>. Each board has its own full name and a short code, as in this list:</p>
@@ -192,6 +200,7 @@
 <p class="cl" id="c-5-4A"><span class="num">5.4A</span> A Member Board leaves IHCC only if at least eight of its twelve Voting Members agree in writing. The Director alone cannot take the board out. The notice goes to the General Secretary with the names of the eight players, confirmed from their Gmail addresses, and runs for thirty days. Within twenty-four hours the General Secretary tells every player of the board (one to twenty) by email and WhatsApp. A player who does not wish to go with the board may move to another Member Board without the thirty days of clause <a href="#c-8-6">8.6</a> and without counting it as the one move in a year, if the new board accepts. A board may not leave from the closing of the Voting List until the result of the election, nor during a tournament in progress. A board that has left may not join again for ninety days, and then only as a new board (clauses <a href="#c-5-3">5.3</a> and <a href="#c-7-8">7.8</a>).</p>
 <p class="cl" id="c-5-5"><span class="num">5.5</span> Boards not yet admitted are not Members, and no decision about them is taken by the Boards that already exist, except under clause <a href="#c-5-3">5.3</a>.</p>
 <p class="cl" id="c-5-6"><span class="num">5.6</span> The country name of a board is for branding only. Players may be of any nationality.</p>
+<p class="pn"><a href="#art-4">Previous: Article 4</a> <a href="#art-6">Next: Article 6</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-6">Article 6: Rights and duties of Member Boards</h3>
 <p class="cl" id="c-6-1"><span class="num">6.1</span> Every Member Board has the right:</p>
 <p class="sub">(a) To have its Team Director on the Board of Directors, with one vote.</p>
@@ -209,6 +218,7 @@
 <p class="sub">(f) To keep the personal data of its players safe under <a href="#art-10">Article 10</a>.</p>
 <p class="sub">(g) To respect the other boards and their players.</p>
 <p class="sub">(h) Not to stop, pressure or threaten a player who wishes to leave under clause <a href="#c-8-9A">8.9A</a>.</p>
+<p class="pn"><a href="#art-5">Previous: Article 5</a> <a href="#art-7">Next: Article 7</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-7">Article 7: Suspension and removal of a Member Board</h3>
 <p class="cl" id="c-7-1"><span class="num">7.1</span> Only the Board of Directors may suspend or remove a Member Board.</p>
 <p class="cl" id="c-7-2"><span class="num">7.2</span> Before it decides, IHCC gives the board the reasons in writing and a fair time to explain.</p>
@@ -219,6 +229,7 @@
 <p class="cl" id="c-7-6"><span class="num">7.6</span> The credit of a removed board is dealt with under clause <a href="#c-5-4">5.4</a>. The badges stay with IHCC under clause <a href="#c-9-10">9.10</a>.</p>
 <p class="cl" id="c-7-7"><span class="num">7.7</span> A board disqualified under clause <a href="#c-32-3">32.3</a> for not submitting its squad is not covered by this Article.</p>
 <p class="cl" id="c-7-8"><span class="num">7.8</span> A board that has left or been removed can return only as a new board under clause <a href="#c-5-3">5.3</a>.</p>
+<p class="pn"><a href="#art-6">Previous: Article 6</a> <a href="#art-8">Next: Article 8</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-8">Article 8: Players, display names and squads</h3>
 <p class="cl" id="c-8-1"><span class="num">8.1</span> Each Member Board has a squad of at least twelve and at most twenty players. [Players above twenty: see the note after clause <a href="#c-9-13">9.13</a>.]</p>
 <p class="cl" id="c-8-1A"><span class="num">8.1A</span> <span class="lk">[Locked]</span> If a squad falls below twelve players, the board has thirty days to register new players. During this time the board's membership is not affected and its Director may vote. If the squad is still below twelve after thirty days, the board has one last period of fourteen days. If it is still below twelve after that, the board is suspended under clause <a href="#c-7-3">7.3</a>, and the Director of that board does not vote on it. The General Secretary tells the board in writing how many players are missing and the last date. These periods stop running from the day the Voting List is closed until the result of the election concerned. The procedure is in the Rule Book.</p>
@@ -236,6 +247,7 @@
 <p class="cl" id="c-8-10"><span class="num">8.10</span> Each Member Board has one representative, whose Gmail address IHCC knows. Until the Team Director of the board is in office, the representative submits the squad on the official IHCC website, as the Rule Book says in Rule Book Chapter 2.</p>
 <p class="cl" id="c-8-10A"><span class="num">8.10A</span> <span class="lk">[Locked]</span> After the Team Director of a board is in office, new players are registered by the Team Director under Rule Book Chapter 2. The player fills in the joining form with the display name, real name, city, country, Gmail, WhatsApp number and gender, submits the final form under clause <a href="#c-9-6">9.6</a> and gives the statement under <a href="#art-9">Article 9</a>. The Team Director makes sure that everything is complete and sends the request to the General Secretary. The player joins the squad only when the General Secretary approves. The General Secretary also checks that the player is not in another squad, that the cooling-off period under clauses <a href="#c-8-6">8.6</a> and <a href="#c-8-6B">8.6B</a> is over, that no sanction is in force, and that the squad will not be more than twenty.</p>
 <p class="cl" id="c-8-11"><span class="num">8.11</span> A member who joins accepts this Constitution in writing, in the final form under <a href="#art-9">Article 9</a>.</p>
+<p class="pn"><a href="#art-7">Previous: Article 7</a> <a href="#art-8A">Next: Article 8A</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-8A">Article 8A: Rights and duties of players</h3>
 <p>8A.1 <span class="lk">[Locked]</span> Every player has the right:</p>
 <p class="sub">(a) To be treated equally, as <a href="#art-10">Article 10</a> says.</p>
@@ -256,6 +268,7 @@
 <p class="sub">(f) To pay a fine decided against him or her within thirty days.</p>
 <p class="sub">(g) To use the badge only as IHCC says, and to return it when he or she leaves.</p>
 <p class="sub">(h) To keep the Hand Cricket premium of his or her Gmail address active.</p>
+<p class="pn"><a href="#art-8">Previous: Article 8</a> <a href="#art-9">Next: Article 9</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-9">Article 9: Verified names and badges</h3>
 <p class="cl" id="c-9-1"><span class="num">9.1</span> <span class="lk">[Locked]</span> A verified display name that a player holds in the Hand Cricket application before submitting the final form under clause <a href="#c-9-6">9.6</a> is the property of that player. No Member Board, officer or IHCC may take it from the player by force or require the player to give it to another.</p>
 <p class="cl" id="c-9-2"><span class="num">9.2</span> <span class="lk">[Locked]</span> A Member Board that wants a verified name held by a player may ask the player for it. The player may give it if he wishes, and is not bound to. This applies whether the name is held by a player of the same board, of another Member Board, or of no Member Board.</p>
@@ -272,11 +285,13 @@
 <p class="cl" id="c-9-12"><span class="num">9.12</span> The purpose of this Article is that verified names always remain with IHCC, so that they can be given to new players of the same Member Board.</p>
 <p class="cl" id="c-9-13"><span class="num">9.13</span> <span class="lk">[Locked]</span> The reserve account is an official account of IHCC, not of any person. It is held by the General Secretary together with the CEO. A new player may take a name that is in reserve for the country of his or her board, and no price is paid for it. Or the player may bring his or her own verified name and sell it to IHCC under clause <a href="#c-9-4">9.4</a>, and its price is paid under clause <a href="#c-9-8">9.8</a>. When that player leaves, the badge goes back into the reserve. The General Secretary keeps a record of the names in reserve and of the players to whom they were given.</p>
 <p>[Note on the squad limit: the idea that a player above twenty gives his badge to IHCC free is NOT decided and is not part of this draft. It waits for the advice of a scholar and for a decision on clause <a href="#c-8-1">8.1</a>.]</p>
+<p class="pn"><a href="#art-8A">Previous: Article 8A</a> <a href="#art-10">Next: Article 10</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-10">Article 10: Protection of members</h3>
 <p class="cl" id="c-10-1"><span class="num">10.1</span> No member is treated worse because of nationality, race, colour, religion, gender, language, disability or social standing.</p>
 <p class="cl" id="c-10-2"><span class="num">10.2</span> IHCC protects younger members. A member under eighteen years of age is treated with extra care. No officer may pressure, mislead or harm him, and any complaint about the safety of a younger member is looked into at once by the Core Committee.</p>
 <p class="cl" id="c-10-3"><span class="num">10.3</span> Every meeting, notice, form and page of IHCC must be usable by blind members with a screen reader.</p>
 <p class="cl" id="c-10-4"><span class="num">10.4</span> IHCC collects personal details of members, such as real name, Gmail address, WhatsApp number, city and country, only for the work of IHCC. Only the officers who need them for their task may see them. Gmail addresses and WhatsApp numbers are never published. They are shared outside IHCC only with the member's permission, or where the law requires. <span class="lk">[Locked]</span> The Gmail address, WhatsApp number and city of a person who has left are deleted on his or her request, except where they are needed for a badge, a debt, a sanction or a complaint. The details are in the Rule Book.</p>
+<p class="pn"><a href="#art-9">Previous: Article 9</a> <a href="#art-11">Next: Article 11</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-iii">Chapter III: Governance</h2>
 <h3 id="art-11">Article 11: Offices inside a Member Board</h3>
 <p class="cl" id="c-11-1"><span class="num">11.1</span> Each Member Board has a Team Director, a Deputy Director and a Media Manager.</p>
@@ -292,12 +307,14 @@
 <p class="cl" id="c-11-8C"><span class="num">11.8C</span> <span class="lk">[Locked]</span> The Team Director and the Deputy Director together may remove the Media Manager they chose. They tell the General Secretary within seven days.</p>
 <p class="cl" id="c-11-9"><span class="num">11.9</span> The Media Manager handles the media of the board: what it passes to IHCC, to the public and to its own team. The Media Manager has no right to vote except as a Voting Member. No official announcement of a board is made without the approval of its Director or Deputy Director.</p>
 <p class="cl" id="c-11-10"><span class="num">11.10</span> <span class="lk">[Locked]</span> With twelve Member Boards, IHCC has forty-two offices: six in the Core Committee, twelve Team Directors, twelve Deputy Directors and twelve Media Managers. The main body is eighteen: the six Core officers and the twelve Team Directors. The other twenty-four belong to their own boards. All these persons are different. One person cannot hold two offices. If the number of Member Boards changes, the number of offices changes with it.</p>
+<p class="pn"><a href="#art-10">Previous: Article 10</a> <a href="#art-12">Next: Article 12</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-12">Article 12: General Assembly</h3>
 <p class="cl" id="c-12-1"><span class="num">12.1</span> The General Assembly is all the Voting Members of all Member Boards.</p>
 <p class="cl" id="c-12-2"><span class="num">12.2</span> It meets at least once every six months.</p>
 <p class="cl" id="c-12-3"><span class="num">12.3</span> In a meeting the Core Committee gives its report on the work, the expenses and the monthly fee. Any member may ask questions.</p>
 <p class="cl" id="c-12-4"><span class="num">12.4</span> The General Assembly does not take decisions, except as stated in this Constitution. Decisions are for the Board of Directors.</p>
 <p class="cl" id="c-12-5"><span class="num">12.5</span> A special meeting may be called by a written request of at least thirty Voting Members who belong to at least three different boards. The Chairman fixes the meeting within seven days. If he does not, the General Secretary fixes it. The meeting discusses only the matter for which it was requested.</p>
+<p class="pn"><a href="#art-11">Previous: Article 11</a> <a href="#art-13">Next: Article 13</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-13">Article 13: Board of Directors</h3>
 <p class="cl" id="c-13-1"><span class="num">13.1</span> The Board of Directors has one Team Director from each Member Board. Each Director has one vote.</p>
 <p class="cl" id="c-13-2"><span class="num">13.2</span> The Board of Directors has these powers:</p>
@@ -321,6 +338,7 @@
 <p class="cl" id="c-13-6"><span class="num">13.6</span> The six Core officers attend the meetings of the Board of Directors, give their reports and answer questions. They do not vote.</p>
 <p class="cl" id="c-13-7"><span class="num">13.7</span> The Board of Directors has no daily work. It does not take part in the daily running of IHCC.</p>
 <p class="cl" id="c-13-8"><span class="num">13.8</span> The Chairman presides over meetings of the Directors and does not vote. If the Chairman is concerned (a complaint against him, a review of his decision, his removal), the Deputy Chairman presides. If both are concerned or absent, the Directors choose one of themselves for that meeting only, by more than half, and he keeps his own vote. The General Secretary calls the meeting on the Chairman's order with twenty-four hours' notice. If the Chairman does not call it, at least five Directors may demand it in writing, and the General Secretary calls it within seven days.</p>
+<p class="pn"><a href="#art-12">Previous: Article 12</a> <a href="#art-14">Next: Article 14</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-14">Article 14: Core Committee</h3>
 <p class="cl" id="c-14-1"><span class="num">14.1</span> The Core Committee has six officers:</p>
 <p class="sub">1. Chairman</p>
@@ -351,8 +369,10 @@
 <p class="cl" id="c-14-16"><span class="num">14.16</span> When an office becomes vacant, the Deputy Chairman acts as Chairman, and in other cases the Chairman appoints a Core member to act. A new election is held under clause <a href="#c-16-20">16.20</a>. The new officer serves for the remaining term only.</p>
 <p class="cl" id="c-14-17"><span class="num">14.17</span> Each Core officer receives an honorarium of one thousand Pakistani rupees each month, paid from the operational fee. The Board of Directors may change the amount by more than half. The amounts are published.</p>
 <p class="cl" id="c-14-18"><span class="num">14.18</span> A Core officer who has not answered official matters for fourteen days, with no leave notice, is told in writing by the General Secretary (if it is the General Secretary, by the Deputy Chairman) by email and WhatsApp, and has seven days to answer. If he does not, the Chairman (or the Deputy Chairman) declares the office vacant in writing, and the Board of Directors confirms it within seven days by more than half, or the declaration ends. This is not a sanction. The officer stays in the squad and may be heard again within seven days, after which the Directors may withdraw the declaration. A vacant office is dealt with under clause <a href="#c-14-16">14.16</a> and a by-election under clause <a href="#c-16-20">16.20</a>. A Core officer may take written leave of up to thirty days, once a year, approved by the Chairman (for the Chairman, by the Deputy Chairman), and an acting officer does the work. A Team Director who is absent without written reason from three Directors' meetings in a row is replaced at the meetings by his Deputy Director, and the board is given seven days' notice to choose a new Director. This is also not a sanction. The whole matter takes at most thirty days.</p>
+<p class="pn"><a href="#art-13">Previous: Article 13</a> <a href="#art-15">Next: Article 15</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-15">Article 15: [Not used]</h3>
 <p class="cl" id="c-15-1"><span class="num">15.1</span> This Article is not used. The Working Committee of earlier drafts is ended (Decision 48), and its tasks belong to the Core Committee. The number is kept so that the numbers of the other Articles do not move.</p>
+<p class="pn"><a href="#art-14">Previous: Article 14</a> <a href="#art-16">Next: Article 16</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-iv">Chapter IV: Elections</h2>
 <h3 id="art-16">Article 16: Elections</h3>
 <p class="cl" id="c-16-1"><span class="num">16.1</span> Terms. Every office is held for one year. A person may hold the same office for two consecutive terms, but not a third. After two terms he may hold another office, or return to the same office after a gap of one year.</p>
@@ -389,6 +409,7 @@
 <p class="sub">Who screens. In the first election (15 November 2026) the Election Committee screens the allegation. In later elections the sitting Chairman and General Secretary screen it, and stay in office until the hand-over. If either is a candidate, or the allegation is against him or his board, the Deputy Chairman takes his place. If the Deputy Chairman also cannot sit, the Directors choose two Directors by lot, from boards that have no candidate in that election.</p>
 <p class="sub">A candidate has no right to see who voted for him.</p>
 <p class="cl" id="c-16-23"><span class="num">16.23</span> If the result of a seat is not ready on 3 December, the person who sits in the seat stays until the next person takes charge. A seat whose result is final is handed over on 3 December. Only the disputed seat stays with the outgoing person, and he does routine work only. The Directors may meet at any time and decide what to do. There is no fixed number of days for the dispute.</p>
+<p class="pn"><a href="#art-15">Previous: Article 15</a> <a href="#art-17">Next: Article 17</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-17">Article 17: Election Committee</h3>
 <p class="cl" id="c-17-1"><span class="num">17.1</span> <span class="lk">[Locked]</span> The Directors of the Board of Directors form a committee of three members for the election. Each Director may name a person, after asking him. If he agrees, the Directors vote on him. A person who gets more than half of all Directors becomes a member of the committee.</p>
 <p class="cl" id="c-17-2"><span class="num">17.2</span> <span class="lk">[Locked]</span> The three members come from three different boards.</p>
@@ -399,6 +420,7 @@
 <p class="cl" id="c-17-7"><span class="num">17.7</span> The Directors vote on the members in a meeting on Google Meet, which is recorded. The Directors' voting is open (clause <a href="#c-19-7A">19.7A</a>). If three members are not chosen in the first round, a second round is held on the same day.</p>
 <p class="cl" id="c-17-8"><span class="num">17.8</span> The three members choose a Head from among themselves. The Head leads the committee and announces the results, together with the confirmation of the other two members. The committee decides by the majority of its three members.</p>
 <p class="cl" id="c-17-9"><span class="num">17.9</span> The Election Committee keeps a record of every call and complaint that it handles.</p>
+<p class="pn"><a href="#art-16">Previous: Article 16</a> <a href="#art-18">Next: Article 18</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-18">Article 18: Eligibility and disqualification</h3>
 <p class="cl" id="c-18-1"><span class="num">18.1</span> There is no age limit for a Voting Member, a Team Director, a Deputy Director, a Core officer or any other member.</p>
 <p class="cl" id="c-18-2"><span class="num">18.2</span> A person cannot hold the office of Core officer, Team Director or Deputy Director if:</p>
@@ -407,6 +429,7 @@
 <p class="sub">(c) His board's rights are suspended because of unpaid fees.</p>
 <p class="sub">(d) He is also a member of the squad of another board.</p>
 <p class="cl" id="c-18-3"><span class="num">18.3</span> A person who is a member of IHCC Management may be a candidate in the first election without any further condition.</p>
+<p class="pn"><a href="#art-17">Previous: Article 17</a> <a href="#art-19">Next: Article 19</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-v">Chapter V: The business of IHCC</h2>
 <h3 id="art-19">Article 19: Meetings and voting</h3>
 <p class="cl" id="c-19-1"><span class="num">19.1</span> Meetings are held on Google Meet, and notices are given in the Main Group.</p>
@@ -419,17 +442,20 @@
 <p class="cl" id="c-19-7A"><span class="num">19.7A</span> Votes of Directors in meetings, including the election of the CEO, CFO and Women's Director, are open and are published. The votes of voters in an election are secret (clause <a href="#c-16-11">16.11</a>).</p>
 <p class="cl" id="c-19-8"><span class="num">19.8</span> If a notice was by mistake not received by some members, the meeting and its decisions are still valid if the notice was given in the Main Group in time and the quorum was met.</p>
 <p class="cl" id="c-19-9"><span class="num">19.9</span> If Google Meet or another needed service stops working at the time of a meeting or a vote, the General Secretary announces in the Main Group another way to hold it and a new time. Deadlines that depend on the service are extended by the same time.</p>
+<p class="pn"><a href="#art-18">Previous: Article 18</a> <a href="#art-20">Next: Article 20</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-20">Article 20: Conflict of interest</h3>
 <p class="cl" id="c-20-1"><span class="num">20.1</span> A person who has a personal interest, or whose Member Board has an interest, in a particular decision must declare it and must not vote on it. He may speak. This applies to a gain and to a loss.</p>
 <p class="cl" id="c-20-2"><span class="num">20.2</span> Examples: a decision on his own pay, on a sanction against him, on a complaint about him, on the removal of his board, or on an appointment of his relative.</p>
 <p class="cl" id="c-20-3"><span class="num">20.3</span> It does not apply to general decisions which affect all boards equally, such as the budget, the fee, or amendments.</p>
 <p class="cl" id="c-20-4"><span class="num">20.4</span> Any member may complain to the Board of Directors if a person did not declare an interest.</p>
+<p class="pn"><a href="#art-19">Previous: Article 19</a> <a href="#art-21">Next: Article 21</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-21">Article 21: Official communication</h3>
 <p class="cl" id="c-21-1"><span class="num">21.1</span> Official announcements are made only by the General Secretary, or the Chairman. No other officer makes an official announcement for IHCC.</p>
 <p class="cl" id="c-21-2"><span class="num">21.2</span> A Media Manager makes announcements for his own board, with the approval of its Director or Deputy Director.</p>
 <p class="cl" id="c-21-3"><span class="num">21.3</span> Official decisions and announcements are issued in the Main Group, so that all receive them equally.</p>
 <p class="cl" id="c-21-4"><span class="num">21.4</span> The Board of Directors and the Core Committee may have separate groups for their work, but their decisions are announced in the Main Group.</p>
 <p class="cl" id="c-21-5"><span class="num">21.5</span> A wrong announcement may be corrected within forty-eight hours under clause <a href="#c-19-5">19.5</a>.</p>
+<p class="pn"><a href="#art-20">Previous: Article 20</a> <a href="#art-22">Next: Article 22</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-vi">Chapter VI: Money and property</h2>
 <h3 id="art-22">Article 22: Finance</h3>
 <p class="cl" id="c-22-1"><span class="num">22.1</span> IHCC is not registered. Its money is kept in the account of the CFO. A separate account is not required. The CFO gives a written statement that the money is IHCC's and not his own, and keeps a separate written register of every amount. Every spending or transfer needs the earlier written approval of the Chairman (in his absence, the Deputy Chairman). The Chairman receives the monthly bank statement, the General Secretary may see it, and the Auditor compares the statement with the register at least twice a year. At hand-over the new CFO takes the money into his own account in front of the General Secretary, under the written statement of clause <a href="#c-32-13">32.13</a>. If the CFO is absent, the Chairman and the General Secretary choose an Acting CFO within two days. If IHCC is registered, the account is opened in its name.</p>
@@ -451,6 +477,7 @@
 <p class="sub">(b) Medium, from 2,001 to 10,000: more than half of the Core Committee in writing.</p>
 <p class="sub">(c) Large, above 10,000, or above 10,000 in a year for one purpose: the Board of Directors by more than half.</p>
 <p class="sub">The payment of a badge price under clause <a href="#c-9-8">9.8</a> is a fixed debt and needs only the CFO's record. In an emergency the Chairman may spend alone up to 2,000 and reports to the Directors within fourteen days. The Directors approve the yearly budget by purposes (clause <a href="#c-13-2">13.2</a>(a)), and the Core Committee may spend inside the budget. Every payment has a receipt or proof and a reason in the CFO's record, and the monthly report shows the total and the purpose. The amounts may be changed by the Directors after advice.</p>
+<p class="pn"><a href="#art-21">Previous: Article 21</a> <a href="#art-23">Next: Article 23</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-23">Article 23: Sponsorship and voluntary contributions</h3>
 <p class="cl" id="c-23-1"><span class="num">23.1</span> Prizes, awards, tournaments, series and world cups are paid for by sponsors, not by the fees of Member Boards.</p>
 <p class="cl" id="c-23-2"><span class="num">23.2</span> Any person may give or bring a sponsor of his own free will, including a Core officer, a Director, a member, or a person outside IHCC.</p>
@@ -462,11 +489,13 @@
 <p class="cl" id="c-23-8"><span class="num">23.8</span> Sponsorship money may be used to pay the prices of badges owed under <a href="#art-9">Article 9</a>. Money given for another purpose is used only for that purpose.</p>
 <p class="cl" id="c-23-9"><span class="num">23.9</span> The General Secretary keeps a written agreement for each sponsorship. The Directors approve a sponsorship by more than half. The Core Committee may approve small sums under clause <a href="#c-22-14">22.14</a>. A sponsor gets only a public acknowledgment of the name. If the purpose of a sponsorship is cancelled, IHCC asks the sponsor and holds the money for sixty days. A public record is kept every month.</p>
 <p class="cl" id="c-23-10"><span class="num">23.10</span> General sponsorship money without any condition may be used anywhere under clause <a href="#c-22-14">22.14</a>. While any price owed to a person who has left or been removed (after the week of clause <a href="#c-9-9">9.9</a>) is unpaid, no prizes or gifts are paid from general sponsorship money.</p>
+<p class="pn"><a href="#art-22">Previous: Article 22</a> <a href="#art-24">Next: Article 24</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-24">Article 24: Property of IHCC</h3>
 <p class="cl" id="c-24-1"><span class="num">24.1</span> The name IHCC, its logo, website, social media accounts, groups and channels, official email addresses, records, and the verified badges under <a href="#art-9">Article 9</a> belong to IHCC. They do not belong to any person who set them up or runs them.</p>
 <p class="cl" id="c-24-2"><span class="num">24.2</span> A person who runs any of this property holds it for IHCC and uses it only for the work of IHCC.</p>
 <p class="cl" id="c-24-3"><span class="num">24.3</span> No person may sell, hire out or give away any of this property, or use it for personal gain.</p>
 <p class="cl" id="c-24-4"><span class="num">24.4</span> The Board of Directors may allow others, such as sponsors, to use the name and logo of IHCC, on the conditions that it fixes.</p>
+<p class="pn"><a href="#art-23">Previous: Article 23</a> <a href="#art-25">Next: Article 25</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-vii">Chapter VII: Discipline and disputes</h2>
 <h3 id="art-25">Article 25: Discipline</h3>
 <p class="cl" id="c-25-1"><span class="num">25.1</span> <span class="lk">[Locked]</span> Who may complain. Any member (player), officer or Member Board may make a complaint, in writing to the General Secretary or in the Main Group. A person outside IHCC may only give information to the General Secretary, who may start a complaint himself if there is proof. A complaint without a name is not accepted. A person who fears may give his name to the General Secretary and ask that it is not shown to the accused, but the accused is always told what is said against him, so that he can answer.</p>
@@ -492,38 +521,45 @@
 <p class="cl" id="c-25-14"><span class="num">25.14</span> <span class="lk">[Locked]</span> A player removed from a squad as a sanction may not join any squad for the length of the ban, and his or her badge stays with IHCC. A complaint continues even if the person leaves while it is pending, and the decision applies if he or she returns.</p>
 <p class="cl" id="c-25-15"><span class="num">25.15</span> <span class="lk">[Locked]</span> Notice and record. A small sanction is told only to the person and the Core Committee, not in the Main Group (the public record of fines in clause <a href="#c-25-7">25.7</a> stays). For a medium or large sanction the Main Group is told only the display name, the kind of offence, the sanction and its length, and not the real name, Gmail, WhatsApp or details. The notice is taken out of the Main Group when the sanction ends. IHCC keeps the record of a small sanction for two years, of a medium sanction for five years, and of a large sanction always. The old record is used only for clause <a href="#c-25-3">25.3</a> (repeat offences) and for the permission to return, and the person is clean after the sanction.</p>
 <p class="cl" id="c-25-16"><span class="num">25.16</span> <span class="lk">[Locked]</span> Pardon. Only the Board of Directors may forgive or reduce a sanction, and no single officer. At least half of the sanction must have passed without a new offence. A medium sanction needs more than half of all Directors, and a large sanction more than two-thirds. The person asks in writing through the General Secretary, with a reason, and the decision is taken within fourteen days. A small sanction is not forgiven. A permanent ban is forgiven only after five years and by more than two-thirds. A general pardon for everyone is not allowed. The record stays, and clause <a href="#c-25-3">25.3</a> on repeated offences still applies.</p>
+<p class="pn"><a href="#art-24">Previous: Article 24</a> <a href="#art-26">Next: Article 26</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-26">Article 26: Disputes and interpretation</h3>
 <p class="cl" id="c-26-1"><span class="num">26.1</span> A dispute between boards, between a board and IHCC, or about a decision of the Core Committee is decided by the Board of Directors. A Director whose board is in the dispute does not vote.</p>
 <p class="cl" id="c-26-2"><span class="num">26.2</span> A complaint about an election is decided by the Board of Directors within three days, under clause <a href="#c-16-16">16.16</a>.</p>
 <p class="cl" id="c-26-3"><span class="num">26.3</span> If a part of this Constitution is unclear, the Board of Directors explains it by more than half and publishes the explanation. An explanation does not change an Article.</p>
 <p class="cl" id="c-26-4"><span class="num">26.4</span> Until the explanation is made, the General Secretary may say how to proceed for the time being.</p>
+<p class="pn"><a href="#art-25">Previous: Article 25</a> <a href="#art-27">Next: Article 27</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-viii">Chapter VIII: Operations</h2>
 <h3 id="art-27">Article 27: Tournaments and series</h3>
 <p class="cl" id="c-27-1"><span class="num">27.1</span> The Core Committee proposes a tournament or series, and the Board of Directors approves it by more than half.</p>
 <p class="cl" id="c-27-2"><span class="num">27.2</span> For tournaments and series of IHCC, the costs of officials, commentators and broadcasting are paid from the operational fee.</p>
 <p class="cl" id="c-27-3"><span class="num">27.3</span> A bilateral series between two boards does not need IHCC's approval. The two boards report it in writing to the General Secretary, who checks for a clash with IHCC events. If there is a clash, IHCC may stop or move it. Otherwise the series goes on. The two boards bear its costs.</p>
 <p class="cl" id="c-27-4"><span class="num">27.4</span> IHCC keeps the official records and results of its events, and may publish rankings of the boards. The method of the rankings is in the Rule Book and is approved by the Board of Directors.</p>
+<p class="pn"><a href="#art-26">Previous: Article 26</a> <a href="#art-28">Next: Article 28</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-28">Article 28: The Hand Cricket application and its developer</h3>
 <p class="cl" id="c-28-1"><span class="num">28.1</span> IHCC is an organization of players. The Hand Cricket application belongs to its developer. IHCC does not own or control the application or its gameplay.</p>
 <p class="cl" id="c-28-2"><span class="num">28.2</span> IHCC decides only the matters of this Constitution and the Rule Book. It does not decide how the application works.</p>
 <p class="cl" id="c-28-3"><span class="num">28.3</span> IHCC may ask the developer for help on matters such as verified names and badges, and about a person who misuses a badge, as clause <a href="#c-9-11">9.11</a> says.</p>
 <p class="cl" id="c-28-4"><span class="num">28.4</span> If a change in the application affects the Rule Book, the Board of Directors may change the Rule Book under <a href="#art-3">Article 3</a>.</p>
+<p class="pn"><a href="#art-27">Previous: Article 27</a> <a href="#art-29">Next: Article 29</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-ix">Chapter IX: General provisions</h2>
 <h3 id="art-29">Article 29: Indemnity and confidentiality</h3>
 <p class="cl" id="c-29-1"><span class="num">29.1</span> No Director, officer or member who acts honestly and in good faith for IHCC is to be blamed, fined or removed for a mistake made while doing so. This does not protect dishonesty, a deliberate wrong, or a breach of this Constitution.</p>
 <p class="cl" id="c-29-2"><span class="num">29.2</span> What is said in a closed meeting of the Board of Directors or the Core Committee stays confidential until the decision is announced in the Main Group. This does not apply to the open voting of Directors under clause <a href="#c-19-7A">19.7A</a>.</p>
 <p class="cl" id="c-29-3"><span class="num">29.3</span> Breaking this confidentiality is an offence under the Rule Book.</p>
+<p class="pn"><a href="#art-28">Previous: Article 28</a> <a href="#art-30">Next: Article 30</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-30">Article 30: Amendment</h3>
 <p class="cl" id="c-30-1"><span class="num">30.1</span> A proposal to amend an Article is made in writing by at least two Directors or by the Core Committee, and deals with one topic only. The full text is sent to the Main Group, by email and on WhatsApp, at least seven days before the vote. The vote is in a recorded meeting. More than two-thirds of all Directors (nine of twelve) are needed, and each Director's vote is published. The amendment takes effect seven days after the vote. The General Secretary corrects the references in the Rule Book within fourteen days.</p>
 <p class="cl" id="c-30-2"><span class="num">30.2</span> The Rule Book may be amended by more than half of all Directors, under Rule Book rule <a href="rulebook.html#r-1-4">1.4</a>.</p>
 <p class="cl" id="c-30-3"><span class="num">30.3</span> No single person or officer may amend this Constitution or the Rule Book.</p>
 <p class="cl" id="c-30-4"><span class="num">30.4</span> The Rule Book cannot amend this Constitution.</p>
 <p class="cl" id="c-30-5"><span class="num">30.5</span> The rules of this Article apply from 3 December 2026. Every Article is amended by the same rule. No Article is protected more strongly than another.</p>
+<p class="pn"><a href="#art-29">Previous: Article 29</a> <a href="#art-31">Next: Article 31</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-31">Article 31: Dissolution</h3>
 <p class="cl" id="c-31-1"><span class="num">31.1</span> IHCC may be dissolved only if the Board of Directors decides by more than two-thirds of all Directors, and then the Voting Members decide by more than two-thirds of all Voting Members.</p>
 <p class="cl" id="c-31-2"><span class="num">31.2</span> On dissolution all badges stay in the account of IHCC. Players who were already paid keep the price paid. Players who are not paid are paid from the money that remains, in queue order. If the money runs out, the badge of an unpaid player goes back to him or her and the debt ends.</p>
 <p class="cl" id="c-31-3"><span class="num">31.3</span> The website, groups, logo, email and records go as the last decision of the Directors says, or stay in IHCC's accounts.</p>
 <p class="cl" id="c-31-4"><span class="num">31.4</span> The accounts are settled within ninety days. Debts are paid first, then the credit of the boards is returned in equal shares, and unused sponsorship money is returned to the sponsors or given in charity as the Directors decide.</p>
+<p class="pn"><a href="#art-30">Previous: Article 30</a> <a href="#art-32">Next: Article 32</a> <a href="#tocH">Back to contents</a></p>
 <h3 id="art-32">Article 32: Transitional provisions</h3>
 <p class="cl" id="c-32-1"><span class="num">32.1</span> <span class="lk">[Locked]</span> This Constitution and the Rule Book come into force on 3 December 2026. Until then they are being made, and the Boards may change the text of either by agreement in their meetings. Such a change before 3 December 2026 is part of making the text, not an amendment. The last day for changes to the draft is 30 November 2026. The Directors vote on the final text in a recorded meeting on 1 December 2026.</p>
 <p class="cl" id="c-32-2"><span class="num">32.2</span> Until the hand-over on 3 December 2026, IHCC Management runs IHCC.</p>
@@ -538,6 +574,7 @@
 <p class="cl" id="c-32-11"><span class="num">32.11</span> Every decision properly taken by the Boards in their daily meetings from 23 October 2026 stays valid after this Constitution comes into force, unless this Constitution says otherwise.</p>
 <p class="cl" id="c-32-12"><span class="num">32.12</span> <span class="lk">[Locked]</span> The squad rules of <a href="#art-8">Article 8</a> and the rules on badges in <a href="#art-9">Article 9</a>, as they stand in this draft, apply to all players, those who are in a squad on 3 December 2026 and those who join later.</p>
 <p class="cl" id="c-32-13"><span class="num">32.13</span> <span class="lk">[Locked]</span> IHCC Management keeps a written account of the money received and paid until 3 December 2026 (date, from whom, how much, for what), and shows it every month in the Main Group. A person who holds money of IHCC states in writing how much he holds and in which account, and hands it over to the new CFO and the Chairman. Three Directors chosen by lot, who have nothing to do with the Management, check the account by 30 November 2026 and report in writing. At the hand-over the Management, the new CFO and the General Secretary sign a hand-over statement, which is announced in the Main Group. Until then the Management spends only what is necessary and records every expense. This account is a separate report of the Management period, and not part of the first financial year.</p>
+<p class="pn"><a href="#art-31">Previous: Article 31</a> <a href="#tocH">Back to contents</a></p>
 </main>
 <!--SITEFOOT-->
 <footer class="sitefoot">
@@ -563,5 +600,6 @@
 <!--/SITEFOOT-->
 
 <script src="notice.js?v=20261107a"></script>
+<script src="doc.js?v=20261114b"></script>
 </body>
 </html>

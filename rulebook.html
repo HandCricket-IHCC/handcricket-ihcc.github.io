@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="site.css?v=20261106a">
 <link rel="stylesheet" href="site-more.css?v=20261107a">
 <link rel="stylesheet" href="notice.css?v=20261107a">
-<link rel="stylesheet" href="doc.css?v=20261114a">
+<link rel="stylesheet" href="doc.css?v=20261114b">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
@@ -33,7 +33,7 @@
   <div class="in">
     <a class="brand" href="index.html"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="57" fill="#0c2e21" stroke="#e8c97a" stroke-width="4"/><circle cx="60" cy="56" r="34" fill="#1b5e43" stroke="#f4e3b0" stroke-width="3"/><path d="M43 30c9 11 9 31 0 44M77 30c-9 11-9 31 0 44" fill="none" stroke="#f4e3b0" stroke-width="3" stroke-linecap="round"/><rect x="26" y="90" width="68" height="20" rx="5" fill="#e8c97a"/></svg><span>IHCC<small>Hand Cricket Council</small></span></a>
     <button class="menubtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="siteNav" data-sk="M" aria-keyshortcuts="Alt+M">Menu</button>
-    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="constitution.html">Constitution</a></li><li><a href="rulebook.html" aria-current="page">Rule Book</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="rulebook.html" aria-current="page" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li></ul></nav>
+    <nav class="sitenav" id="siteNav" aria-label="Main" data-open="false"><ul><li><a href="index.html" data-sk="H" aria-keyshortcuts="Alt+H">Home</a></li><li><a href="squad.html" data-sk="S" aria-keyshortcuts="Alt+S">Squad lists</a></li><li><a href="boards.html" data-sk="B" aria-keyshortcuts="Alt+B">Boards</a></li><li><a href="elections.html" data-sk="V" aria-keyshortcuts="Alt+V">Elections</a></li><li><a href="constitution.html">Constitution</a></li><li><a href="rulebook.html">Rule Book</a></li><li><a href="news.html" data-sk="N" aria-keyshortcuts="Alt+N">News</a></li><li><a href="rulebook.html" aria-current="page" data-sk="Q" aria-keyshortcuts="Alt+Q">FAQ</a></li><li><a href="privacy.html" data-sk="P" aria-keyshortcuts="Alt+P">Privacy</a></li></ul></nav>
   </div>
 </div>
 <script src="menu.js?v=20261106a"></script>
@@ -62,8 +62,12 @@
   </div>
 </header>
 
-<main id="main" class="wrap docpage" tabindex="-1">
-<section class="draftbox" aria-labelledby="dbx"><h2 id="dbx">DRAFT: not yet in force</h2><p>Version: Draft 5, 14 November 2026. The last day for changes is 30 November 2026. The Directors vote on the final text on 1 December 2026, and it comes into force on 3 December 2026 together with the Constitution.</p><p>Draft 5 (14 November 2026), Part 1 of 2: Chapters 1 to 7. This draft builds the decisions of the review of players, registration and leaving (Decisions 1 to 22), of the review of discipline, elections and finance (Decisions 23 to 40) and of the later reviews (Decisions 41 to 60) directly into the main text. They are not amendments, because the Rule Book is still being made. [Locked] after a number means the Boards decided it in a meeting. All other parts are Draft. Words in square brackets are still to be decided. The main Articles are in the IHCC Constitution; if the two differ, the Constitution applies. The Rule Book comes into force on 3 December 2026 together with the Constitution (Constitution clause <a href="constitution.html#c-32-1">32.1</a>). The last day for changes to this draft is 30 November 2026. Part 2 holds Chapters 8 to 12.</p><p>Words in <span class="tbd">[square brackets]</span> are still to be decided. <span class="lk">[Locked]</span> after a number means the Boards decided it in a meeting.</p><p><a href="rulebook-draft-5.txt" download>Download this draft as a plain text file</a>. <a href="constitution.html">Read the Constitution draft</a></p></section>
+<main id="main" class="wrap docpage" tabindex="-1" data-doc="r">
+<section class="draftbox" aria-labelledby="dbx"><h2 id="dbx">DRAFT: not yet in force</h2><p>This is a DRAFT. The text is still being made and changes every day. The last day for changes is 30 November 2026. The Directors vote on the final text on 1 December 2026, and it comes into force on 3 December 2026 together with the Constitution.</p><p>Words in <span class="tbd">[square brackets]</span> are still to be decided. <span class="lk">[Locked]</span> after a number means the Boards decided it in a meeting.</p><p><a href="rulebook-draft.txt" download>Download this draft as a plain text file</a>. <a href="constitution.html">Read the Constitution draft</a></p></section><section class="doctools" aria-labelledby="toolsH"><h2 id="toolsH">Find a clause</h2>
+<form id="dsearch" role="search" class="sform"><div><label for="dq">Search the text</label><input id="dq" type="text" autocomplete="off" aria-describedby="dstat"></div><button class="go" type="submit">Search</button></form>
+<form id="djump" class="sform"><div><label for="dn">Go to clause number, for example 8.19</label><input id="dn" type="text" inputmode="decimal" autocomplete="off"></div><button class="go" type="submit">Go</button><button class="go" type="button" id="dcopy">Copy link</button></form>
+<p id="dstat" role="status" aria-live="polite" class="field-hint"></p>
+<ol id="dres" class="sres"></ol></section>
 <nav aria-labelledby="tocH" class="doctoc"><h2 id="tocH">Contents</h2><ul>
 <li><a href="#ch-1">Chapter 1: General</a>
 </li>
@@ -99,6 +103,7 @@
 <p class="cl" id="r-1-6"><span class="num">1.6</span> A word defined in Constitution clause <a href="constitution.html#c-1-4">1.4</a> has the same meaning in the Rule Book.</p>
 <p class="cl" id="r-1-7"><span class="num">1.7</span> Every Chapter has a number and every rule has a number such as 7.3, so that it can be cited exactly. The Constitution is cited as "Constitution <a href="constitution.html#art-11">Article 11</a>" or "Constitution clause <a href="constitution.html#c-11-5">11.5</a>".</p>
 <p class="cl" id="r-1-8"><span class="num">1.8</span> <span class="lk">[Locked]</span> The Rule Book is in force from 3 December 2026. Until then it is being made, and a change made before that date is part of making the text, not an amendment.</p>
+<p class="pn"><a href="#ch-2">Next: Chapter 2</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-2">Chapter 2: Squad lists, registration and verification</h2>
 <h3>Part A: The first squad lists (before the Team Directors are in office)</h3>
 <p class="cl" id="r-2-1"><span class="num">2.1</span> Each Member Board has one representative. IHCC adds his Gmail address. He signs in with Google on the official IHCC website and sees only the page of his own board. His task for the squad lists ends when the Team Director of his board is in office (rule <a href="#r-2-17">2.17</a>).</p>
@@ -168,6 +173,7 @@
 <p class="cl" id="r-2-38"><span class="num">2.38</span> <span class="lk">[Locked]</span> No confidence. At least eight of the twelve Voting Members write, by email or on the board's page, that they have no confidence in the Team Director or in the Deputy Director, and send it to the General Secretary. The General Secretary checks the names and the date, and announces in the Main Group that the office has ended. The board elects a new holder within thirty days and reports it. This cannot be done in the first ninety days of the term, nor from the closing of the Voting List until the result of the election. The Director cannot stop it.</p>
 <p class="cl" id="r-2-39"><span class="num">2.39</span> <span class="lk">[Locked]</span> The Team Director and the Deputy Director together remove the Media Manager they chose, and tell the General Secretary within seven days.</p>
 <p class="cl" id="r-2-40"><span class="num">2.40</span> <span class="lk">[Locked]</span> If the Team Director cannot go to a Directors' meeting, the Deputy Director goes. If he cannot, the Media Manager. If he cannot, the player highest in the squad order. The board tells the General Secretary in writing before the meeting (Constitution clause <a href="constitution.html#c-11-7">11.7</a>).</p>
+<p class="pn"><a href="#ch-1">Previous: Chapter 1</a> <a href="#ch-3">Next: Chapter 3</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-3">Chapter 3: Playing conditions</h2>
 <p class="cl" id="r-3-1"><span class="num">3.1</span> There are three formats.</p>
 <p class="cl" id="r-3-2"><span class="num">3.2</span> <span class="lk">[Locked]</span> T20: each innings has 12 overs.</p>
@@ -180,6 +186,7 @@
 <p class="cl" id="r-3-9"><span class="num">3.9</span> A tied match, the result of a match and points: <span class="tbd">[to be decided]</span>.</p>
 <p class="cl" id="r-3-10"><span class="num">3.10</span> A match that cannot be completed: <span class="tbd">[to be decided]</span>.</p>
 <p class="cl" id="r-3-11"><span class="num">3.11</span> Other rules of play: <span class="tbd">[to be decided]</span>.</p>
+<p class="pn"><a href="#ch-2">Previous: Chapter 2</a> <a href="#ch-4">Next: Chapter 4</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-4">Chapter 4: Match officials, scorers and commentators</h2>
 <p class="cl" id="r-4-1"><span class="num">4.1</span> The match officials of IHCC are the on-field umpires, the third umpire, the match referee, the scorers and the commentators. Which of these IHCC will have in each match: <span class="tbd">[to be decided]</span>.</p>
 <p class="cl" id="r-4-2"><span class="num">4.2</span> Whether an official may belong to a board that is playing the match: <span class="tbd">[to be decided]</span>.</p>
@@ -188,12 +195,14 @@
 <p class="cl" id="r-4-5"><span class="num">4.5</span> Officials and commentators follow Chapter 6.</p>
 <p class="cl" id="r-4-6"><span class="num">4.6</span> The costs of officials, commentators and broadcasting of IHCC tournaments and series are paid from the operational fee, as Constitution clause <a href="constitution.html#c-27-2">27.2</a> says.</p>
 <p class="cl" id="r-4-7"><span class="num">4.7</span> Rules for the broadcast of matches: <span class="tbd">[to be decided]</span>.</p>
+<p class="pn"><a href="#ch-3">Previous: Chapter 3</a> <a href="#ch-5">Next: Chapter 5</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-5">Chapter 5: Tournaments, series and rankings</h2>
 <p class="cl" id="r-5-1"><span class="num">5.1</span> The Core Committee proposes a tournament or series, and the Board of Directors approves it, as Constitution clause <a href="constitution.html#c-27-1">27.1</a> says.</p>
 <p class="cl" id="r-5-2"><span class="num">5.2</span> The report of a bilateral series to the General Secretary under Constitution clause <a href="constitution.html#c-27-3">27.3</a> gives the two boards, the dates and the format: <span class="tbd">[other details to be decided]</span>.</p>
 <p class="cl" id="r-5-3"><span class="num">5.3</span> The results and records of IHCC events are published in the Main Group and on the official IHCC website.</p>
 <p class="cl" id="r-5-4"><span class="num">5.4</span> The method of the rankings of the boards: <span class="tbd">[to be decided]</span>.</p>
 <p class="cl" id="r-5-5"><span class="num">5.5</span> A cash prize is offered only when a sponsor has promised it, as Constitution clause <a href="constitution.html#c-23-7">23.7</a> says.</p>
+<p class="pn"><a href="#ch-4">Previous: Chapter 4</a> <a href="#ch-6">Next: Chapter 6</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-6">Chapter 6: Code of conduct</h2>
 <p class="cl" id="r-6-1"><span class="num">6.1</span> Using a false display name or a display name that is not the player's own verified name is not allowed. A player who returns under another person's Gmail address or name uses false information and wrongly uses a verified name (rule <a href="#r-8-14">8.14</a>).</p>
 <p class="cl" id="r-6-2"><span class="num">6.2</span> A player may not play for more than one board or with more than one account.</p>
@@ -208,6 +217,7 @@
 <p class="cl" id="r-6-11"><span class="num">6.11</span> The sanctions are those of Constitution <a href="constitution.html#art-25">Article 25</a>.</p>
 <p class="cl" id="r-6-12"><span class="num">6.12</span> <span class="lk">[Locked]</span> No board, officer or member may stop, pressure or threaten a player who wishes to leave (Constitution clause <a href="constitution.html#c-8-9A">8.9A</a>). A board may only politely ask the player to think again.</p>
 <p class="cl" id="r-6-13"><span class="num">6.13</span> <span class="lk">[Locked]</span> A player who is moved down, or treated badly, because he complained, appealed, voted or announced that he is leaving has been wronged, and the person who did it breaks this Chapter.</p>
+<p class="pn"><a href="#ch-5">Previous: Chapter 5</a> <a href="#ch-7">Next: Chapter 7</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-7">Chapter 7: Offences, fines and sanctions</h2>
 <p class="cl" id="r-7-1"><span class="num">7.1</span> The Core Committee proposes the list of fines. The Board of Directors approves it by more than half and it is announced in advance to all.</p>
 <p class="cl" id="r-7-2"><span class="num">7.2</span> No fine may be higher than <span class="tbd">[maximum amount to be decided]</span>.</p>
@@ -230,6 +240,7 @@
 <p class="cl" id="r-7-16"><span class="num">7.16</span> <span class="lk">[Locked]</span> If the same offence is done a third time, the sanction moves to the next level. For example a third warning becomes a medium sanction.</p>
 <p class="cl" id="r-7-17"><span class="num">7.17</span> <span class="lk">[Locked]</span> An act that is not written as an offence in this Rule Book can only get a small sanction of a warning, a reprimand or a written apology (Constitution clause <a href="constitution.html#c-25-5">25.5</a>). The Board of Directors may write a new offence into the Rule Book for the future only, by more than half of all Directors, with a notice of at least seven days.</p>
 <p class="cl" id="r-7-18"><span class="num">7.18</span> <span class="lk">[Locked]</span> One act is sanctioned once. If a Member Board has sanctioned an act, its sanction counts in the sanction of IHCC.</p>
+<p class="pn"><a href="#ch-6">Previous: Chapter 6</a> <a href="#ch-8">Next: Chapter 8</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-8">Chapter 8: Complaints, appeals and leaving</h2>
 <h3>Part A: Complaints and appeals</h3>
 <p class="cl" id="r-8-1"><span class="num">8.1</span> <span class="lk">[Locked]</span> A complaint is made in writing to the General Secretary, by email to the official IHCC address or in the Main Group. It says who, what and when, and gives the proof. It is made within ninety days of the act or of the day it became known, and within one year for serious offences (match fixing, a false vote or buying a vote, misuse of IHCC money, threats and pressure). If the act was hidden, the time runs from the day it was found out. A complaint without a name is not accepted. A person who fears may give his name to the General Secretary and ask that it is not shown to the accused, but the accused is told everything said against him so that he can answer. A person outside IHCC only gives information, and the General Secretary may start a complaint himself if there is proof.</p>
@@ -297,6 +308,7 @@
 <p class="cl" id="r-8-46"><span class="num">8.46</span> If a Core officer has not answered official matters for fourteen days and gave no leave notice, the General Secretary (or, if it is the General Secretary, the Deputy Chairman) gives him written notice on email and WhatsApp, with seven days to answer.</p>
 <p class="cl" id="r-8-47"><span class="num">8.47</span> If he does not answer, the Chairman (or the Deputy Chairman) declares the office vacant in writing. The Directors confirm it within seven days by more than half, or it ends. It is not a sanction. The officer may be heard again within seven days. The vacancy is filled under Constitution clauses <a href="constitution.html#c-14-16">14.16</a> and <a href="constitution.html#c-16-20">16.20</a>.</p>
 <p class="cl" id="r-8-48"><span class="num">8.48</span> Leave: a Core officer may take written leave of up to thirty days, once a year, approved by the Chairman (for the Chairman, by the Deputy Chairman). An acting officer works meanwhile. A Team Director who is absent from three Directors' meetings in a row without a written reason is replaced at the meetings by his Deputy Director, and his board is given seven days' notice to choose a new Director. This is not a sanction.</p>
+<p class="pn"><a href="#ch-7">Previous: Chapter 7</a> <a href="#ch-9">Next: Chapter 9</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-9">Chapter 9: Election rules and timetable</h2>
 <p class="cl" id="r-9-1"><span class="num">9.1</span> The Election Committee makes the timetable of an election and announces it in the Main Group. It may move a date only for a good reason.</p>
 <p class="cl" id="r-9-2"><span class="num">9.2</span> The Election Committee closes the Voting List on a date it fixes before the nominations begin. After that Constitution clause <a href="constitution.html#c-8-7">8.7</a> applies.</p>
@@ -336,6 +348,7 @@
 <p class="cl" id="r-9-36"><span class="num">9.36</span> Allegation of rigging (Constitution clause <a href="constitution.html#c-16-22">16.22</a>). The logs of the Election Committee and of the IHCC Owner stay sealed. A written allegation with evidence is made within forty-eight hours of the result. It is screened within twenty-four hours, only to see whether there is evidence. In the first election the Election Committee screens it. In later elections the sitting Chairman and General Secretary screen it; if either is a candidate, or the allegation is against him or his board, the Deputy Chairman takes the place; if the Deputy Chairman also cannot sit, the Directors choose two Directors by lot from boards that have no candidate in that election. If the allegation is rejected, the complainant may go to the Directors within forty-eight hours, and seven of twelve decide. The Directors (seven of twelve) may open only the part of the log linked to the allegation. A member of the Election Committee who is the subject of the allegation does not vote. The Directors rule that the allegation is true, false, or made in good faith but not proven. The opened material is not published, only the ruling and the action. Only a knowingly false allegation, or one with no basis at all, is punished, at the medium level (rule <a href="#r-7-14">7.14</a>(b)); a repeat moves to the large level. A good-faith allegation that is not proven has no penalty.</p>
 <p class="cl" id="r-9-37"><span class="num">9.37</span> Term end (Constitution clauses <a href="constitution.html#c-16-3">16.3</a> and <a href="constitution.html#c-16-23">16.23</a>). The Election Committee fixes the date of the annual election, but the election must be finished before the term ends. The Election Committee is formed at least sixty days before the end of the term. On 3 December the elected persons take charge automatically. A seat whose result is final is handed over on 3 December. If the result of a seat is not ready, the person sitting in it stays until the next person takes charge and does routine work only. The Directors may meet at any time and decide. There is no fixed number of days.</p>
 <p class="cl" id="r-9-38"><span class="num">9.38</span> Directors' votes (Constitution clause <a href="constitution.html#c-19-7A">19.7A</a>). The votes of Directors in meetings, including the elections of the CEO, CFO and Women's Director, are open and are published. This does not apply to the votes of voters in an election.</p>
+<p class="pn"><a href="#ch-8">Previous: Chapter 8</a> <a href="#ch-10">Next: Chapter 10</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-10">Chapter 10: Meetings, records and personal data</h2>
 <p class="cl" id="r-10-1"><span class="num">10.1</span> Meetings are held on Google Meet. The notice gives the date, the time and the link, and the meeting starts at the time stated.</p>
 <p class="cl" id="r-10-2"><span class="num">10.2</span> <span class="lk">[Locked]</span> A meeting that Constitution clause <a href="constitution.html#c-19-7">19.7</a> says must be recorded is recorded, and the recording is kept for one year.</p>
@@ -352,6 +365,7 @@
 <p class="cl" id="r-10-8"><span class="num">10.8</span> A tie among the Directors means the proposal is not accepted. The Chairman has no casting vote among the Directors. The proposal may be brought again the next week (Constitution clause <a href="constitution.html#c-13-4A">13.4A</a>).</p>
 <p class="cl" id="r-10-9"><span class="num">10.9</span> The Chairman presides over meetings of the Directors and does not vote. If he is concerned, the Deputy Chairman presides. If both are concerned or absent, the Directors choose one of themselves by more than half for that meeting only, and he keeps his own vote (Constitution clause <a href="constitution.html#c-13-8">13.8</a>).</p>
 <p class="cl" id="r-10-10"><span class="num">10.10</span> The General Secretary calls the meeting on the Chairman's order with twenty-four hours' notice. If the Chairman does not call it, at least five Directors may demand it in writing, and the General Secretary calls it within seven days.</p>
+<p class="pn"><a href="#ch-9">Previous: Chapter 9</a> <a href="#ch-11">Next: Chapter 11</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-11">Chapter 11: Finance procedures</h2>
 <p class="cl" id="r-11-1"><span class="num">11.1</span> The monthly fee of a board is the real total cost of the month divided by the number of Member Boards of that month, rounded up to the next fifty Pakistani rupees for each board. The amount above the cost becomes credit. Boards of other countries pay the equal value. A new board pays from the month after it joins. A board that gives notice of leaving pays until the date of the notice. IHCC takes the fee only from boards, never from players. How a board collects it is its own affair.</p>
 <p class="cl" id="r-11-2"><span class="num">11.2</span> The monthly report of the CFO under Constitution clause <a href="constitution.html#c-22-5">22.5</a> is published in the Main Group on the first day of the month.</p>
@@ -368,6 +382,7 @@
 <p class="cl" id="r-11-13"><span class="num">11.13</span> Sponsorship money goes only into the account of the CFO. Anyone else who receives it hands it to the CFO within three days and tells the General Secretary. The General Secretary keeps a written agreement for each sponsorship. The Directors approve a sponsorship by more than half; the Core Committee approves small sums under rule <a href="#r-11-10">11.10</a>. The sponsor gets only a public acknowledgment of the name. Money is bound to its purpose; if the purpose is cancelled, IHCC asks the sponsor and holds the money sixty days. A public record is kept every month. General sponsorship money may be used anywhere under rule <a href="#r-11-10">11.10</a>, but while any price owed to a person who has left or been removed (after the week of Constitution clause <a href="constitution.html#c-9-9">9.9</a>) is unpaid, no prizes or gifts are paid from it.</p>
 <p class="cl" id="r-11-14"><span class="num">11.14</span> Dissolution (Constitution <a href="constitution.html#art-31">Article 31</a>). All badges stay in IHCC's account. Players already paid keep the price. Unpaid players are paid from what remains, in queue order. If the money runs out, the badge of an unpaid player goes back to him and the debt ends. The accounts are settled within ninety days: debts first, then the credit of the boards in equal shares, and unused sponsorship money back to the sponsors or in charity as the Directors decide. Website, groups, logo, email and records go as the Directors' last decision says.</p>
 <p class="cl" id="r-11-15"><span class="num">11.15</span> At hand-over the new CFO takes the money into his own account in front of the General Secretary, with the written hand-over statement of rule <a href="#r-11-8">11.8</a>.</p>
+<p class="pn"><a href="#ch-10">Previous: Chapter 10</a> <a href="#ch-12">Next: Chapter 12</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-12">Chapter 12: Official communication</h2>
 <p class="cl" id="r-12-1"><span class="num">12.1</span> The official channels of IHCC are the Main Group, the official IHCC website, the IHCC WhatsApp channel, the IHCC YouTube channel and the official IHCC email address.</p>
 <p class="cl" id="r-12-2"><span class="num">12.2</span> Official notifications are in plain text, numbered, and without lines or decoration, so that a screen reader reads them clearly.</p>
@@ -375,6 +390,7 @@
 <p class="cl" id="r-12-4"><span class="num">12.4</span> Official notifications are in English. A translation may be added for understanding, as Constitution clause <a href="constitution.html#c-4-2">4.2</a> says.</p>
 <p class="cl" id="r-12-5"><span class="num">12.5</span> A wrong notification may be corrected within forty-eight hours, as Constitution clause <a href="constitution.html#c-19-5">19.5</a> says.</p>
 <p class="cl" id="r-12-6"><span class="num">12.6</span> Official announcements are made only by the General Secretary or the Chairman, as Constitution clause <a href="constitution.html#c-21-1">21.1</a> says.</p>
+<p class="pn"><a href="#ch-11">Previous: Chapter 11</a> <a href="#tocH">Back to contents</a></p>
 </main>
 <!--SITEFOOT-->
 <footer class="sitefoot">
@@ -400,5 +416,6 @@
 <!--/SITEFOOT-->
 
 <script src="notice.js?v=20261107a"></script>
+<script src="doc.js?v=20261114b"></script>
 </body>
 </html>
