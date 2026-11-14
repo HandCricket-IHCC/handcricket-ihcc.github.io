@@ -103,7 +103,7 @@
   function editable() { return me && me.editable; }
 
   function render(focusSpec) {
-    var n = players.length, min = 12, max = 20;
+    var n = players.length, min = 12, max = 30;
     $("boardName").textContent = dispBoard(me.board);
     $("whoLine").textContent = "Signed in as " + me.email + ".";
     var l = left(me.deadline, me.now);
@@ -147,7 +147,7 @@
     $("finalSec").hidden = !(canAdd && mode === "list");
     $("newWrap").hidden = !canAdd;
     $("newBtn").disabled = n >= max;
-    $("newBtn").textContent = n >= max ? "Add player (the list is full, 20 players)" : "Add player";
+    $("newBtn").textContent = n >= max ? "Add player (the list is full, 30 players)" : "Add player";
     $("finalBtn").disabled = n < min;
     $("finalIntro").textContent = n < min ? "You need at least 12 players before you can do the final submit." : "When your list is ready, press Final submit. IHCC will receive your final list and you will get a copy by email.";
     $("formTitle").textContent = editingId ? "Edit player" : "Add a player";
@@ -260,7 +260,7 @@
       render();
       if (!wasEdit && players.length) savedId = players[players.length - 1].id;
       var btns = [];
-      if (!wasEdit && players.length < 20 && editable()) btns.push({ label: "Add next player", focus: function () { return $("display_name"); } });
+      if (!wasEdit && players.length < 30 && editable()) btns.push({ label: "Add next player", focus: function () { return $("display_name"); } });
       btns.push({ label: "Close", onClick: leaveForm, focus: function () { return lineEl(savedId) || firstLine() || $("newBtn"); } });
       notify(note, false, btns);
     } catch (e) {
