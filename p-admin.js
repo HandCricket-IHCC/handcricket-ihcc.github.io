@@ -412,7 +412,7 @@
 
 
   // ---- Squads of all boards (owner and core) ----
-  var MINP = 12, MAXP = 20;
+  var MINP = 12, MAXP = 30;
   var SQ = { summary: null, dupC: [], dupN: [], recent: [], board: null, openBtn: null, player: null, playerBtn: null };
   function isOwner() { return me && me.role === "owner"; }
   function isOC() { return me && (me.role === "owner" || me.role === "core"); }
