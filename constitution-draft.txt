@@ -400,16 +400,17 @@ ARTICLE 22: FINANCE
     The payment of a badge price under clause 9.8 is a fixed debt and needs only the CFO's record. In an emergency the Chairman may spend alone up to 2,000 and reports to the Directors within fourteen days. The Directors approve the yearly budget by purposes (clause 13.2(a)), and the Core Committee may spend inside the budget. Every payment has a receipt or proof and a reason in the CFO's record, and the monthly report shows the total and the purpose. The amounts may be changed by the Directors after advice.
 
 ARTICLE 23: SPONSORSHIP AND VOLUNTARY CONTRIBUTIONS
-23.1 Prizes, awards, tournaments, series and world cups are paid for by sponsors, not by the fees of Member Boards.
+23.1 Prizes and awards of the tournaments and world cups of IHCC are paid for by sponsors, not by the fees of Member Boards. The prizes of a series between boards are as clause 27.3C says.
 23.2 Any person may give or bring a sponsor of his own free will, including a Core officer, a Director, a member, or a person outside IHCC.
-23.3 The Board of Directors approves a sponsor by more than half. A sponsor is not accepted if his business is gambling, interest or alcohol.
+23.3 The Board of Directors approves a sponsor by more than half, except the sponsor of a series between boards under clause 27.3C. A sponsor is not accepted if his business is gambling, interest or alcohol.
 23.4 A sponsor, or a member who gives money, gets no extra vote, office, or favor, and is treated equally in discipline. A sponsor does not interfere in the decisions of IHCC.
 23.5 Sponsorship money is used only for the purpose for which it was given. It goes only into the account of the CFO. Anyone else who receives it hands it to the CFO within three days and tells the General Secretary.
 23.6 IHCC publicly thanks sponsors and encourages members to give.
 23.7 A tournament offers a cash prize only when a sponsor has promised the prize. If there is none, it is announced clearly that there is no cash prize.
+23.7A The prizes of an IHCC tournament may include the winner, the runner-up, the third place, the player of the match, the best batter, the best bowler and other awards. All of them are paid from sponsorship money, and IHCC gives them step by step when it sees fit.
 23.8 Sponsorship money may be used to pay the prices of badges owed under Article 9. Money given for another purpose is used only for that purpose.
 23.9 The General Secretary keeps a written agreement for each sponsorship. The Directors approve a sponsorship by more than half. The Core Committee may approve small sums under clause 22.14. A sponsor gets only a public acknowledgment of the name. If the purpose of a sponsorship is cancelled, IHCC asks the sponsor and holds the money for sixty days. A public record is kept every month.
-23.10 General sponsorship money without any condition may be used anywhere under clause 22.14. While any price owed to a person who has left or been removed (after the week of clause 9.9) is unpaid, no prizes or gifts are paid from general sponsorship money.
+23.10 General sponsorship money without any condition may be used anywhere under clause 22.14. Money given for a particular series or purpose is used only for that.
 
 ARTICLE 24: PROPERTY OF IHCC
 24.1 The name IHCC, its logo, website, social media accounts, groups and channels, official email addresses, records, and the verified badges under Article 9 belong to IHCC. They do not belong to any person who set them up or runs them.
@@ -453,10 +454,14 @@ ARTICLE 26: DISPUTES AND INTERPRETATION
 CHAPTER VIII: OPERATIONS
 
 ARTICLE 27: TOURNAMENTS AND SERIES
-27.1 The Core Committee proposes a tournament or series, and the Board of Directors approves it by more than half.
-27.2 For tournaments and series of IHCC, the costs of officials, commentators and broadcasting are paid from the operational fee.
-27.3 A bilateral series between two boards does not need IHCC's approval. The two boards report it in writing to the General Secretary, who checks for a clash with IHCC events. If there is a clash, IHCC may stop or move it. Otherwise the series goes on. The two boards bear its costs.
-27.4 IHCC keeps the official records and results of its events, and may publish rankings of the boards. The method of the rankings is in the Rule Book and is approved by the Board of Directors.
+27.1 The Core Committee proposes a tournament of IHCC, and the Board of Directors approves it by more than half. A series between Member Boards is approved under clause 27.3A.
+27.2 For the tournaments of IHCC, the costs of the Core Committee's honorarium, officials, commentators, broadcasting and live streaming are paid from the operational fee, which is divided equally among the Member Boards. For a series between Member Boards, clauses 27.3 to 27.3D apply.
+27.3 A series may be played between two Member Boards (a bilateral series), or between three or four Member Boards (a multi-board series). In every case it is a series, in which each board plays more than one match. The boards decide everything among themselves first: the number of matches, the number of T20, ODI and Test matches, the dates, the officials (volunteer or paid), the sponsors, the budget, and who pays what. They send all of it in writing to the General Secretary.
+27.3A The General Secretary alone approves the series. The approval of the Chairman is not needed. He also checks for a clash with an event of IHCC, and if there is a clash he may refuse the series or ask the boards to move it. The series may be played only after the approval.
+27.3B IHCC gives the officials of the series. Officials may be volunteers who take no fee. If they are paid, the boards of the series bear the whole cost, and IHCC pays nothing for a series.
+27.3C The prizes of a series (for example player of the match, the winner of the series, and second and third places) are decided by the boards. They say in their request what the budget is and who gives it. A board may give a prize from its own money. A sponsor of a series may be found by the boards, and the General Secretary approves the sponsor together with the series; the approval of the Directors under clause 23.3 is not needed for it. A sponsor whose business is gambling, interest or alcohol is still not accepted. The sponsor's money is paid into the account of the CFO (clause 23.5), and IHCC pays it out for the prizes of that series.
+27.3D The boards give IHCC the scorecards (CSV) and the results of every match of the series, so that IHCC keeps the record. The results of every approved series count in the rankings of the boards.
+27.4 IHCC keeps the official records and results of its events and of the approved series, and may publish rankings of the boards. The method of the rankings is in the Rule Book and is approved by the Board of Directors.
 
 ARTICLE 28: THE HAND CRICKET APPLICATION AND ITS DEVELOPER
 28.1 IHCC is an organization of players. The Hand Cricket application belongs to its developer. IHCC does not own or control the application or its gameplay.
