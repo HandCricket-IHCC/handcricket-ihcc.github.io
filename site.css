@@ -20,6 +20,7 @@
   --band-muted: #b9d1c3;
   --error: #b3261e;
   --focus: #0b57d0;
+  --gold-ui: #8f6700;
   --shadow: 0 1px 2px rgba(10,40,25,.06), 0 8px 24px rgba(10,40,25,.07);
   --font-display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
@@ -27,13 +28,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0b130f; --surface: #14201a; --fg: #e8f0eb; --muted: #a8bbb0; --line: #2b3f34;
-    --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
+    --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --gold-ui: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
     --error: #ff8a80; --focus: #8ab4f8; --shadow: none; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b130f; --surface: #14201a; --fg: #e8f0eb; --muted: #a8bbb0; --line: #2b3f34;
-  --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
+  --brand: #55c192; --brand-fg: #07140d; --brand-soft: #193026; --gold: #e0b252; --gold-ui: #e0b252; --band: #07140d; --band2: #0e2a1d; --band-fg: #e8f0eb; --band-muted: #9fb8a9;
   --error: #ff8a80; --focus: #8ab4f8; --shadow: none; color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -48,7 +49,7 @@ body {
 .wrap { width: 100%; max-width: 700px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .topnav { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0 0 26px; padding: 0 0 14px; border-bottom: 1px solid rgba(255,255,255,.2); }
 .topnav a { color: var(--band-fg); text-decoration: none; font-weight: 600; padding: 6px 2px; border-bottom: 2px solid transparent; }
-.topnav a:hover, .topnav a[aria-current=page] { border-bottom-color: var(--gold); }
+.topnav a:hover, .topnav a[aria-current=page] { border-bottom-color: var(--gold-ui); }
 .topnav a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .hero { position: relative; overflow: hidden; color: var(--band-fg);
   background:
@@ -73,7 +74,7 @@ h2::before { content: ""; display: block; width: 36px; height: 4px; border-radiu
 .pnum strong { font: 700 34px/1 var(--font-display); color: var(--brand); }
 .dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .dots i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); background: transparent; }
-.dots i.on { background: var(--gold); border-color: var(--gold); }
+.dots i.on { background: var(--gold-ui); border-color: var(--gold-ui); }
 .foot p { margin: 0 0 8px; }
 .foot a { color: var(--brand); font-weight: 700; }
 .foot a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
