@@ -1,0 +1,16 @@
+.draftbox { margin: 22px 0; padding: 16px 18px; border: 2px solid var(--gold); border-radius: 12px; background: var(--surface); }
+.draftbox h2 { margin: 0 0 8px; font: 700 28px/1.1 var(--font-display); letter-spacing: .04em; }
+.draftbox p { margin: 8px 0; }
+.docpage h2 { font: 700 30px/1.1 var(--font-display); margin: 40px 0 10px; padding-top: 14px; border-top: 3px solid var(--brand); scroll-margin-top: 80px; }
+.docpage h3 { font: 700 23px/1.2 var(--font-display); margin: 28px 0 8px; color: var(--brand); scroll-margin-top: 80px; }
+.docpage .doctoc h2 { border-top: 0; margin-top: 12px; padding-top: 0; }
+.doctoc ul { list-style: none; padding-left: 0; margin: 0; }
+.doctoc li { margin: 6px 0; }
+.doctoc .toc2 { padding-left: 18px; margin-bottom: 10px; }
+.doctoc a { padding: 3px 0; display: inline-block; }
+.cl, .sub { margin: 10px 0; overflow-wrap: anywhere; scroll-margin-top: 80px; }
+.cl .num { font-weight: 700; color: var(--brand); margin-right: 4px; }
+.sub { margin-left: 26px; }
+.lk { font-weight: 700; color: var(--brand); }
+.tbd { background: color-mix(in srgb, var(--gold) 30%, transparent); padding: 0 4px; border-radius: 4px; font-weight: 600; }
+.cl:target { background: var(--brand-soft); border-radius: 8px; outline: 3px solid var(--gold); outline-offset: 4px; }
