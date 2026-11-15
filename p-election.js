@@ -169,7 +169,7 @@
       msg(T('Voting is closed. This is stage one, only the number of people who voted is shown, not their names and not who they voted for.'), false, true);
       renderStage1(e, res, ballot);
     } else if (status === 'closed') {
-      msg(T('The election is closed. These are the results.'), false, true);
+      msg(T('The election is closed. The result was announced on the day of the voting. For 24 hours after the announcement, until the evening of Monday 16 November 2026, any member may say that a vote under his name was not cast by him. These are the results.'), false, true);
       renderClosed(res);
     }
     app.appendChild(accountFooter());
@@ -301,7 +301,7 @@
     if (!q) return null;
     var c = card();
     c.appendChild(el('h2', { text: 'Turnout' }));
-    c.appendChild(el('p', { text: q.voted + ' of ' + q.total + ' voting members voted, which is ' + q.percent + ' percent. More than half, at least ' + q.needed + ' voters, are needed for the election to be valid.' }));
+    c.appendChild(el('p', { text: q.voted + ' of ' + q.total + ' voting members voted, which is ' + q.percent + ' percent. ' + (q.not_voted != null ? q.not_voted + ' members (' + q.not_voted_percent + ' percent) did not vote. ' : '') + 'More than half, at least ' + q.needed + ' voters, are needed for the election to be valid.' }));
     c.appendChild(el('p', { text: q.ok ? 'The turnout is enough. The election is valid.' : 'The turnout is not enough. The voting will be repeated on Sunday, ' + q.repeat_date + ', from 6:00 AM to 6:00 PM, Pakistan time.' }));
     if (q.boards && q.boards.length) {
       c.appendChild(el('h3', { text: 'Votes by board' }));
@@ -366,7 +366,8 @@
       var ul = el('ul', { class: 'plain' });
       s.candidates.forEach(function (x, i) {
         var li = el('li');
-        li.appendChild(el('strong', { text: (i === 0 ? 'Most votes, ' : '') + x.display_name + ', ' + dispBoard(x.board) + ', ' + x.votes + ' votes' }));
+        li.appendChild(el('strong', { text: (x.winner ? 'Winner, ' : '') + x.display_name + (x.real_name ? ', real name ' + x.real_name : '') + ', ' + dispBoard(x.board) + ', ' + x.votes + ' votes' }));
+        if (x.percent_of_all != null) li.appendChild(el('span', { text: '. ' + x.percent_of_all + ' percent of all ' + (res.quorum ? res.quorum.total : '') + ' members, ' + x.percent_of_votes + ' percent of the votes cast.' }));
         ul.appendChild(li);
       });
       c.appendChild(ul);
