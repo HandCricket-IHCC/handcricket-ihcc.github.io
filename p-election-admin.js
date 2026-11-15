@@ -71,6 +71,7 @@
     ME = me.data;
     if (['owner', 'core', 'election_officer'].indexOf(ME.role) < 0) { msg('Your admin role cannot manage elections.', true, true); return; }
     await renderHome();
+    var fh = app.querySelector('h2'); if (fh) { fh.tabIndex = -1; fh.focus(); }
   }
   function signOut() { sb.auth.signOut({ scope: "global" }).then(renderSignedOut); }
 

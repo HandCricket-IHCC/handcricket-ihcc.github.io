@@ -181,3 +181,10 @@ body { background: #fff !important; color: #000 !important; }
 a { color: #000 !important; text-decoration: underline; }
 a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 85%; }
 }
+
+/* Home page current-event banner (p-banner.js, events.json) */
+.eventbar { margin: 16px 0 8px; padding: 14px 16px; background: var(--surface); border: 2px solid var(--line); border-left-width: 8px; border-radius: 10px; }
+.eventbar h2 { margin: 0 0 6px; font-size: 1.2rem; }
+.eventbar p { margin: 0 0 8px; }
+.eventbar p:last-child { margin-bottom: 0; }
+@media print { .eventbar { display: none; } }

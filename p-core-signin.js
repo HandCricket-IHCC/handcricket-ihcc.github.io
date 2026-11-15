@@ -5,7 +5,11 @@
   var $ = function (id) { return document.getElementById(id); };
   var busy = false;
   function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
-  function show(id) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; }); }
+  function show(id, focusIt) {
+    ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; });
+    var hid = id === "panel" ? "seatH" : id === "deniedView" ? "deniedH" : (focusIt ? "loginH" : null);
+    if (hid) { $(hid).setAttribute("tabindex", "-1"); $(hid).focus(); }
+  }
   function fmt(d) { if (!d) return ""; var x = new Date(d + "T00:00:00Z"); return isNaN(x) ? d : x.getUTCDate() + " " + ["January","February","March","April","May","June","July","August","September","October","November","December"][x.getUTCMonth()] + " " + x.getUTCFullYear(); }
   async function start() {
     if (busy) return; busy = true;
@@ -32,7 +36,7 @@
   $("signIn").addEventListener("click", function () {
     sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
   });
-  async function out() { await sb.auth.signOut({ scope: "global" }); $("who").textContent = ""; say("You are signed out."); show("loginView"); }
+  async function out() { await sb.auth.signOut({ scope: "global" }); $("who").textContent = ""; say("You are signed out."); show("loginView", true); }
   $("signOut").addEventListener("click", out); $("signOut2").addEventListener("click", out);
   sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN") start(); });
   start();

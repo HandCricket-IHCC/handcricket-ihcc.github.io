@@ -44,6 +44,14 @@ for f in pages:
 for js in sorted(glob.glob('*.js')):
     r = subprocess.run(['node', '--check', js], capture_output=True, text=True)
     if r.returncode != 0: err(js, 'JavaScript error: ' + r.stderr.strip().splitlines()[0] if r.stderr.strip() else 'JavaScript error')
+# events file for the home banner
+import json
+try:
+    for e in json.load(open('events.json', encoding='utf-8')):
+        for k in ('from', 'to', 'title', 'text'):
+            if k not in e: err('events.json', 'missing ' + k)
+except Exception as ex:
+    err('events.json', 'not valid: %s' % ex)
 # sitemap
 sm = open('sitemap.xml', encoding='utf-8').read()
 for u in re.findall(r'<loc>https://handcricket-ihcc\.github\.io/([^<]*)</loc>', sm):

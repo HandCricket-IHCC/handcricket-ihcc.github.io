@@ -67,12 +67,35 @@
       var groups = {}, order = [];
       t.voters.forEach(function (v) { if (!groups[v.board]) { groups[v.board] = []; order.push(v.board); } groups[v.board].push(v); });
       order.sort(function (a, b) { return bn(a).localeCompare(bn(b)); });
-      order.forEach(function (b) {
-        vb.appendChild(mk("h3", bn(b) + ", " + groups[b].length + " voted"));
-        var ul = mk("ul", null, "plain");
-        groups[b].forEach(function (v) { ul.appendChild(mk("li", v.display_name + ", real name " + v.real_name + ", " + bn(b) + ".")); });
+      var blocks = [], jump = mk("ul", null, "plain");
+      order.forEach(function (b, i) {
+        var h = mk("h3", bn(b) + ", " + groups[b].length + " voted"); h.id = "vb-" + (i + 1); h.tabIndex = -1;
+        vb.appendChild(h);
+        var ul = mk("ul", null, "plain"), items = [];
+        groups[b].forEach(function (v) { var li = mk("li", v.display_name + ", real name " + v.real_name + ", " + bn(b) + "."); ul.appendChild(li); items.push(li); });
         vb.appendChild(ul);
+        blocks.push({ h: h, ul: ul, items: items });
+        var jl = mk("li"), a = mk("a", bn(b) + ", " + groups[b].length + " voted"); a.href = "#vb-" + (i + 1); jl.appendChild(a); jump.appendChild(jl);
       });
+      var ctl = mk("div"), jn = mk("nav"); jn.setAttribute("aria-label", "Jump to a board");
+      jn.appendChild(mk("h3", "Jump to a board")); jn.appendChild(jump);
+      var form = mk("form", null, "sform"); form.setAttribute("role", "search");
+      var wrap = mk("div"), lab = mk("label", "Search the names"); lab.setAttribute("for", "rvsearch");
+      var inp = mk("input"); inp.type = "text"; inp.id = "rvsearch"; inp.autocomplete = "off"; inp.setAttribute("aria-describedby", "rvstat");
+      wrap.appendChild(lab); wrap.appendChild(inp); form.appendChild(wrap);
+      var stat = mk("p", "", "field-hint"); stat.id = "rvstat"; stat.setAttribute("role", "status"); stat.setAttribute("aria-live", "polite");
+      form.addEventListener("submit", function (e) { e.preventDefault(); });
+      inp.addEventListener("input", function () {
+        var q = inp.value.trim().toLowerCase(), n = 0;
+        blocks.forEach(function (bk) {
+          var any = false;
+          bk.items.forEach(function (li) { var m = !q || li.textContent.toLowerCase().indexOf(q) !== -1; li.hidden = !m; if (m) { any = true; n++; } });
+          bk.h.hidden = !any; bk.ul.hidden = !any;
+        });
+        stat.textContent = q ? (n === 1 ? "1 name matches." : n + " names match.") : "";
+      });
+      ctl.appendChild(jn); ctl.appendChild(form); ctl.appendChild(stat);
+      vs.insertBefore(ctl, vb);
       vs.hidden = false;
     }
   }

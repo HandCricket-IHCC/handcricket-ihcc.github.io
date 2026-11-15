@@ -35,7 +35,12 @@
       buttons: [{ label: "Close", focus: function () { var f = focusFn && focusFn(); return f || findBack(op, key); } }]
     });
   }
-  function show(view) { ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; }); }
+  function show(view, focusLogin) {
+    ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== view; });
+    /* after sign-in, move the screen reader cursor to the heading of the new view */
+    var hid = view === "panel" ? "statH" : view === "deniedView" ? "deniedH" : (focusLogin ? "loginH" : null);
+    if (hid && $(hid)) { $(hid).setAttribute("tabindex", "-1"); $(hid).focus(); }
+  }
   function td(text) { var c = document.createElement("td"); c.textContent = text == null ? "" : String(text); return c; }
   function th(text) { var c = document.createElement("th"); c.scope = "row"; c.textContent = text; return c; }
 
@@ -1035,7 +1040,7 @@
   $("signIn").addEventListener("click", function () {
     sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname, queryParams: { prompt: "select_account" } } });
   });
-  async function out() { await sb.auth.signOut({ scope: "global" }); me = null; entries = []; sayLive("You are signed out."); show("loginView"); $("who").textContent = ""; }
+  async function out() { await sb.auth.signOut({ scope: "global" }); me = null; entries = []; sayLive("You are signed out."); show("loginView", true); $("who").textContent = ""; }
   $("signOut").addEventListener("click", out); $("signOut2").addEventListener("click", out);
 
   sb.auth.onAuthStateChange(function (evt) { if (evt === "SIGNED_IN" && !me) start(); });
