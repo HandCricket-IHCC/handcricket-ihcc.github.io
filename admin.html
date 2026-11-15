@@ -417,6 +417,8 @@
       <h3>8. Backup</h3>
       <p class="muted small">Downloads one file with the leaders, About texts, announcements, logos, activity, squad history and appeals of all boards.</p>
       <button type="button" id="btBackup">Download the board backup</button>
+      <p class="muted small">Full backup: one file with every table of the database (squads, boards, elections, voters, news, notes, Core seats, admins, audit log). The sealed vote choices are left out on purpose. The file holds private data: keep it only on your own phone and your private Drive, and make one every Sunday.</p>
+      <button type="button" id="btFullBackup">Download the FULL backup</button>
     </section>
 
     <section id="auditSec" aria-labelledby="audH" hidden>
@@ -433,7 +435,7 @@
 
 <script src="dialog.js?v=2"></script>
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-admin.js?v=20261107a"></script>
+<script src="p-admin.js?v=20261115a"></script>
 <script src="notice.js?v=20261107a"></script>
 </body>
 </html>

@@ -1015,6 +1015,12 @@
       var rows = await rpc("admin_squad_history", { p_board: $("btHiBoard").value });
       fillList("btHiList", rows.map(function (h) { var li = document.createElement("li"); li.textContent = fmtT(h.at) + " · " + (BT_ROLE[h.role] || h.role || "") + " · " + h.kind + " " + JSON.stringify(h.detail || {}); return li; }), "No squad history yet.");
     }); });
+    $("btFullBackup").addEventListener("click", function () { guard(async function () {
+      var d = await rpc("admin_full_backup");
+      var blob = new Blob([JSON.stringify(d)], { type: "application/json" });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ihcc-full-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); say("The full backup file is downloaded.", false);
+    }); });
     $("btBackup").addEventListener("click", function () { guard(async function () {
       var d = await rpc("admin_board_backup");
       var blob = new Blob([JSON.stringify(d, null, 1)], { type: "application/json" });
