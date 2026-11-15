@@ -1,0 +1,184 @@
+THE IHCC RULE BOOK
+Draft 5 (14 November 2026), Part 1 of 2: Chapters 1 to 7. This draft builds the decisions of the review of players, registration and leaving (Decisions 1 to 22), of the review of discipline, elections and finance (Decisions 23 to 40) and of the later reviews (Decisions 41 to 60) directly into the main text. They are not amendments, because the Rule Book is still being made. [Locked] after a number means the Boards decided it in a meeting. All other parts are Draft. Words in square brackets are still to be decided. The main Articles are in the IHCC Constitution; if the two differ, the Constitution applies. The Rule Book comes into force on 3 December 2026 together with the Constitution (Constitution clause 32.1). The last day for changes to this draft is 30 November 2026. Part 2 holds Chapters 8 to 13.
+
+CONTENTS
+Chapter 1: General
+Chapter 2: Squad lists, registration and verification
+Chapter 3: Playing conditions
+Chapter 4: Match officials, scorers and commentators
+Chapter 5: Tournaments, series and rankings
+Chapter 6: Code of conduct
+Chapter 7: Offences, fines and sanctions
+Chapter 8: Complaints, appeals and leaving
+Chapter 9: Election rules and timetable
+Chapter 10: Meetings, records and personal data
+Chapter 11: Finance procedures
+Chapter 12: Official communication
+Chapter 13: Transitional Schedule (to be removed after 3 December 2026)
+
+CHAPTER 1: GENERAL
+1.1 This is the IHCC Rule Book. The Board of Directors makes it under Constitution Article 3 and it holds the detailed rules of IHCC.
+1.2 Every member, officer and Member Board must follow the Rule Book as well as the Constitution.
+1.3 If a part of the Rule Book conflicts with the Constitution, the Constitution applies.
+1.4 The Rule Book may be amended by more than half of all Directors. A proposed change is published in the Main Group at least twenty-four hours before the vote.
+1.5 A change takes effect when it is published, or on a later date that it states. The date of each change is recorded.
+1.6 A word defined in Constitution clause 1.4 has the same meaning in the Rule Book.
+1.7 Every Chapter has a number and every rule has a number such as 7.3, so that it can be cited exactly. The Constitution is cited as "Constitution Article 11" or "Constitution clause 11.5".
+1.8 [Locked] The Rule Book is in force from 3 December 2026. Until then it is being made, and a change made before that date is part of making the text, not an amendment.
+
+CHAPTER 2: SQUAD LISTS, REGISTRATION AND VERIFICATION
+
+Part A: The first squad lists (before the Team Directors are in office)
+2.1 Each Member Board has one representative. IHCC adds his Gmail address. He signs in with Google on the official IHCC website and sees only the page of his own board. His task for the squad lists ends when the Team Director of his board is in office (rule 2.17).
+2.2 The representative enters one player at a time. For every player the display name, real name, WhatsApp number, Gmail address, city, the country where the player lives, and gender are required. The Gmail address is the one used for voting.
+2.3 The system checks that the same display name, Gmail address or WhatsApp number is not entered twice in one board. Gmail addresses are compared without capital letters, without dots, and without a plus sign and what follows it.
+2.4 If the same player is also in the squad of another board, the entry is accepted, and IHCC contacts the representative. The other board is not named to him. Constitution clause 8.5 then applies.
+2.5 On the first entry and on the final submission the representative confirms with a tick: that he has the permission of every player he adds, that the details are correct, and that he accepts the data terms of the form. IHCC also notes technical details such as the IP address and device, only to keep registration and elections fair. The date and time are recorded.
+2.6 The first twelve players are the Voting Members. The representative may move a player up or down until the squad is locked. The page always shows the count, for example "7 of 12 minimum, 5 more needed", and warns when there are fewer than twelve.
+2.7 Final submission is asked twice. After it, a copy of the whole list is emailed to the board. Before the deadline the representative may reopen and change the squad. Every reopening is recorded and IHCC Management is informed. At the deadline every squad is locked. After the deadline only IHCC Management can reopen a squad.
+2.8 When a player is added, or any detail of the player changes, the player receives an email with the details and a request to reply if anything is wrong. A player receives at most five such emails in a day.
+2.9 The public page shows for each board only "Not started", "N players submitted" or "Completed". No names or personal details are shown.
+2.10 A squad list is shown one player to a line, with the number, the display name and the real name. The first twelve lines end with the word "Voter". Gmail addresses, cities and countries are not shown in the list.
+2.11 Every change and deletion in a squad is recorded in a log.
+
+Part B: Verification and the final form
+2.12 [Locked] Checking of the display name. Before a player joins a squad, the General Secretary alone confirms two things: that the display name is the name of a real cricketer who has played at least one international match (T20, ODI or Test) for the country of the player's board, and that the name is verified on the verification page of the Hand Cricket application. He may check in any simple way that satisfies him, for example the history of the cricketer or a Google search. He records both confirmations with the date. No vote or committee is needed.
+2.13 [Locked] The final form under Constitution clause 9.6: each player signs in with his or her own email address, and agrees to the Constitution, to the sale of the badge and to the fines. IHCC keeps the form. The dates for the first time are in rule 13.12.
+2.13A [Locked] A player who cannot have a name because another person holds it follows Constitution clause 9.3. Whether a name is "held" is decided by the application: the name belongs to the person who verified it first with his own email. IHCC has no rule for disputes about display names.
+
+Part C: Payment of badge prices
+2.14 [Locked] Payment of badge prices. The CFO keeps the queue of prices owed, and pays under Constitution clause 9.8 in this order:
+    (a) First, money is used to pay the prices owed to persons who have left or been removed and whose week under Constitution clause 9.9 has passed, in the order in which they left.
+    (b) Then the rest is paid in equal turns, one player of each Member Board in turn. If money for twelve badges comes in, one player of each board is paid.
+    (c) Inside a board the order is: first come, first paid, by the date on which the General Secretary accepted the player's statement and final form. If the date is the same, the player with the smaller squad number is first.
+    (d) A new player, and a player who has transferred, goes to the end of the queue of his board, by the date on which his statement and final form were accepted.
+    (e) A player who takes a name from the reserve account under rule 2.15 is not placed in the queue, because no price is owed to him.
+    (f) A board with nobody owed is skipped, and its turn is shared equally among the other boards.
+    (g) Only the full price of a badge is paid, never a part.
+    (h) The queue is public. It shows only the display name and the queue number.
+2.15 [Locked] The reserve account.
+    (a) IHCC has one official reserve account for badges. It is held by the General Secretary, with the CEO as the second person.
+    (b) When a player leaves, is removed or transfers, the badge is taken off his account and put into the reserve account. The record of this is kept.
+    (c) A new player of the same board may take a name from the reserve for the country of his board, and no price is owed. Or he may bring his own verified name and sell it to IHCC under Constitution clause 9.4, and its price is paid under rule 2.14. If there are several names in reserve, he chooses among them.
+    (d) The General Secretary puts the name on the account of the new player within seven days of the approval of the player to the squad.
+    (e) When that player later leaves, the badge goes back to the reserve.
+    (f) The General Secretary keeps a record of the names in reserve and of the players to whom they were given.
+2.16 [Locked] A new player becomes part of a squad only after he has given the statement to IHCC, submitted the final form and sold the badge to IHCC (Constitution clause 9.4A).
+
+Part D: Registration of new players (after the Team Directors are in office)
+2.17 [Locked] The task of the representative for the squad lists ends when the Team Director of his board is in office. From then on new players are registered by the Team Director.
+2.18 [Locked] The Team Director collects the joining form of the player, through the page on the official IHCC website or the same form. It asks for: display name, real name, city, country, Gmail address, WhatsApp number and gender.
+2.19 [Locked] The display name must be the verified name of a real cricketer of the country of the board, as Constitution clause 8.3 says, verified in the application. The Gmail address must have the Hand Cricket premium.
+2.20 [Locked] The player submits the final form (rule 2.13) and gives the statement (Constitution Article 9). The Team Director makes sure that everything is complete and sends a request to the General Secretary.
+2.21 [Locked] The General Secretary decides within twenty-four hours. Before approving, he confirms the name (rule 2.12) and checks:
+    (a) That the player is not in the squad of another board.
+    (b) That the cooling-off period under rules 8.17 to 8.20 is over.
+    (c) That no sanction under Constitution Article 25 is in force against him.
+    (d) That the squad will not be more than thirty.
+    If he rejects the request, he gives the reason in writing.
+2.22 [Locked] The new player joins at the end of the squad. In the time from the closing of the Voting List until the result of the election, a new player joins only at the places thirteen to thirty (Constitution clause 8.7).
+2.23 [Locked] Every approval and every rejection is recorded in the log (rule 2.11).
+
+Part E: Squad of fewer than twelve
+2.24 [Locked] If a squad has fewer than twelve players, the General Secretary tells the board in writing how many players are missing and the last date. The board has thirty days from the notice. If the squad is still below twelve, the General Secretary gives a last period of fourteen days. After that the board is suspended under Constitution clause 7.3, and the Director of that board does not vote on it.
+2.25 [Locked] During these periods the membership of the board is not affected and its Director may vote. The periods stop running from the day the Voting List is closed until the result of the election concerned (Constitution clause 8.1A). The maximum of thirty players does not change.
+
+Part F: Order of the squad
+2.26 [Locked] The players thirteen to thirty may be put in a different order by the Team Director and the Deputy Director together, after consulting each other.
+2.27 [Locked] To move a player into or out of the first twelve, at least seven of the twelve Voting Members must agree (Constitution clause 8.8). The player who is to be moved may speak, and his own vote is not counted, so seven of the other eleven are needed.
+2.28 [Locked] The board writes down the merit reason for the change and sends it to the General Secretary within twenty-four hours. The General Secretary corrects the record and logs it.
+2.29 [Locked] The order is not changed more than once in three months, except to fill a vacancy.
+2.30 [Locked] A player may not be moved down as revenge for a complaint, an appeal, a vote, or because he said that he is leaving. A player who thinks so complains to the General Secretary, and the matter is dealt with under Chapter 8.
+2.31 [Locked] From the closing of the Voting List until the result of the election, the order of the first twelve is not changed. The order of the players thirteen to thirty is also not changed in that period.
+
+Part G: Changes of Gmail address, WhatsApp number and name
+2.32 [Locked] A player who wants to change his Gmail address, WhatsApp number or real name asks the General Secretary, by email or on WhatsApp, in any way. No recording and no email to two addresses is needed. The General Secretary satisfies himself of the identity of the player in whatever way he finds sufficient.
+2.33 [Locked] The new Gmail address must have the Hand Cricket premium and must not be used by another player. The General Secretary approves or rejects within twenty-four hours.
+2.34 [Locked] A Voting Member cannot change his Gmail address from the closing of the Voting List until the result of the election. If his Gmail account is truly closed, the Election Committee decides under rule 9.6.
+2.35 [Locked] A player may change his Gmail address at most twice in a year.
+2.36 [Locked] A mistake in the spelling of the real name is corrected by the General Secretary. A real change of the name needs proof. A display name changes only by a transfer (rule 8.19). The General Secretary logs the old and the new value of every change.
+
+Part H: Offices inside a board
+2.37 [Locked] The Team Director and the Deputy Director are chosen for one year, and the election inside the board is held once a year, before or together with the election of the Core Committee (Constitution clause 11.8A).
+2.38 [Locked] No confidence. At least eight of the twelve Voting Members write, by email or on the board's page, that they have no confidence in the Team Director or in the Deputy Director, and send it to the General Secretary. The General Secretary checks the names and the date, and announces in the Main Group that the office has ended. The board elects a new holder within thirty days and reports it. This cannot be done in the first ninety days of the term, nor from the closing of the Voting List until the result of the election. The Director cannot stop it.
+2.39 [Locked] The Team Director and the Deputy Director together remove the Media Manager they chose, and tell the General Secretary within seven days.
+2.40 [Locked] If the Team Director cannot go to a Directors' meeting, the Deputy Director goes. If he cannot, the Media Manager. If he cannot, the player highest in the squad order. The board tells the General Secretary in writing before the meeting (Constitution clause 11.7).
+
+CHAPTER 3: PLAYING CONDITIONS
+3.1 There are three formats.
+3.2 [Locked] T20: each innings has 12 overs.
+3.3 [Locked] ODI: each innings has 16 overs. (Changed from 15 to 16 by more than two-thirds of the Board of Directors, in the meeting of 31 October 2026.)
+3.4 [Locked] Test: each innings has 20 overs, and there are four innings.
+3.5 These names are brands only. The format is made by IHCC for Hand Cricket.
+3.6 Number of players in a team: [to be decided].
+3.6A A Member Board may play in a match any player from its whole squad, from one to thirty. It need not choose the first twelve. The board decides who plays (Constitution clause 8.2A).
+3.7 In an innings a team must use at least four bowlers. No bowler may bowl more than three overs in a T20 innings (12 overs), four overs in an ODI innings (16 overs), or five overs in a Test innings (20 overs).
+3.8 The toss, and the choice of the winner of the toss to bat or to bowl, are made inside the Hand Cricket application, and IHCC does not decide them. A Test match has four innings, one after the other: the team that bats first plays the first and third innings, and the other team the second and fourth. There is no declaration and no follow-on. In every format and in every match of a series, what the application allows is what happens.
+3.9 If the scores are level, the application itself plays the super over. A team that wins a match gets two points. The points of the losing team: [to be decided].
+3.10 If a match cannot be completed, the rules of that tournament or series apply. They are announced in advance.
+3.11 This Rule Book holds only the main and important rules of play. A tournament or a series may have its own rules that differ in small ways, announced in advance. What is not written in this Rule Book or in the rules of the tournament or series is as the Hand Cricket application is set up.
+
+CHAPTER 4: MATCH OFFICIALS, SCORERS AND COMMENTATORS
+4.1 The match officials of IHCC are the on-field umpires, the third umpire, the match referee, the scorers and the commentators. Which of these IHCC will have in each match: [to be decided].
+4.2 Whether an official may belong to a board that is playing the match: [to be decided].
+4.3 How officials and commentators are chosen and appointed: [to be decided].
+4.4 The duties of each kind of official: [to be decided].
+4.5 Officials and commentators follow Chapter 6.
+4.6 The costs of officials, commentators and broadcasting of IHCC tournaments are paid from the operational fee, as Constitution clause 27.2 says. For a series between boards, rule 5.2B applies.
+4.7 Rules for the broadcast of matches: [to be decided].
+
+CHAPTER 5: TOURNAMENTS, SERIES AND RANKINGS
+5.1 The Core Committee proposes a tournament of IHCC, and the Board of Directors approves it, as Constitution clause 27.1 says. A series between Member Boards is approved by the General Secretary under rule 5.2.
+5.2 A series between two, three or four Member Boards is arranged as Constitution clauses 27.3 to 27.3D say. The boards send the General Secretary a written request that gives the boards, the dates, the number of matches in each format, the officials (volunteer or paid), the sponsors, the budget, and who pays. The General Secretary alone approves it, and the series is played only after that.
+5.2A The number of matches is decided by the boards. An odd number (for example three or five) is preferred, but an even number is allowed. If the series ends level, it is a drawn series.
+5.2B IHCC gives the officials of a series. Volunteers may serve without a fee. If officials are paid, the boards of the series bear the cost.
+5.2C The prizes of a series are decided and paid by the boards, or are paid by IHCC from the sponsor's money that the boards found and the General Secretary approved with the series.
+5.2D The boards send IHCC the scorecards (CSV) and results of every match, and the results count in the rankings of the boards.
+5.3 The results and records of IHCC events are published in the Main Group and on the official IHCC website.
+5.4 The method of the rankings of the boards: [to be decided].
+5.5 A cash prize is offered only when a sponsor has promised it, as Constitution clause 23.7 says. The prizes of an IHCC tournament (the winner, the runner-up, the third place, the player of the match, the best batter, the best bowler and other awards) are paid from sponsorship money, step by step, as Constitution clause 23.7A says.
+
+CHAPTER 6: CODE OF CONDUCT
+6.1 Using a false display name or a display name that is not the player's own verified name is not allowed. A player who returns under another person's Gmail address or name uses false information and wrongly uses a verified name (rule 8.14).
+6.2 A player may not play for more than one board or with more than one account. A player may not play with the account of another person, and may not give his own account to another person to play. This is always a large offence (rule 7.15).
+6.3 Match fixing is not allowed, including losing on purpose or agreeing results.
+6.4 Abuse, insult or rude behavior is not allowed, in a match or in a meeting. Harassment of any person, especially of women players, is not allowed. A complaint about harassment is also told to the Women's Director.
+6.5 Betting on any match or election is not allowed.
+6.6 A false vote or pressure on a voter in an election is not allowed.
+6.7 In an election campaign, offering money or gifts, pressure, threats and lies are not allowed.
+6.8 False information or a false announcement about IHCC is not allowed.
+6.9 A person who has left or been removed must not keep or use a badge that belongs to IHCC, and must help to return it under Constitution Article 9.
+6.10 Passing on the confidential matters of Constitution clause 29.2 is not allowed.
+6.11 The sanctions are those of Constitution Article 25.
+6.12 [Locked] No board, officer or member may stop, pressure or threaten a player who wishes to leave (Constitution clause 8.9A). A board may only politely ask the player to think again.
+6.13 [Locked] A player who is moved down, or treated badly, because he complained, appealed, voted or announced that he is leaving has been wronged, and the person who did it breaks this Chapter.
+6.14 Threats and pressure on any person, to make him do or not do something in IHCC, are not allowed.
+6.15 Hatred or unfair treatment of a person because of nationality, race, colour, religion, gender, language, disability or social standing is not allowed (Constitution clause 10.1).
+6.16 Making known the private details of a person (Constitution clause 10.4) without his permission is not allowed.
+6.17 An officer or a Director may not use his office for his own gain or for the gain of his board, his relative or his friend. An officer may not accept a gift or money that could influence his decision (Constitution clause 20.5).
+6.18 A false or malicious complaint, made to harm a person, is not allowed.
+6.19 Stopping or spoiling an inquiry, for example by hiding proof, by pressure on a witness or by giving a false statement, is not allowed.
+6.20 Deceiving IHCC in an application, for example by using a gap in a form, by changing an application after it was approved, or by giving false details, is not allowed. The sanction is medium or large, and the Core Committee decides it.
+
+CHAPTER 7: OFFENCES, FINES AND SANCTIONS
+7.1 The Core Committee proposes the list of fines. The Board of Directors approves it by more than half and it is announced in advance to all.
+7.2 No fine may be higher than [maximum amount to be decided].
+7.3 List of offences and amounts: [to be decided].
+7.4 [Locked] Every fine is given in charity on behalf of the person fined.
+7.5 [Locked] Offences for which sanctions are made fall in these categories: breaking the rules of play; match fixing or influencing a result; not appearing or leaving a match without permission; wrong use of a verified name; false information in a registration or a squad list; abuse, insult or rude behavior; disrespect to IHCC officers or decisions; false claims about IHCC or a board; misuse or disclosure of data; breaking the rules of an election; not obeying a decision of IHCC; and a delay or a mistake in a squad list by a board officer.
+7.6 What happens when a fine is not paid: the fine is due within thirty days. If it is not paid, the person is suspended under Constitution clauses 25.10 and 25.11 until it is paid. [Locked] Leaving does not cancel the fine (rule 8.23). During an appeal the thirty days are paused (rule 8.33).
+7.7 Fines may be made on a player or on a Member Board: [to be decided].
+7.8 Giving a false vote in an election, or causing another person to give one, is an offence. The fine or the ban for it: [to be decided].
+7.9 The public record of fines under Constitution clause 25.7 shows the amount received, from whom, and where it was given in charity.
+7.10 [Locked] The standard of every fine is the Pakistani rupee (PKR). A person of another country pays the equal value in his own money. [Locked] The rest of the penalty list (the maximum and minimum fine, the levels, the offences, the criteria and the process) waits for the discussion with the Directors. The full list of questions is in the document "IHCC Penalty Full List For Directors" of 11 November 2026. Chapter 7 will be completed after the Directors have answered.
+7.11 [Locked] A fine and a debt of IHCC are never set off against each other (Constitution clause 25.7).
+7.12 [Locked] A complaint that is pending when a person leaves goes on, the data is kept, and the decision applies if he returns (Constitution clause 25.14).
+7.13 [Locked] The public record shows whether a fine is paid or unpaid. A fine on a Member Board under rule 7.7 is also in the list for the Directors.
+7.14 [Locked] Levels of sanctions (Constitution clause 25.3). The amounts of money are only examples, until the Directors decide them (rule 7.10).
+    (a) Small: a warning, a reprimand, a written apology; a ban of up to seven days or two matches; a fine of up to 300 rupees (PKR). The decision of the Core Committee is final, and there is no appeal.
+    (b) Medium: a ban or suspension of eight to thirty days; a fine of 301 to 1,000 rupees; a suspension of vote or office for up to thirty days; a match declared lost or points taken. Appeal to five Directors chosen by lot.
+    (c) Large: removal from a squad or a ban of more than thirty days; a ban on returning to IHCC of six months to two years; removal from an office; a fine of more than 1,000 rupees. Appeal to the full Board of Directors. A permanent ban is possible only under Constitution clause 25.3B.
+7.15 [Locked] Some offences are always large, even if the sanction is lighter: match fixing, a false vote or buying a vote, using another person's name or Gmail, playing with another person's account or giving one's own account to be played, misuse of the money of IHCC, and revenge on a person who complained.
+7.16 [Locked] If the same offence is done a third time, the sanction moves to the next level. For example a third warning becomes a medium sanction.
+7.17 [Locked] An act that is not written as an offence in this Rule Book can only get a small sanction of a warning, a reprimand or a written apology (Constitution clause 25.5). The Board of Directors may write a new offence into the Rule Book for the future only, by more than half of all Directors, with a notice of at least seven days.
+7.18 [Locked] One act is sanctioned once. If a Member Board has sanctioned an act, its sanction counts in the sanction of IHCC.
