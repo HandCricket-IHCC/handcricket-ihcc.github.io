@@ -81,5 +81,37 @@
     $("chgNew").value = ""; $("chgNote").value = ""; $("chgId").checked = false; $("chgFrozen").checked = false; $("chgForm").hidden = true; picked = null; $("pqList").textContent = "";
   });
 
-  window.__gsToolsLoad = function () { fillBoards(); loadBadges(); loadShort(); };
+  var KIND = { first12_move: "Move into the first twelve", player_leaves: "A player has left", media_removed: "Media Manager removed" };
+  async function loadBoardReqs() {
+    var r = await sb().rpc("gs_board_requests"); var box = $("brList"); if (!box) return; box.textContent = "";
+    if (r.error) { return; }
+    var rows = r.data || [];
+    if (!rows.length) { box.appendChild(el("p", "No request is waiting.")); return; }
+    rows.forEach(function (q, n) {
+      var c = el("section", null, "card"); c.setAttribute("aria-labelledby", "br" + n);
+      var h = el("h4", KIND[q.kind] + ", " + q.board); h.id = "br" + n; c.appendChild(h);
+      var line = "Sent by the " + (q.by === "director" ? "Team Director" : "Deputy Director") + " on " + when(q.created_at) + ".";
+      if (q.due_at) line += (q.overdue ? " OVERDUE since " : " Decide by ") + when(q.due_at) + ".";
+      c.appendChild(el("p", line));
+      if (q.kind === "first12_move" && q.player && q.player2) c.appendChild(el("p", "Comes in: " + q.player.display_name + " (" + q.player.real_name + "), now place " + q.player.position + ". Goes down: " + q.player2.display_name + " (" + q.player2.real_name + "), now place " + q.player2.position + "."));
+      if (q.kind === "player_leaves" && q.player) c.appendChild(el("p", "Player: " + q.player.display_name + " (" + q.player.real_name + "), place " + q.player.position + "."));
+      if (q.reason) c.appendChild(el("p", "Note: " + q.reason));
+      var lab = el("label", "Reason or note"); lab.setAttribute("for", "brn" + n); c.appendChild(lab);
+      var inp = el("input"); inp.type = "text"; inp.id = "brn" + n; inp.maxLength = 300; inp.autocomplete = "off"; c.appendChild(inp);
+      var yes = el("button", q.kind === "media_removed" ? "Noted" : "Approve", "alt"); yes.type = "button"; yes.setAttribute("aria-label", "Approve: " + KIND[q.kind] + ", " + q.board);
+      var no = el("button", "Reject", "alt"); no.type = "button"; no.setAttribute("aria-label", "Reject: " + KIND[q.kind] + ", " + q.board);
+      async function go(ok) {
+        if (busy) return; busy = true;
+        var x = await sb().rpc("gs_board_request_decide", { p_id: q.id, p_approve: ok, p_note: inp.value });
+        busy = false;
+        if (x.error) { say(cleanErr(x.error.message), true); return; }
+        say(ok ? "Done." : "Rejected."); loadBoardReqs();
+      }
+      yes.addEventListener("click", function () { go(true); }); no.addEventListener("click", function () { go(false); });
+      var p = el("p"); p.appendChild(yes); p.appendChild(document.createTextNode(" ")); p.appendChild(no); c.appendChild(p);
+      box.appendChild(c);
+    });
+  }
+
+  window.__gsToolsLoad = function () { fillBoards(); loadBadges(); loadShort(); loadBoardReqs(); };
 })();

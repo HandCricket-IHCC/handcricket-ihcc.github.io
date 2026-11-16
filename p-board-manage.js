@@ -81,7 +81,7 @@
       if (p.role) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
       li.setAttribute("aria-label", label); ol.appendChild(li);
     });
-    showOnly("app"); showTab(tab, false); jrLoad();
+    showOnly("app"); showTab(tab, false); jrLoad(); if (window.__tdLoad) window.__tdLoad(sb, data.code, me);
   }
   function annItem(a) {
     var li = el("li", "card");

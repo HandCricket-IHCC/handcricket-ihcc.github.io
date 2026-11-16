@@ -119,6 +119,34 @@
         <h4>My board's requests</h4>
         <ul id="jrList" class="plain"></ul>
       </div>
+      <div class="card mcard" id="m-td">
+        <h3>Order of the squad and players who leave</h3>
+        <p class="muted small">Only the Team Director and the Deputy Director. This opens on 3 December 2026. Nothing is changed from the closing of the Voting List until the result of the election.</p>
+        <h4>Change a place from thirteen to thirty (rule 2.26)</h4>
+        <p class="muted small">One of you proposes, the other confirms. One change in three months.</p>
+        <div class="field"><label class="fl" for="ordPlayer">Player</label><select id="ordPlayer"></select></div>
+        <div class="field"><label class="fl" for="ordPos">New place (thirteen or more)</label><input type="number" id="ordPos" min="13" max="30"></div>
+        <div class="field"><label class="fl" for="ordWhy">Reason (merit)</label><input type="text" id="ordWhy" maxlength="300" autocomplete="off"></div>
+        <button type="button" id="ordSend">Propose the change</button>
+        <h4>Bring a player into the first twelve (rule 2.27)</h4>
+        <p class="muted small">One player comes in from thirteen to thirty, one goes down from the first twelve. The General Secretary decides within twenty-four hours.</p>
+        <div class="field"><label class="fl" for="f12In">Player coming in</label><select id="f12In"></select></div>
+        <div class="field"><label class="fl" for="f12Out">Player going down</label><select id="f12Out"></select></div>
+        <div class="field"><label class="fl" for="f12Why">Reason (merit)</label><input type="text" id="f12Why" maxlength="300" autocomplete="off"></div>
+        <div class="ck"><input type="checkbox" id="f12Agree"><label for="f12Agree">At least seven of the other eleven Voting Members agree.</label></div>
+        <button type="button" id="f12Send">Send to the General Secretary</button>
+        <h4>A player has left (rule 8.9A)</h4>
+        <p class="muted small">The player sent a written notice. The General Secretary removes him, moves the others up and keeps his badge name in the reserve.</p>
+        <div class="field"><label class="fl" for="lvPlayer">Player</label><select id="lvPlayer"></select></div>
+        <div class="field"><label class="fl" for="lvNote">Note</label><input type="text" id="lvNote" maxlength="300" autocomplete="off"></div>
+        <button type="button" id="lvSend">Tell the General Secretary</button>
+        <h4>The Media Manager was removed</h4>
+        <div class="field"><label class="fl" for="mrNote">Note</label><input type="text" id="mrNote" maxlength="300" autocomplete="off"></div>
+        <button type="button" id="mrSend">Tell the General Secretary</button>
+        <div id="tdMsg" class="msg" role="status" tabindex="-1" hidden></div>
+        <h4>Requests of my board</h4>
+        <ul id="tdList" class="plain"></ul>
+      </div>
       <div class="card mcard">
         <h3>The squad now</h3>
         <ol class="team" id="teamList"></ol>
@@ -202,7 +230,8 @@
 <!--/SITEFOOT-->
 
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-board-manage.js?v=3341a49b"></script>
+<script src="p-board-td.js?v=73fba1f7"></script>
+<script src="p-board-manage.js?v=fb636c83"></script>
 <script src="notice.js?v=3186a9d3"></script>
 </body>
 </html>
