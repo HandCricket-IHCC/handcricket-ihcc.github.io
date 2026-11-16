@@ -16,10 +16,14 @@
         li.insertBefore(a, li.querySelector(".bar"));
       }
     });
-    document.getElementById("doneN").textContent = done;
-    document.getElementById("doneL").textContent = done === 1 ? "board has completed its squad list" : "boards have completed their squad list";
-    document.getElementById("playN").textContent = total;
-    document.getElementById("playL").textContent = total === 1 ? "player registered so far" : "players registered so far";
+    if (done > 0) {
+      document.getElementById("doneN").textContent = done;
+      document.getElementById("doneL").textContent = done === 1 ? "board has completed its squad list" : "boards have completed their squad list";
+    }
+    if (total > 0) {
+      document.getElementById("playN").textContent = total;
+      document.getElementById("playL").textContent = total === 1 ? "player registered so far" : "players registered so far";
+    }
   }
   fetch(API, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" })
     .then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) draw(d); }).catch(function () {});

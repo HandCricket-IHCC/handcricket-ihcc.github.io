@@ -90,7 +90,7 @@ ul.log li { padding:8px 12px; border-radius:10px; background:var(--bg); border-l
 .sitebar .brand small { display: block; font: 600 11px/1.2 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--band-muted); }
 .sitebar .menubtn { display: none; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 10px; border: 2px solid rgba(255,255,255,.55); background: transparent; color: inherit; font: 700 16px var(--font); cursor: pointer; }
 .sitenav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 4px; }
-.sitenav a { display: flex; align-items: center; min-height: 44px; padding: 0 13px; border-radius: 10px; color: inherit; text-decoration: none; font-weight: 600; }
+.sitenav a { display: flex; align-items: center; min-height: 44px; padding: 0 10px; border-radius: 10px; color: inherit; text-decoration: none; font-weight: 600; }
 .sitenav a:hover { background: rgba(255,255,255,.12); }
 .sitenav a[aria-current="page"] { background: rgba(255,255,255,.16); box-shadow: inset 0 -3px 0 var(--gold); }
 .sitenav a.adminlink { border: 1px solid rgba(255,255,255,.4); margin-left: 6px; }

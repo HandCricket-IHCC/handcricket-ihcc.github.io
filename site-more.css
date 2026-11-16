@@ -37,3 +37,7 @@ details p.ur { border-left: 3px solid var(--brand); padding-left: 12px; color: v
 .sres .sn { font-weight: 700; }
 .sres .sm { color: var(--muted); }
 .field-hint { color: var(--muted); font-size: 16px; margin: 4px 0 0; }
+.sform > div { flex: 1 1 260px; }
+.sform input { width: 100%; }
+.sform .go { flex: 0 0 auto; width: auto; margin-top: 0; padding: 0 34px; }
+.wrap.wide { max-width: 960px; }
