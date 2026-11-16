@@ -188,3 +188,7 @@ a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 85%; }
 .eventbar p { margin: 0 0 8px; }
 .eventbar p:last-child { margin-bottom: 0; }
 @media print { .eventbar { display: none; } }
+main a:not([class]) { color: var(--brand); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+main a:not([class]):visited { color: var(--brand); }
+main a:not([class]):hover { text-decoration-thickness: 3px; }
+@media (min-width: 801px) { .sitefoot li a { padding: 4px 0; } }

@@ -107,13 +107,13 @@ def build(doc, lines, title, h1, desc, fname, txtname, draftline, intro, other):
     foot=re.sub(r'(<script src="notice\.js\?v=[A-Za-z0-9]+"></script>)',r'\1\n<script src="doc.js?v=0"></script>',foot,count=1)
     head=re.sub(r'<meta name="description" content="[^"]*">','<meta name="description" content="%s">'%esc(desc),head)
     head=head.replace('FAQ - IHCC',title+' (Draft) - IHCC')
-    head=head.replace('faq.html',fname)
     head=re.sub(r'<meta property="og:description" content="[^"]*">','<meta property="og:description" content="%s">'%esc(desc),head)
     head=head.replace('<meta name="theme-color"','<meta name="robots" content="noindex">\n<meta name="theme-color"')
     head=re.sub(r'(<link rel="stylesheet" href="notice\.css\?v=[A-Za-z0-9]+">)',r'\1\n<link rel="stylesheet" href="doc.css?v=0">',head,count=1)
     head=head.replace('<h1>Questions and answers</h1>','<h1>%s</h1>'%esc(h1))
     head=re.sub(r'<p class="lede">.*?</p>','<p class="lede">%s</p>'%esc(desc),head,flags=re.S)
     head=head.replace('<a href="faq.html" aria-current="page"','<a href="faq.html"')
+    head=head.replace('<a href="%s"'%fname,'<a href="%s" aria-current="page"'%fname,1)
     box=('<section class="draftbox" aria-labelledby="dbx"><h2 id="dbx">DRAFT: not yet in force</h2>'
       '<p>%s</p>'
       '<p>Words in <span class="tbd">[square brackets]</span> are still to be decided. <span class="lk">[Locked]</span> after a number means the Boards decided it in a meeting.</p>'
