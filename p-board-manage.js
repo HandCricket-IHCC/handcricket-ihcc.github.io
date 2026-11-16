@@ -81,7 +81,7 @@
       if (p.role) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
       li.setAttribute("aria-label", label); ol.appendChild(li);
     });
-    showOnly("app"); showTab(tab, false); jrLoad(); if (window.__tdLoad) window.__tdLoad(sb, data.code, me);
+    showOnly("app"); showTab(tab, false); jrLoad(); pjQLoad(); if (window.__tdLoad) window.__tdLoad(sb, data.code, me);
   }
   function annItem(a) {
     var li = el("li", "card");
@@ -141,13 +141,30 @@
     me = null; showLogin("login"); say($("signMsg"), "You are signed out.", false);
   });
   function jrClean(e) { var t = errText(e); return t.replace(/^E\|[a-z]+\|/, ""); }
+  async function pjQLoad() {
+    var box = $("m-pj"); if (!me || (me.role !== "director" && me.role !== "deputy")) { box.hidden = true; return; }
+    var ul = $("pjQueue"); ul.textContent = "";
+    var r = await sb.rpc("td_join_list", { p_board: data.code });
+    var rows = (!r.error && r.data) || [];
+    box.hidden = !rows.length;
+    rows.forEach(function (x) {
+      var li = el("li", "", x.display_name + " (" + x.real_name + "), " + x.city + ", " + x.country + ". " + (x.gender === "female" ? "Female" : "Male") + ". Gmail: " + x.email + ". WhatsApp: " + x.whatsapp + ". Sent " + when(x.created_at) + "." + (x.in_other_squad ? " WARNING: this Gmail is already in a squad." : "") + (x.overdue ? " The twenty-four hours are over." : ""));
+      var rs = el("input", ""); rs.type = "text"; rs.maxLength = 300; rs.id = "pjr" + x.id; rs.setAttribute("aria-label", "Reason for refusing " + x.display_name);
+      var a = el("button", "", "Approve"); a.type = "button"; a.setAttribute("aria-label", "Approve " + x.display_name + " and send to the General Secretary");
+      a.addEventListener("click", async function () { var d = await sb.rpc("td_join_decide", { p_id: x.id, p_approve: true, p_reason: null }); if (d.error) { say($("pjQMsg"), jrClean(d.error), true); return; } await pjQLoad(); say($("pjQMsg"), x.display_name + " is approved and sent to the General Secretary.", false); });
+      var n = el("button", "secondary", "Refuse"); n.type = "button"; n.setAttribute("aria-label", "Refuse " + x.display_name + ". Write the reason in the box before this button");
+      n.addEventListener("click", async function () { var d = await sb.rpc("td_join_decide", { p_id: x.id, p_approve: false, p_reason: rs.value }); if (d.error) { say($("pjQMsg"), jrClean(d.error), true); rs.focus(); return; } await pjQLoad(); say($("pjQMsg"), x.display_name + " is refused.", false); });
+      li.appendChild(document.createElement("br")); li.appendChild(rs); li.appendChild(a); li.appendChild(n);
+      ul.appendChild(li);
+    });
+  }
   async function jrLoad() {
     var box = $("m-join"); if (!me || (me.role !== "director" && me.role !== "deputy")) { box.hidden = true; return; }
     box.hidden = false;
     var ul = $("jrList"); ul.textContent = "";
     var r = await sb.rpc("jr_list_mine", { p_board: data.code });
     var rows = (!r.error && r.data) || [];
-    var NAME = { sent: "Waiting for the General Secretary", approved: "Approved", rejected: "Rejected", withdrawn: "Withdrawn" };
+    var NAME = { td_pending: "Waiting for the Team Director", sent: "Waiting for the General Secretary", approved: "Approved", rejected: "Rejected", withdrawn: "Withdrawn" };
     rows.forEach(function (x) {
       var li = el("li", "", x.display_name + " (" + x.real_name + "): " + NAME[x.status] + ". Sent " + when(x.created_at) + (x.reason ? ". Reason: " + x.reason : "") + ".");
       if (x.status === "sent") {

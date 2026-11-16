@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0f3324">
 <title>Board management - IHCC</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="p-board-manage.css?v=2e17b026">
+<link rel="stylesheet" href="p-board-manage.css?v=161ae946">
 <link rel="stylesheet" href="notice.css?v=f5bb7a62">
 <script src="frame-guard.js?v=2af19751"></script>
 </head>
@@ -101,6 +101,12 @@
         <button type="button" id="removeBtn" class="secondary">Remove a player</button>
         <button type="button" id="swapBtn" class="secondary">Swap players</button>
         <div id="closedMsg" class="msg" role="status" tabindex="-1" hidden></div>
+      </div>
+      <div class="card mcard" id="m-pj" hidden>
+        <h3>Players who asked to join your board</h3>
+        <p class="muted small">A player signed in with Google and sent the form from your board page. Check that the display name is the verified name of a real cricketer of your country. If you approve, the request goes to the IHCC General Secretary. If you refuse, write the reason. You have twenty-four hours.</p>
+        <ul id="pjQueue" class="plain"></ul>
+        <div id="pjQMsg" class="msg" role="status" tabindex="-1" hidden></div>
       </div>
       <div class="card mcard" id="m-join">
         <h3>Send a joining request for a new player</h3>
@@ -231,7 +237,7 @@
 
 <script src="supabase-js-2.45.4.min.js"></script>
 <script src="p-board-td.js?v=73fba1f7"></script>
-<script src="p-board-manage.js?v=fb636c83"></script>
+<script src="p-board-manage.js?v=bdd3fced"></script>
 <script src="notice.js?v=3186a9d3"></script>
 </body>
 </html>

@@ -136,7 +136,47 @@
   $("olderBtn").addEventListener("click", function () { loadNews(false); });
 
   // ---- join (closed for now) ----
-  $("joinBtn").addEventListener("click", function () { say($("closedMsg"), "Joining is closed for now.", false); });
+  function pjClean(e) { return errText(e).replace(/^E\|[a-z]+\|/, ""); }
+  var PJ_NAME = { td_pending: "Waiting for the Team Director", sent: "Approved by the Team Director, waiting for the General Secretary", approved: "Approved. You are in the squad", rejected: "Not approved", withdrawn: "Withdrawn" };
+  async function pjLoad(focusTitle) {
+    var box = $("joinBox"); box.hidden = false;
+    var sess = null;
+    try { var s = await sb.auth.getSession(); sess = s.data && s.data.session; } catch (e) {}
+    $("joinSignedOut").hidden = !!sess; $("joinForm").hidden = !sess;
+    if (sess) {
+      $("joinWho").textContent = "Signed in as " + (sess.user.email || "") + ". Your request will use this Gmail address.";
+      var ul = $("pjList"); ul.textContent = "";
+      var r = await sb.rpc("pj_my", { p_board: data.code });
+      var rows = (!r.error && r.data) || [];
+      rows.forEach(function (x) {
+        var li = el("li", "", x.display_name + ": " + PJ_NAME[x.status] + (x.reason ? ". Reason: " + x.reason : "") + ". ");
+        if (x.status === "td_pending" || x.status === "sent") {
+          var b = el("button", "secondary", "Withdraw"); b.type = "button"; b.setAttribute("aria-label", "Withdraw the request for " + x.display_name);
+          b.addEventListener("click", async function () { var w = await sb.rpc("pj_withdraw", { p_id: x.id }); if (w.error) { say($("joinMsg"), pjClean(w.error), true); return; } await pjLoad(false); say($("joinMsg"), "Your request is withdrawn.", false); });
+          li.appendChild(b);
+        }
+        ul.appendChild(li);
+      });
+      if (!rows.length) ul.appendChild(el("li", "", "None yet."));
+    }
+    if (focusTitle) $("joinTitle").focus();
+  }
+  $("joinBtn").addEventListener("click", function () { if (!sb || !data) return; pjLoad(true); });
+  $("joinSign").addEventListener("click", async function () {
+    try { sessionStorage.setItem("ihcc_join", "1"); sessionStorage.setItem("ihcc_board", data.code); } catch (e) {}
+    try { await sb.auth.signOut({ scope: "global" }); } catch (e) {}
+    sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname, queryParams: { prompt: "select_account" } } });
+  });
+  $("pjOut").addEventListener("click", async function () { try { await sb.auth.signOut({ scope: "global" }); } catch (e) {} await pjLoad(false); say($("joinMsg"), "You are signed out.", false); });
+  $("pjSend").addEventListener("click", async function () {
+    var g = document.querySelector("input[name=pjGender]:checked");
+    var r = await sb.rpc("pj_submit", { p_board: data.code, p_display: $("pjDisplay").value, p_real: $("pjReal").value, p_city: $("pjCity").value, p_country: $("pjCountry").value,
+      p_whatsapp: $("pjWa").value, p_gender: g ? g.value : "", p_final: $("pjFinal").checked, p_statement: $("pjStmt").checked });
+    if (r.error) { say($("joinMsg"), pjClean(r.error), true); return; }
+    ["pjDisplay", "pjReal", "pjCity", "pjCountry", "pjWa"].forEach(function (i) { $(i).value = ""; });
+    if (g) g.checked = false; $("pjFinal").checked = false; $("pjStmt").checked = false;
+    await pjLoad(false); say($("joinMsg"), "Sent to the Team Director, who decides within twenty-four hours. Then the General Secretary decides.", false);
+  });
 
   // ---- leader bar: login link for leaders, Management link when signed in ----
   var barBusy = false;
@@ -179,6 +219,8 @@
       status("The page of this board is not open yet. It opens after the board reports its election to IHCC.", false); return;
     }
     data = r.data; render(); await loadNews(true); await loadBar();
+    var wantJoin = false; try { wantJoin = sessionStorage.getItem("ihcc_join") === "1"; sessionStorage.removeItem("ihcc_join"); } catch (e) {}
+    if (wantJoin) { await pjLoad(true); }
     if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
   }
   sb && sb.auth.onAuthStateChange(function (evt) { if ((evt === "SIGNED_IN" || evt === "SIGNED_OUT") && data) loadBar(); });

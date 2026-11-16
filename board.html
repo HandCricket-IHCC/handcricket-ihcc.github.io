@@ -18,7 +18,7 @@
 <meta property="og:image:alt" content="IHCC, the International Hand Cricket Council">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3Cpath d='M12 20c10 8 10 16 0 24M52 20c-10 8-10 16 0 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="p-board.css?v=93d98d51">
+<link rel="stylesheet" href="p-board.css?v=666553d2">
 <link rel="stylesheet" href="notice.css?v=f5bb7a62">
 </head>
 <body>
@@ -87,9 +87,35 @@
       <button type="button" id="copyBtn">Copy list</button>
       <button type="button" id="dlBtn" class="secondary">Download list</button>
       <div id="copyMsg" class="msg" role="status" tabindex="-1" hidden></div>
-      <p class="muted small">Joining is closed for now. Removing and swapping players is done by the board's leaders, from their Management page, after the elections are finished.</p>
+      <p class="muted small">New players join in two steps: the Team Director of the board approves first, then the IHCC General Secretary. Removing and swapping players is done by the board's leaders, from their Management page, after the elections are finished.</p>
       <button type="button" id="joinBtn" class="secondary">Join</button>
       <div id="closedMsg" class="msg" role="status" tabindex="-1" hidden></div>
+      <div class="card" id="joinBox" hidden>
+        <h3 id="joinTitle" tabindex="-1">Join this board</h3>
+        <div id="joinSignedOut">
+          <p>To join, sign in with the Gmail address you use for Hand Cricket. This proves the address is yours.</p>
+          <button type="button" id="joinSign">Sign in with Google</button>
+        </div>
+        <div id="joinForm" hidden>
+          <p id="joinWho" class="muted"></p>
+          <div class="field"><label class="fl" for="pjDisplay">Display name (the verified name of a real cricketer of your country)</label><input type="text" id="pjDisplay" maxlength="30" autocomplete="off"></div>
+          <div class="field"><label class="fl" for="pjReal">Real name</label><input type="text" id="pjReal" maxlength="80" autocomplete="name"></div>
+          <div class="field"><label class="fl" for="pjCity">City</label><input type="text" id="pjCity" maxlength="60" autocomplete="address-level2"></div>
+          <div class="field"><label class="fl" for="pjCountry">Country</label><input type="text" id="pjCountry" maxlength="60" autocomplete="country-name"></div>
+          <div class="field"><label class="fl" for="pjWa">WhatsApp number with the country code</label><input type="tel" id="pjWa" maxlength="25" autocomplete="tel"></div>
+          <fieldset class="field"><legend class="fl">Gender</legend>
+            <div class="ck"><input type="radio" name="pjGender" id="pjMale" value="male"><label for="pjMale">Male</label></div>
+            <div class="ck"><input type="radio" name="pjGender" id="pjFemale" value="female"><label for="pjFemale">Female</label></div>
+          </fieldset>
+          <div class="ck"><input type="checkbox" id="pjFinal"><label for="pjFinal">I have submitted the final form.</label></div>
+          <div class="ck"><input type="checkbox" id="pjStmt"><label for="pjStmt">I have given my statement to IHCC.</label></div>
+          <button type="button" id="pjSend">Send my request to the Team Director</button>
+          <button type="button" id="pjOut" class="secondary">Sign out</button>
+          <h4>My requests on this board</h4>
+          <ul id="pjList" class="plain"></ul>
+        </div>
+        <div id="joinMsg" class="msg" role="status" tabindex="-1" hidden></div>
+      </div>
       <ol class="team" id="teamList"></ol>
     </section>
 
@@ -127,7 +153,7 @@
 <!--/SITEFOOT-->
 
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-board.js?v=e542b7f6"></script>
+<script src="p-board.js?v=c8f9f38a"></script>
 <script src="notice.js?v=3186a9d3"></script>
 </body>
 </html>

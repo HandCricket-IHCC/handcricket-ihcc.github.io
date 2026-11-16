@@ -27,6 +27,7 @@
     items.forEach(function (it, n) {
       var card = el("section", null, "card"); card.setAttribute("aria-labelledby", "h" + n);
       var h = el("h3", it.display_name + " (" + it.real_name + "), " + it.board); h.id = "h" + n; card.appendChild(h);
+      if (it.sent_by === "player") card.appendChild(el("p", "The player sent this request himself or herself. The Team Director of the board has already approved it."));
       card.appendChild(el("p", "Sent " + when(it.created_at) + ". Decide by " + when(it.due_at) + (it.overdue ? ". OVERDUE." : ". About " + it.hours_left + " hours left.")));
       card.appendChild(el("p", "City: " + it.city + ". Country: " + it.country + ". Gender: " + it.gender + ". Gmail: " + it.email + ". WhatsApp: " + it.whatsapp + "."));
       var a = it.auto || {};
