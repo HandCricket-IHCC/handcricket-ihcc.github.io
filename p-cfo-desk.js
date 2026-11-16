@@ -51,10 +51,29 @@
   $("fnAdd").addEventListener("click", function () { act("fin_add", { p_direction: $("fnDir").value, p_date: $("fnDate").value || null, p_amount: $("fnAmt").value ? Number($("fnAmt").value) : null, p_category: $("fnCat").value, p_note: $("fnNote").value }, "The entry is saved.", ["fnDate", "fnAmt", "fnCat", "fnNote"]); });
   $("fiAdd").addEventListener("click", function () { act("fin_fine_add", { p_board: $("fiBoard").value, p_amount: $("fiAmt").value ? Number($("fiAmt").value) : null, p_received: $("fiDate").value || null, p_note: $("fiNote").value }, "The fine is recorded. It must be given in charity within thirty days.", ["fiBoard", "fiAmt", "fiDate", "fiNote"]); });
   $("rpSend").addEventListener("click", function () { act("report_add", { p_office: "CFO", p_kind: $("rpKind").value, p_body: $("rpBody").value }, "Saved for the Board of Directors.", ["rpBody"]); });
+  function renderBp(rows) {
+    var box = $("bpList"); box.textContent = "";
+    if (!rows.length) { box.appendChild(el("p", "No badge price is owed.")); return; }
+    rows.forEach(function (q, n) {
+      var card = el("section", null, "card"); card.setAttribute("aria-labelledby", "bq" + n);
+      var h = el("h3", (q.status === "owed" ? "Number " + q.order + ": " : "Paid: ") + q.player + ", " + q.board + ", " + pkr(q.price)); h.id = "bq" + n; card.appendChild(h);
+      card.appendChild(el("p", (q.kind === "left" ? "Left or removed on " : "Accepted on ") + q.owed_since + (q.status === "owed" ? (q.eligible ? ". May be paid now." : ". May be paid from " + q.eligible_from + ".") : ". Paid on " + q.paid_on + ".")));
+      if (q.status === "owed") {
+        var p = el("p"); var b = el("button", "Mark as paid in full"); b.type = "button"; b.setAttribute("aria-label", "Mark as paid in full: " + q.player + ", " + q.board);
+        b.addEventListener("click", function () { act("cfo_badge_paid", { p_id: q.id, p_paid: null, p_note: null }, "Saved. Remember to write it in the accounts."); });
+        p.appendChild(b); card.appendChild(p);
+      }
+      box.appendChild(card);
+    });
+  }
+  $("bpAdd").addEventListener("click", function () {
+    act("cfo_badge_add", { p_board: $("bpBoard").value, p_player: $("bpPlayer").value, p_kind: $("bpKind").value, p_since: $("bpSince").value || null, p_eligible: $("bpElig").value || null, p_price: $("bpPrice").value ? Number($("bpPrice").value) : null, p_note: null }, "Added to the list.", ["bpBoard", "bpPlayer", "bpSince", "bpElig", "bpPrice"]);
+  });
   async function load(keepStatus) {
     var f = await sb.rpc("fin_list");
     if (f.error) { $("deniedText").textContent = cleanErr(f.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     renderFin(f.data || {});
+    var bq = await sb.rpc("cfo_badge_list"); if (!bq.error) renderBp(bq.data || []);
     var r = await sb.rpc("report_list", { p_office: "CFO" }); if (!r.error) renderRep(r.data || []);
     if (!keepStatus) say("");
     return true;

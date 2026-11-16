@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Discipline pages of the IHCC General Secretary. Not for public use.">
+<meta name="theme-color" content="#0f3324">
+<title>Discipline - IHCC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="p-admin.css?v=6bb623b7">
+<script src="frame-guard.js?v=2af19751"></script>
+</head>
+<body>
+<noscript><p class="nojs">This page needs JavaScript to work. Please turn JavaScript on in your browser and reload the page.</p></noscript>
+<a class="skip" href="#main">Skip to the content</a>
+<header>
+  <div class="wrap">
+    <h1>IHCC discipline and records</h1>
+    <div id="who" aria-live="polite"></div>
+    <p><a href="core-signin.html">Back to the Core Committee sign-in</a> | <a href="gs-desk.html">General Secretary desk</a></p>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+  <div id="status" class="msg" role="status" tabindex="-1" hidden></div>
+
+  <section id="loginView" hidden aria-labelledby="loginH">
+    <h2 id="loginH">Sign in</h2>
+    <p>This desk is only for the General Secretary of IHCC. Sign in with the Google account that IHCC has on record for the office.</p>
+    <p><button id="signIn" type="button">Sign in with Google</button></p>
+  </section>
+
+  <section id="deniedView" hidden aria-labelledby="deniedH">
+    <h2 id="deniedH">Not authorised</h2>
+    <p id="deniedText"></p>
+    <p><button id="signOut2" type="button" class="alt">Sign out</button></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section aria-labelledby="sxH">
+      <h2 id="sxH">Sanctions register</h2>
+      <p>Constitution Article 25. Record each sanction after it is decided. A small sanction is told only to the person and the Core Committee. The record is kept two years for small, five for medium, always for large. The third time for the same offence moves to the next level.</p>
+      <div class="fieldrow"><label for="scKind0">Who is sanctioned</label><select id="scKind0"><option value="player">Player</option><option value="officer">Officer</option><option value="board">Member Board</option></select></div>
+      <div class="fieldrow"><label for="scTarget">Display name</label><input type="text" id="scTarget" maxlength="120" autocomplete="off"></div>
+      <div class="fieldrow"><label for="scBoard">Board</label><input type="text" id="scBoard" maxlength="80" autocomplete="off"></div>
+      <div class="fieldrow"><label for="scOffence">Offence</label><input type="text" id="scOffence" maxlength="200" autocomplete="off"></div>
+      <div class="fieldrow"><label for="scKind">Sanction</label><select id="scKind"><option value="warning">Warning</option><option value="suspension">Suspension</option><option value="squad_removal">Removal from a squad</option><option value="ban">Ban from tournaments and series</option><option value="office_removal">Removal from an office</option><option value="fine">Fine</option></select></div>
+      <div class="fieldrow"><label for="scLevel">Level</label><select id="scLevel"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select></div>
+      <div class="fieldrow"><label for="scBy">Decided by</label><select id="scBy"><option value="core">Core Committee</option><option value="directors">Board of Directors</option></select></div>
+      <div class="fieldrow"><label for="scDecided">Day of the decision</label><input type="date" id="scDecided"></div>
+      <div class="fieldrow"><label for="scEnds">Last day of the sanction (blank if none)</label><input type="date" id="scEnds"></div>
+      <div class="opt"><input type="checkbox" id="scPerm"><label for="scPerm">Permanent ban (only the Board of Directors, more than two-thirds)</label></div>
+      <div class="fieldrow"><label for="scFine">Amount of the fine (PKR)</label><input type="number" id="scFine" min="1" step="any" inputmode="decimal"></div>
+      <div class="fieldrow"><label for="scReceipt">Complaint receipt code (optional)</label><input type="text" id="scReceipt" maxlength="40" autocomplete="off"></div>
+      <div class="fieldrow"><label for="scNote">Note</label><input type="text" id="scNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="scAdd" type="button">Record the sanction</button></p>
+      <div id="scList"></div>
+    </section>
+    <section aria-labelledby="apH">
+      <h2 id="apH">Appeals</h2>
+      <p>Constitution 25.9 and 25.9A. The appeal is in writing within seven days, on one ground. You check within twenty-four hours whether there is a ground. A medium sanction goes to five Directors drawn by lot, a large one to the full Board. The decision is within fourteen days and can never make the sanction heavier. Open an appeal from the sanction above.</p>
+      <div id="apList"></div>
+    </section>
+    <section aria-labelledby="ncH">
+      <h2 id="ncH">No confidence in a Team Director or Deputy Director</h2>
+      <p>Constitution 11.8B. At least eight of the twelve Voting Members say it in writing. Not in the first ninety days of the term, nor from the closing of the Voting List until the election result. The office ends, the board elects a new holder within thirty days and tells you. It is not a sanction.</p>
+      <div class="fieldrow"><label for="ncBoard">Board</label><input type="text" id="ncBoard" maxlength="80" autocomplete="off"></div>
+      <div class="fieldrow"><label for="ncOffice">Office</label><select id="ncOffice"><option>Team Director</option><option>Deputy Director</option></select></div>
+      <div class="fieldrow"><label for="ncCount">How many Voting Members said it in writing</label><input type="number" id="ncCount" min="1" max="12" step="1" inputmode="numeric"></div>
+      <div class="fieldrow"><label for="ncNote">Note</label><input type="text" id="ncNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="ncAdd" type="button">Record the no confidence</button></p>
+      <div id="ncList"></div>
+    </section>
+    <section aria-labelledby="imH">
+      <h2 id="imH">Interim measures</h2>
+      <p>Constitution 25.2B. The Chairman proposes it on his desk, and you approve it here. The Directors must confirm within seven days by more than half, or it ends by itself. It lasts at most thirty days and is not a sanction. The accused may object in writing within forty-eight hours.</p>
+      <div id="imList"></div>
+    </section>
+    <p><button id="reload" type="button" class="alt">Reload the lists</button></p>
+    <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
+  </div>
+</main>
+<script src="supabase-js-2.45.4.min.js"></script>
+<script src="p-gs-discipline.js?v=f802f777"></script>
+</body>
+</html>

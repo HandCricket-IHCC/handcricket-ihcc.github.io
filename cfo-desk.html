@@ -61,6 +61,18 @@
       <p><button id="fiAdd" type="button">Record the fine</button></p>
       <div id="fiList"></div>
     </section>
+    <section aria-labelledby="bpH">
+      <h2 id="bpH">Badge prices owed</h2>
+      <p>Constitution 9.8: as sponsorship money comes in, first pay the persons who have left or been removed and whose time has passed, in the order in which they left. The rest is paid gradually, giving every board an equal turn. Only the full price is paid, never a part. The list below is in that order.</p>
+      <div class="fieldrow"><label for="bpBoard">Board</label><input type="text" id="bpBoard" maxlength="80" autocomplete="off"></div>
+      <div class="fieldrow"><label for="bpPlayer">Display name</label><input type="text" id="bpPlayer" maxlength="120" autocomplete="off"></div>
+      <div class="fieldrow"><label for="bpKind">Kind</label><select id="bpKind"><option value="left">Left or removed</option><option value="current">Current player</option></select></div>
+      <div class="fieldrow"><label for="bpSince">Day he left, or the day his final form was accepted</label><input type="date" id="bpSince"></div>
+      <div class="fieldrow"><label for="bpElig">First day he may be paid (optional)</label><input type="date" id="bpElig"></div>
+      <div class="fieldrow"><label for="bpPrice">Full price (PKR)</label><input type="number" id="bpPrice" min="1" step="any" inputmode="decimal"></div>
+      <p><button id="bpAdd" type="button">Add to the list</button></p>
+      <div id="bpList"></div>
+    </section>
     <section aria-labelledby="rpH">
       <h2 id="rpH">Financial report</h2>
       <p>Article 22: your report to the Board of Directors. The Directors can read it.</p>
@@ -74,6 +86,6 @@
   </div>
 </main>
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-cfo-desk.js?v=99c06a06"></script>
+<script src="p-cfo-desk.js?v=4d1fc1d1"></script>
 </body>
 </html>

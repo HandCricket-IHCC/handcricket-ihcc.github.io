@@ -68,12 +68,23 @@
   $("lvGrant").addEventListener("click", function () { act("ch_leave_grant", { p_office: $("lvOffice").value, p_from: $("lvFrom").value || null, p_to: $("lvTo").value || null, p_note: $("lvNote").value }, "The leave is approved. An acting officer does the work meanwhile.", ["lvFrom", "lvTo", "lvNote"]); });
   $("silOpen").addEventListener("click", function () { act("ch_silent_open", { p_office: $("silOffice").value, p_note: $("silNote").value, p_fourteen: $("silTick").checked }, "The notice is recorded. The General Secretary sends it by email and WhatsApp. The officer has seven days to answer.", ["silNote", "silTick"]); });
 
+  var IMS = { proposed: "Waiting for the General Secretary", active: "Active, waiting for the Directors", confirmed: "Confirmed by the Directors", lapsed: "Ended by itself, not confirmed in time", ended: "Ended", withdrawn: "Withdrawn" };
+  function renderIm(rows) {
+    var box = $("imList"); box.textContent = ""; var ul = el("ul");
+    rows.forEach(function (m) { ul.appendChild(el("li", m.target + ": " + IMS[m.status] + ". " + m.offence + (m.confirm_due && m.status === "active" ? ". Directors confirm by " + when(m.confirm_due) : "") + (m.outcome ? ". Result: " + m.outcome : "") + ".")); });
+    box.appendChild(ul); if (!rows.length) box.appendChild(el("p", "No interim measure has been proposed."));
+  }
+  $("imSend").addEventListener("click", function () {
+    act("ch_interim_propose", { p_target: $("imTarget").value, p_office: $("imOffice").value, p_offence: $("imOffence").value, p_reason: $("imReason").value, p_proof: $("imProof").checked }, "Proposed. The General Secretary must approve it on his desk, then the Directors confirm within seven days.", ["imTarget", "imOffice", "imReason", "imProof"]);
+  });
+
   async function load(keepStatus) {
     var m = await sb.rpc("ch_meeting_list");
     if (m.error) { $("deniedText").textContent = cleanErr(m.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     renderMeet(m.data || []);
     var l = await sb.rpc("ch_leave_list"); if (!l.error) renderLeave(l.data || []);
     var s = await sb.rpc("ch_silent_list"); if (!s.error) renderSil(s.data || []);
+    var im = await sb.rpc("ch_interim_list"); if (!im.error) renderIm(im.data || []);
     if (!keepStatus) say("");
     return true;
   }

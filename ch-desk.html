@@ -47,6 +47,17 @@
       <p><button id="mtSend" type="button">Send the order to the General Secretary</button></p>
       <div id="mtList"></div>
     </section>
+    <section aria-labelledby="imH">
+      <h2 id="imH">Interim measure</h2>
+      <p>Constitution 25.2B: only for a serious offence, and only if the complaint has written proof. You and the General Secretary together may stop the accused, in writing and with the reason, from voting, from the work of his office and from contact with the complainant and the witnesses, for the time of the inquiry. You propose it here and the General Secretary approves it. The Directors must confirm within seven days by more than half, or it ends by itself. It lasts at most thirty days. It is not a sanction.</p>
+      <div class="fieldrow"><label for="imTarget">Who it is about (display name)</label><input type="text" id="imTarget" maxlength="120" autocomplete="off"></div>
+      <div class="fieldrow"><label for="imOffice">His office or board (optional)</label><input type="text" id="imOffice" maxlength="80" autocomplete="off"></div>
+      <div class="fieldrow"><label for="imOffence">Offence</label><select id="imOffence"><option>match fixing</option><option>false vote or buying votes</option><option>threats and pressure</option><option>misuse of IHCC money</option><option>revenge on a complainant</option></select></div>
+      <div class="fieldrow"><label for="imReason">Reason, in writing</label><textarea id="imReason" rows="4" maxlength="1500"></textarea></div>
+      <div class="opt"><input type="checkbox" id="imProof"><label for="imProof">The complaint has written proof.</label></div>
+      <p><button id="imSend" type="button">Propose the interim measure</button></p>
+      <div id="imList"></div>
+    </section>
     <section aria-labelledby="lvH">
       <h2 id="lvH">Leave of Core officers</h2>
       <p>Constitution 14.18: a Core officer may take written leave of up to thirty days, once a year. You approve it, except your own, which the Deputy Chairman approves.</p>
@@ -72,6 +83,6 @@
   </div>
 </main>
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-ch-desk.js?v=623ccfd0"></script>
+<script src="p-ch-desk.js?v=e09bf440"></script>
 </body>
 </html>
