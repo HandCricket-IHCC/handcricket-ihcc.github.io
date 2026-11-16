@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Working desk of the IHCC CFO. Not for public use.">
+<meta name="theme-color" content="#0f3324">
+<title>CFO desk - IHCC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="p-admin.css?v=6bb623b7">
+<script src="frame-guard.js?v=2af19751"></script>
+</head>
+<body>
+<noscript><p class="nojs">This page needs JavaScript to work. Please turn JavaScript on in your browser and reload the page.</p></noscript>
+<a class="skip" href="#main">Skip to the content</a>
+<header>
+  <div class="wrap">
+    <h1>IHCC CFO desk</h1>
+    <div id="who" aria-live="polite"></div>
+    <p><a href="core-signin.html">Back to the Core Committee sign-in</a></p>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+  <div id="status" class="msg" role="status" hidden></div>
+
+  <section id="loginView" hidden aria-labelledby="loginH">
+    <h2 id="loginH">Sign in</h2>
+    <p>This desk is only for the CFO of IHCC. Sign in with the Google account that IHCC has on record for the office.</p>
+    <p><button id="signIn" type="button">Sign in with Google</button></p>
+  </section>
+
+  <section id="deniedView" hidden aria-labelledby="deniedH">
+    <h2 id="deniedH">Not authorised</h2>
+    <p id="deniedText"></p>
+    <p><button id="signOut2" type="button" class="alt">Sign out</button></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section aria-labelledby="fnH">
+      <h2 id="fnH">Accounts</h2>
+      <p>Constitution 14.14 and Article 22: you keep the accounts. Money stays in your account for now (Decision 8). Write every amount in Pakistani rupees.</p>
+      <p id="fnTotals" aria-live="polite"></p>
+      <div class="fieldrow"><label for="fnDir">Money</label><select id="fnDir"><option value="in">Came in</option><option value="out">Went out</option></select></div>
+      <div class="fieldrow"><label for="fnDate">Date</label><input type="date" id="fnDate"></div>
+      <div class="fieldrow"><label for="fnAmt">Amount (PKR)</label><input type="number" id="fnAmt" min="1" step="any" inputmode="decimal"></div>
+      <div class="fieldrow"><label for="fnCat">What it is for</label><input type="text" id="fnCat" maxlength="120" autocomplete="off"></div>
+      <div class="fieldrow"><label for="fnNote">Note</label><input type="text" id="fnNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="fnAdd" type="button">Save the entry</button></p>
+      <div id="fnList"></div>
+    </section>
+    <section aria-labelledby="fiH">
+      <h2 id="fiH">Fines given in charity</h2>
+      <p>Constitution 25.7: every fine is given in charity within thirty days, and the Chairman and you choose the charity together.</p>
+      <div class="fieldrow"><label for="fiBoard">Board that was fined</label><input type="text" id="fiBoard" maxlength="80" autocomplete="off"></div>
+      <div class="fieldrow"><label for="fiAmt">Amount (PKR)</label><input type="number" id="fiAmt" min="1" step="any" inputmode="decimal"></div>
+      <div class="fieldrow"><label for="fiDate">Day the fine was received</label><input type="date" id="fiDate"></div>
+      <div class="fieldrow"><label for="fiNote">Note</label><input type="text" id="fiNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="fiAdd" type="button">Record the fine</button></p>
+      <div id="fiList"></div>
+    </section>
+    <section aria-labelledby="rpH">
+      <h2 id="rpH">Financial report</h2>
+      <p>Article 22: your report to the Board of Directors. The Directors can read it.</p>
+      <div class="fieldrow"><label for="rpKind">Kind</label><select id="rpKind"><option value="report">Report</option></select></div>
+      <div class="fieldrow"><label for="rpBody">Text</label><textarea id="rpBody" rows="6" maxlength="4000"></textarea></div>
+      <p><button id="rpSend" type="button">Save for the Board of Directors</button></p>
+      <div id="rpList"></div>
+    </section>
+    <p><button id="reload" type="button" class="alt">Reload the lists</button></p>
+    <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
+  </div>
+</main>
+<script src="supabase-js-2.45.4.min.js"></script>
+<script src="p-cfo-desk.js?v=ce66df9b"></script>
+</body>
+</html>

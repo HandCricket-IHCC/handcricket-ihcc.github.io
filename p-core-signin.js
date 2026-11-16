@@ -27,6 +27,7 @@
         $("seatTools").textContent = "Your office tools are being built one by one. Sign-in is open for testing only.";
         if (d.office === "General Secretary") { var lk = document.createElement("a"); lk.href = "gs-desk.html"; lk.textContent = "Open the General Secretary desk"; $("seatTools").appendChild(document.createTextNode(" ")); $("seatTools").appendChild(lk); }
         if (d.office === "Deputy Chairman") { var lk2 = document.createElement("a"); lk2.href = "dc-desk.html"; lk2.textContent = "Open the Deputy Chairman desk"; $("seatTools").appendChild(document.createTextNode(" ")); $("seatTools").appendChild(lk2); }
+        [["CEO", "ceo-desk.html", "CEO"], ["CFO", "cfo-desk.html", "CFO"], ["Women's Director", "wd-desk.html", "Women's Director"]].forEach(function (x) { if (d.office === x[0]) { var lk4 = document.createElement("a"); lk4.href = x[1]; lk4.textContent = "Open the " + x[2] + " desk"; $("seatTools").appendChild(document.createTextNode(" ")); $("seatTools").appendChild(lk4); } });
         if (d.office === "Chairman") { var lk3 = document.createElement("a"); lk3.href = "ch-desk.html"; lk3.textContent = "Open the Chairman desk"; $("seatTools").appendChild(document.createTextNode(" ")); $("seatTools").appendChild(lk3); }
         say("");
         show("panel");
