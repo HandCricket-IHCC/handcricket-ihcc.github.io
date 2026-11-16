@@ -175,7 +175,7 @@
     if (r.error) { say($("joinMsg"), pjClean(r.error), true); return; }
     ["pjDisplay", "pjReal", "pjCity", "pjCountry", "pjWa"].forEach(function (i) { $(i).value = ""; });
     if (g) g.checked = false; $("pjFinal").checked = false; $("pjStmt").checked = false;
-    await pjLoad(false); say($("joinMsg"), "Sent to the Team Director, who decides within twenty-four hours. Then the General Secretary decides.", false);
+    await pjLoad(false); say($("joinMsg"), "Sent to the Team Director, who has seven days to decide. Then the General Secretary also has seven days.", false);
   });
 
   // ---- leader bar: login link for leaders, Management link when signed in ----

@@ -148,7 +148,7 @@
     var rows = (!r.error && r.data) || [];
     box.hidden = !rows.length;
     rows.forEach(function (x) {
-      var li = el("li", "", x.display_name + " (" + x.real_name + "), " + x.city + ", " + x.country + ". " + (x.gender === "female" ? "Female" : "Male") + ". Gmail: " + x.email + ". WhatsApp: " + x.whatsapp + ". Sent " + when(x.created_at) + "." + (x.in_other_squad ? " WARNING: this Gmail is already in a squad." : "") + (x.overdue ? " The twenty-four hours are over." : ""));
+      var li = el("li", "", x.display_name + " (" + x.real_name + "), " + x.city + ", " + x.country + ". " + (x.gender === "female" ? "Female" : "Male") + ". Gmail: " + x.email + ". WhatsApp: " + x.whatsapp + ". Sent " + when(x.created_at) + "." + (x.in_other_squad ? " WARNING: this Gmail is already in a squad." : "") + (x.overdue ? " The seven days are over." : ""));
       var rs = el("input", ""); rs.type = "text"; rs.maxLength = 300; rs.id = "pjr" + x.id; rs.setAttribute("aria-label", "Reason for refusing " + x.display_name);
       var a = el("button", "", "Approve"); a.type = "button"; a.setAttribute("aria-label", "Approve " + x.display_name + " and send to the General Secretary");
       a.addEventListener("click", async function () { var d = await sb.rpc("td_join_decide", { p_id: x.id, p_approve: true, p_reason: null }); if (d.error) { say($("pjQMsg"), jrClean(d.error), true); return; } await pjQLoad(); say($("pjQMsg"), x.display_name + " is approved and sent to the General Secretary.", false); });
@@ -183,7 +183,7 @@
     if (r.error) { say(b, jrClean(r.error), true); return; }
     ["jrDisplay", "jrReal", "jrCity", "jrCountry", "jrEmail", "jrWa"].forEach(function (i) { $(i).value = ""; });
     $("jrGender").value = ""; $("jrFinal").checked = false; $("jrStmt").checked = false;
-    await jrLoad(); say(b, "Sent to the General Secretary, who decides within twenty-four hours.", false);
+    await jrLoad(); say(b, "Sent to the General Secretary, who decides within seven days.", false);
   });
   $("removeBtn").addEventListener("click", function () { say($("closedMsg"), "Removal is closed until the elections are finished.", false); });
   $("swapBtn").addEventListener("click", function () { say($("closedMsg"), "Swapping is closed until the elections are finished.", false); });
