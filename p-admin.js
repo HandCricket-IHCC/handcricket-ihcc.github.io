@@ -1,7 +1,7 @@
 (function () {
   var URL = "https://krkrpcnovdobnscknfnw.supabase.co";
   var KEY = "sb_publishable_ZUJcEJgLgksBWY5Y3NUdKQ_xNIvs6t4";
-  var BOARDS = ["Afghanistan Hand Cricket Board","Australia Hand Cricket Board","Bangladesh Hand Cricket Board","England Hand Cricket Board","Germany Hand Cricket Board","India Hand Cricket Board","Nepal Hand Cricket Board","New Zealand Hand Cricket Board","Pakistan Hand Cricket Board","Scotland Hand Cricket Board","South Africa Hand Cricket Board","Sri Lanka Hand Cricket Board","UAE Hand Cricket Board","USA Hand Cricket Board","Zimbabwe Hand Cricket Board"];
+  var BOARDS = ["Afghanistan Hand Cricket Board","Australia Hand Cricket Board","Bangladesh Hand Cricket Board","England Hand Cricket Board","India Hand Cricket Board","Nepal Hand Cricket Board","New Zealand Hand Cricket Board","Pakistan Hand Cricket Board","Scotland Hand Cricket Board","South Africa Hand Cricket Board","Sri Lanka Hand Cricket Board","UAE Hand Cricket Board","USA Hand Cricket Board","Zimbabwe Hand Cricket Board"];
   var sb = window.supabase.createClient(URL, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, lock: function (name, timeout, fn) { return fn(); } } });
   var $ = function (id) { return document.getElementById(id); };
   var me = null, entries = [], boardCounts = {};

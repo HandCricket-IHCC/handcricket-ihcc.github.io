@@ -13,7 +13,6 @@
     "South Africa Hand Cricket Board": ["\uD83C\uDDFF\uD83C\uDDE6", "#007749"],
     "UAE Hand Cricket Board": ["\uD83C\uDDE6\uD83C\uDDEA", "#00732f"],
     "USA Hand Cricket Board": ["\uD83C\uDDFA\uD83C\uDDF8", "#3c3b6e"],
-    "Germany Hand Cricket Board": ["\uD83C\uDDE9\uD83C\uDDEA", "#c9a100"],
     "Nepal Hand Cricket Board": ["\uD83C\uDDF3\uD83C\uDDF5", "#dc143c"],
     "India Hand Cricket Board": ["\uD83C\uDDEE\uD83C\uDDF3", "#e07b00"]
   };
@@ -22,8 +21,7 @@
     "Pakistan Hand Cricket Board": "Pakistan Hand Cricket Board", "Bangladesh Hand Cricket Board": "Bangladesh Hand Cricket Board",
     "Afghanistan Hand Cricket Board": "Afghanistan Hand Cricket Board", "Australia Hand Cricket Board": "Hand Cricket Australia",
     "Sri Lanka Hand Cricket Board": "Sri Lanka Hand Cricket", "South Africa Hand Cricket Board": "Hand Cricket South Africa",
-    "UAE Hand Cricket Board": "Emirates Hand Cricket Board", "USA Hand Cricket Board": "USA Hand Cricket",
-    "Germany Hand Cricket Board": "German Hand Cricket Federation", "Nepal Hand Cricket Board": "Hand Cricket Association of Nepal",
+    "UAE Hand Cricket Board": "Emirates Hand Cricket Board", "USA Hand Cricket Board": "USA Hand Cricket", "Nepal Hand Cricket Board": "Hand Cricket Association of Nepal",
     "India Hand Cricket Board": "Board of Control for Hand Cricket in India"
   };
   var names = Object.keys(BOARD_STYLE);
