@@ -81,7 +81,7 @@
       if (p.role) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
       li.setAttribute("aria-label", label); ol.appendChild(li);
     });
-    showOnly("app"); showTab(tab, false);
+    showOnly("app"); showTab(tab, false); jrLoad();
   }
   function annItem(a) {
     var li = el("li", "card");
@@ -139,6 +139,34 @@
   $("signOutBtn").addEventListener("click", async function () {
     try { await sb.auth.signOut({ scope: "global" }); } catch (e) {}
     me = null; showLogin("login"); say($("signMsg"), "You are signed out.", false);
+  });
+  function jrClean(e) { var t = errText(e); return t.replace(/^E\|[a-z]+\|/, ""); }
+  async function jrLoad() {
+    var box = $("m-join"); if (!me || (me.role !== "director" && me.role !== "deputy")) { box.hidden = true; return; }
+    box.hidden = false;
+    var ul = $("jrList"); ul.textContent = "";
+    var r = await sb.rpc("jr_list_mine", { p_board: data.code });
+    var rows = (!r.error && r.data) || [];
+    var NAME = { sent: "Waiting for the General Secretary", approved: "Approved", rejected: "Rejected", withdrawn: "Withdrawn" };
+    rows.forEach(function (x) {
+      var li = el("li", "", x.display_name + " (" + x.real_name + "): " + NAME[x.status] + ". Sent " + when(x.created_at) + (x.reason ? ". Reason: " + x.reason : "") + ".");
+      if (x.status === "sent") {
+        var b = el("button", "secondary", "Withdraw"); b.type = "button"; b.setAttribute("aria-label", "Withdraw the request for " + x.display_name);
+        b.addEventListener("click", async function () { var w = await sb.rpc("jr_withdraw", { p_id: x.id }); if (w.error) { say($("jrMsg"), jrClean(w.error), true); return; } await jrLoad(); say($("jrMsg"), "The request is withdrawn.", false); });
+        li.appendChild(document.createTextNode(" ")); li.appendChild(b);
+      }
+      ul.appendChild(li);
+    });
+    if (!rows.length) ul.appendChild(el("li", "", "None yet."));
+  }
+  $("jrSend").addEventListener("click", async function () {
+    var b = $("jrMsg");
+    var r = await sb.rpc("jr_submit", { p_board: data.code, p_display: $("jrDisplay").value, p_real: $("jrReal").value, p_city: $("jrCity").value, p_country: $("jrCountry").value,
+      p_email: $("jrEmail").value, p_whatsapp: $("jrWa").value, p_gender: $("jrGender").value, p_final: $("jrFinal").checked, p_statement: $("jrStmt").checked });
+    if (r.error) { say(b, jrClean(r.error), true); return; }
+    ["jrDisplay", "jrReal", "jrCity", "jrCountry", "jrEmail", "jrWa"].forEach(function (i) { $(i).value = ""; });
+    $("jrGender").value = ""; $("jrFinal").checked = false; $("jrStmt").checked = false;
+    await jrLoad(); say(b, "Sent to the General Secretary, who decides within twenty-four hours.", false);
   });
   $("removeBtn").addEventListener("click", function () { say($("closedMsg"), "Removal is closed until the elections are finished.", false); });
   $("swapBtn").addEventListener("click", function () { say($("closedMsg"), "Swapping is closed until the elections are finished.", false); });

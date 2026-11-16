@@ -102,6 +102,23 @@
         <button type="button" id="swapBtn" class="secondary">Swap players</button>
         <div id="closedMsg" class="msg" role="status" tabindex="-1" hidden></div>
       </div>
+      <div class="card mcard" id="m-join">
+        <h3>Send a joining request for a new player</h3>
+        <p class="muted small">Rule Book 2.18 to 2.21. The player first submits the final form and gives the statement. You check that everything is complete and send the request to the General Secretary, who decides within twenty-four hours. This opens on 3 December 2026.</p>
+        <div class="field"><label class="fl" for="jrDisplay">Display name (verified name of a real cricketer of your country)</label><input type="text" id="jrDisplay" maxlength="30" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrReal">Real name</label><input type="text" id="jrReal" maxlength="80" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrCity">City</label><input type="text" id="jrCity" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrCountry">Country</label><input type="text" id="jrCountry" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrEmail">Gmail address (must have the Hand Cricket premium)</label><input type="email" id="jrEmail" maxlength="254" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrWa">WhatsApp number with the country code</label><input type="tel" id="jrWa" maxlength="25" autocomplete="off"></div>
+        <div class="field"><label class="fl" for="jrGender">Gender</label><select id="jrGender"><option value="">Choose</option><option value="male">Male</option><option value="female">Female</option></select></div>
+        <div class="ck"><input type="checkbox" id="jrFinal"><label for="jrFinal">The player has submitted the final form.</label></div>
+        <div class="ck"><input type="checkbox" id="jrStmt"><label for="jrStmt">The player has given the statement to IHCC.</label></div>
+        <button type="button" id="jrSend">Send the request to the General Secretary</button>
+        <div id="jrMsg" class="msg" role="status" tabindex="-1" hidden></div>
+        <h4>My board's requests</h4>
+        <ul id="jrList" class="plain"></ul>
+      </div>
       <div class="card mcard">
         <h3>The squad now</h3>
         <ol class="team" id="teamList"></ol>
@@ -185,7 +202,7 @@
 <!--/SITEFOOT-->
 
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-board-manage.js?v=c7682e63"></script>
+<script src="p-board-manage.js?v=3341a49b"></script>
 <script src="notice.js?v=3186a9d3"></script>
 </body>
 </html>

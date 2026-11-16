@@ -24,7 +24,8 @@
         $("seatLine").textContent = d.office + ": " + d.display_name + " (" + d.real_name + "), " + d.board;
         $("seatTerm").textContent = "Term: " + fmt(d.term_start) + " to " + fmt(d.term_end) + ".";
         $("seatDuties").textContent = d.duties || "";
-        $("seatTools").textContent = "Your office tools will appear here. They are not built yet. Sign-in is open for testing only.";
+        $("seatTools").textContent = "Your office tools are being built one by one. Sign-in is open for testing only.";
+        if (d.office === "General Secretary") { var lk = document.createElement("a"); lk.href = "gs-desk.html"; lk.textContent = "Open the General Secretary desk"; $("seatTools").appendChild(document.createTextNode(" ")); $("seatTools").appendChild(lk); }
         say("");
         show("panel");
       } else {
