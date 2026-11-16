@@ -4,6 +4,7 @@
   var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, lock: function (name, timeout, fn) { return fn(); } } });
   var $ = function (id) { return document.getElementById(id); };
   var busy = false;
+  window.__ihccSb = sb;
   function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
   function show(id, focusLogin) {
     ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; });
@@ -100,6 +101,7 @@
   }
 
   async function load(keepStatus) {
+    if (window.__gsToolsLoad) window.__gsToolsLoad();
     var cq = await sb.rpc("gs_cmp_queue"); if (!cq.error) renderCmp((cq.data && cq.data.items) || []);
     var r = await sb.rpc("gs_join_queue");
     if (r.error) { $("deniedText").textContent = cleanErr(r.error.message) || "The check could not be completed."; show("deniedView"); return false; }

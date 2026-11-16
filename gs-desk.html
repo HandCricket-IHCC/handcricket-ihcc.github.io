@@ -50,10 +50,44 @@
       <p id="cmpInfo">Constitution 25.2: acknowledge in writing within twenty-four hours and tell the accused. The accused has three days to answer. Then the investigating officer has fourteen days.</p>
       <div id="cmpList"></div>
     </section>
+    <section aria-labelledby="badgeH">
+      <h2 id="badgeH">Badge names</h2>
+      <p id="badgeInfo">Rule Book 2.15: put the name on the new player's account within seven days, and keep the record of the reserve names.</p>
+      <h3 id="tasksH">Names to put on new accounts</h3>
+      <div id="badgeTasks"></div>
+      <h3 id="reserveH">Reserve account</h3>
+      <div id="badgeReserve"></div>
+      <h3 id="addResH">Put a name into the reserve</h3>
+      <div class="fieldrow"><label for="rsBoard">Board</label><select id="rsBoard"></select></div>
+      <div class="fieldrow"><label for="rsName">Badge name</label><input type="text" id="rsName" maxlength="60" autocomplete="off"></div>
+      <div class="fieldrow"><label for="rsWhy">Why</label><select id="rsWhy"><option value="left">A player left</option><option value="removed">A player was removed</option><option value="transfer">A player transferred</option></select></div>
+      <p><button id="rsAdd" type="button">Put into the reserve</button></p>
+    </section>
+    <section aria-labelledby="chgH">
+      <h2 id="chgH">Change a player's details</h2>
+      <p>Rules 2.32 to 2.36. The player asks you in any way. When you are satisfied of his identity, find him and make the change. The old and the new value are saved in the log.</p>
+      <div class="fieldrow"><label for="pqText">Find a player (display name, real name or Gmail, at least three letters)</label><input type="search" id="pqText" autocomplete="off"></div>
+      <p><button id="pqGo" type="button" class="alt">Search</button></p>
+      <div id="pqList"></div>
+      <div id="chgForm" hidden>
+        <h3 id="chgWho">Selected player</h3>
+        <div class="fieldrow"><label for="chgKind">What to change</label><select id="chgKind"><option value="gmail">Gmail address</option><option value="whatsapp">WhatsApp number</option><option value="real_name">Real name (spelling mistake, or a real change with proof)</option></select></div>
+        <div class="fieldrow"><label for="chgNew">New value</label><input type="text" id="chgNew" maxlength="254" autocomplete="off"></div>
+        <div class="fieldrow"><label for="chgNote">Note (how you were satisfied, or the proof)</label><input type="text" id="chgNote" maxlength="300" autocomplete="off"></div>
+        <div class="opt"><input type="checkbox" id="chgId"><label for="chgId">I am satisfied of the identity of the player (rule 2.32).</label></div>
+        <div class="opt"><input type="checkbox" id="chgFrozen"><label for="chgFrozen">This is not a Voting Member between the closing of the Voting List and the result of the election (rule 2.34). A new Gmail must have the Hand Cricket premium (rule 2.33).</label></div>
+        <p><button id="chgGo" type="button">Make the change</button></p>
+      </div>
+    </section>
+    <section aria-labelledby="shortH">
+      <h2 id="shortH">Squads below twelve</h2>
+      <p id="shortInfo">Rule Book 2.24: the board has thirty days from the notice. If the squad is still below twelve, you give a last period of fourteen days. The periods stop from the closing of the Voting List until the result of the election.</p>
+      <div id="shortList"></div>
+    </section>
     <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
   </div>
 </main>
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-gs-desk.js?v=eed7ec1e"></script>
+<script src="p-gs-desk.js?v=fe535315"></script>
 </body>
 </html>
