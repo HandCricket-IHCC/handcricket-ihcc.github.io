@@ -101,5 +101,23 @@
       p.appendChild(b);
     })(cls[c]);
   }
+  /* Floating shortcuts: Contents and Top, shown after the reader has scrolled down */
+  var dock = document.createElement("nav");
+  dock.className = "dock"; dock.setAttribute("aria-label", "Page shortcuts"); dock.hidden = true;
+  function dbtn(label, fn) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = label;
+    b.addEventListener("click", fn); dock.appendChild(b);
+  }
+  dbtn("Contents", function () { history.pushState(null, "", "#tocH"); focusId("tocH"); });
+  dbtn("Top", function () {
+    window.scrollTo(0, 0);
+    main.setAttribute("tabindex", "-1");
+    main.focus({ preventScroll: true });
+  });
+  document.body.appendChild(dock);
+  var ticking = false;
+  function showDock() { ticking = false; dock.hidden = window.scrollY < 900; }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(showDock); } }, { passive: true });
+  showDock();
   if (location.hash.length > 1) focusId(decodeURIComponent(location.hash.slice(1)));
 })();

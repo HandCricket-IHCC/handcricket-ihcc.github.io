@@ -2,6 +2,7 @@
   {
     "from": "2026-11-15T18:00:00+05:00",
     "to": "2026-11-16T18:00:00+05:00",
+    "label": "Just held",
     "title": "Election result",
     "text": "The result of the First General Election is published. Until the evening of Monday 16 November 2026, a member may say that a vote under his name was not cast by him.",
     "link": "result.html",
@@ -10,8 +11,27 @@
   {
     "from": "2026-11-16T18:00:00+05:00",
     "to": "2026-11-20T21:00:00+05:00",
+    "label": "Coming up",
     "title": "Directors' vote",
     "text": "The Board of Directors elects the CEO, the CFO and the Women's Director live on Google Meet on Friday 20 November 2026 at 9:00 PM, Pakistan time.",
+    "link": "core.html",
+    "linkText": "See the Core Committee"
+  },
+  {
+    "from": "2026-11-20T21:00:00+05:00",
+    "to": "2026-12-01T00:00:00+05:00",
+    "label": "Open for reading",
+    "title": "Constitution and Rule Book drafts",
+    "text": "The drafts can still change until 30 November 2026. They come into force on 3 December 2026.",
+    "link": "constitution.html",
+    "linkText": "Read the Constitution"
+  },
+  {
+    "from": "2026-12-01T00:00:00+05:00",
+    "to": "2026-12-03T00:00:00+05:00",
+    "label": "Coming up",
+    "title": "3 December 2026",
+    "text": "The Constitution and the Rule Book come into force, and the first terms of the Core Committee begin.",
     "link": "core.html",
     "linkText": "See the Core Committee"
   }

@@ -27,7 +27,6 @@
 .btn1:focus-visible, .btn2:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 main.home { padding-bottom: 10px; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: -34px; position: relative; z-index: 2; }
-.eventbar + .stats { margin-top: 16px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); }
 .stat b { display: block; font: 700 40px/1 var(--font-display); color: var(--brand); }
 .stat span { color: var(--muted); }
@@ -71,3 +70,18 @@ main.home { padding-bottom: 10px; }
 .bc-sri-lanka { --bc: #8d153a; }
 .bc-uae { --bc: #00732f; }
 .bc-usa { --bc: #3c3b6e; }
+
+.nextcard { margin-top: 28px; padding: 18px 20px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); border-top: 5px solid var(--gold); border-radius: 16px; color: var(--band-fg); }
+.nextcard .nl { margin: 0 0 6px; font: 700 15px/1.2 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.nextcard h2 { margin: 0 0 8px; font: 700 28px/1.1 var(--font-display); color: #fff; }
+.nextcard h2::before { display: none; }
+.nextcard p:not(.nl) { margin: 0 0 14px; }
+.nextcard .nbtn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; border-radius: 10px; background: var(--gold); color: #0c2e21; font-weight: 700; text-decoration: none; }
+.nextcard .nbtn:hover { filter: brightness(1.08); }
+.nextcard .nbtn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (min-width: 900px) {
+  .hero.home .wrap.has-next { display: grid; grid-template-columns: minmax(0, 1fr) 330px; column-gap: 40px; align-items: start; }
+  .hero.home .wrap.has-next > * { grid-column: 1; }
+  .hero.home .wrap.has-next > .nextcard { grid-column: 2; grid-row: 1 / span 4; align-self: center; margin-top: 0; }
+}
+main.home .updated { max-width: none; padding: 0; margin-top: 36px; }
