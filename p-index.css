@@ -27,6 +27,7 @@
 .btn1:focus-visible, .btn2:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 main.home { padding-bottom: 10px; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: -34px; position: relative; z-index: 2; }
+.eventbar + .stats { margin-top: 16px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); }
 .stat b { display: block; font: 700 40px/1 var(--font-display); color: var(--brand); }
 .stat span { color: var(--muted); }
