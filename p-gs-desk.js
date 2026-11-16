@@ -59,7 +59,48 @@
     });
   }
 
+  function renderCmp(items) {
+    var box = $("cmpList"); box.textContent = "";
+    $("cmpInfo").textContent = items.length ? items.length + " open complaint" + (items.length === 1 ? "" : "s") + ". Child safety first, then oldest."
+      : "No complaint is open.";
+    items.forEach(function (c, n) {
+      var card = el("section", null, "card"); card.setAttribute("aria-labelledby", "ch" + n);
+      var h = el("h3", c.receipt + ": against " + (c.against_office ? c.against_office + " " : "") + c.against + (c.child_safety ? " (CHILD SAFETY)" : "") + (c.serious ? " (serious)" : "")); h.id = "ch" + n; card.appendChild(h);
+      card.appendChild(el("p", "Status: " + c.status + ". Received " + when(c.created_at) + (c.ack_at ? ". Acknowledged " + when(c.ack_at) + "." : ". Acknowledge by " + when(c.ack_due_at) + (c.ack_overdue ? ". OVERDUE." : "."))));
+      card.appendChild(el("p", "By: " + c.complainant + " (" + c.complainant_kind + (c.complainant_board ? ", " + c.complainant_board : "") + "), " + c.complainant_email + (c.hide_name ? ". THE COMPLAINANT ASKS THAT HIS NAME IS NOT SHOWN TO THE ACCUSED. Do not tell the accused the name." : ".")));
+      card.appendChild(el("p", "Date of the act: " + c.incident_date + "."));
+      card.appendChild(el("p", c.what, "prewrap"));
+      if (c.proof) card.appendChild(el("p", "Proof: " + c.proof, "prewrap"));
+      if (c.answer_due_at) card.appendChild(el("p", "The accused answers by " + when(c.answer_due_at) + (c.answer_at ? ". Answer received " + when(c.answer_at) + "." : ".")));
+      if (c.investigator) card.appendChild(el("p", "Investigating officer: " + c.investigator + ". Report due " + when(c.report_due_at) + (c.report_at ? ". Report received." : ".")));
+      var nl = el("label", "Note, name or decision (needed for assign, decided and close)"); nl.htmlFor = "cn" + n; card.appendChild(nl);
+      var ta = document.createElement("textarea"); ta.id = "cn" + n; ta.rows = 2; ta.maxLength = 500; card.appendChild(ta);
+      var p = el("p");
+      function btn(label, step, cls) {
+        var b = el("button", label, cls); b.type = "button"; b.setAttribute("aria-label", label + ", " + c.receipt);
+        b.addEventListener("click", function () {
+          if (busy) return; busy = true;
+          sb.rpc("gs_cmp_step", { p_id: c.id, p_step: step, p_note: ta.value, p_investigator: step === "assign_investigator" ? ta.value : null }).then(function (r) {
+            busy = false;
+            if (r.error) { say(cleanErr(r.error.message), true); return; }
+            say("Saved: " + label + " for " + c.receipt + "."); load(true);
+          });
+        });
+        p.appendChild(b); p.appendChild(document.createTextNode(" "));
+      }
+      if (!c.ack_at) btn("Acknowledge and tell the accused", "acknowledge");
+      if (c.ack_at && !c.answer_at) btn("Accused has answered", "answer_received", "alt");
+      if (c.ack_at && !c.investigator) btn("Assign investigating officer", "assign_investigator", "alt");
+      if (c.investigator && !c.report_at) btn("Report received", "report_received", "alt");
+      btn("Decided", "decided", "alt"); btn("Close without action", "close", "danger");
+      card.appendChild(p);
+      if ((c.events || []).length) card.appendChild(el("p", "Log: " + c.events.map(function (e) { return when(e.at) + " " + e.kind; }).join("; ") + "."));
+      box.appendChild(card);
+    });
+  }
+
   async function load(keepStatus) {
+    var cq = await sb.rpc("gs_cmp_queue"); if (!cq.error) renderCmp((cq.data && cq.data.items) || []);
     var r = await sb.rpc("gs_join_queue");
     if (r.error) { $("deniedText").textContent = cleanErr(r.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     if (!keepStatus) say("");

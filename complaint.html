@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Complaint form for IHCC members and officers. Sign in with Google.">
+<meta name="theme-color" content="#0f3324">
+<title>Make a complaint - IHCC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="p-admin.css?v=6bb623b7">
+<script src="frame-guard.js?v=2af19751"></script>
+</head>
+<body>
+<noscript><p class="nojs">This page needs JavaScript to work. Please turn JavaScript on in your browser and reload the page.</p></noscript>
+<a class="skip" href="#main">Skip to the content</a>
+<header>
+  <div class="wrap">
+    <h1>Make a complaint to IHCC</h1>
+    <div id="who" aria-live="polite"></div>
+    <p><a href="core.html">Back to the Core Committee page</a></p>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+  <div id="status" class="msg" role="status" hidden></div>
+
+  <section id="loginView" hidden aria-labelledby="loginH">
+    <h2 id="loginH">Sign in</h2>
+    <p>Only a member (a player in a squad) or an officer of IHCC can make a complaint (Constitution 25.1). Sign in with the Google account that is in your squad. A complaint without a name is not accepted. If you are afraid, you can ask that your name is not shown to the accused. The accused is always told what is said against him, so that he can answer.</p>
+    <p>If you are outside IHCC, send the information by email to the General Secretary.</p>
+    <p><button id="signIn" type="button">Sign in with Google</button></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section aria-labelledby="formH">
+      <h2 id="formH">New complaint</h2>
+      <p id="closedNote" class="msg" hidden>Complaints open on 3 December 2026.</p>
+      <p>Time limit: ninety days from the act or from the day it became known. For serious offences (match fixing, a false vote or buying votes, misuse of IHCC money, threats and pressure) one year. A complaint about an election goes to the Board of Directors under Constitution 16.16.</p>
+      <div class="fieldrow"><label for="kind">The complaint is against</label>
+        <select id="kind"><option value="">Choose</option><option value="player">A player</option><option value="board">A Member Board</option><option value="officer">An officer of IHCC</option></select></div>
+      <div class="fieldrow" id="officeRow" hidden><label for="office">Which office</label>
+        <select id="office"><option value="">Choose</option><option>Chairman</option><option>Deputy Chairman</option><option>General Secretary</option><option>CEO</option><option>CFO</option><option>Women's Director</option></select></div>
+      <div class="fieldrow"><label for="against">Name (display name of the player, name of the board, or name of the officer)</label><input type="text" id="against" maxlength="200" autocomplete="off"></div>
+      <div class="fieldrow"><label for="when">Date of the act (or the day it became known)</label><input type="date" id="when"></div>
+      <div class="fieldrow"><label for="what">What happened (who, what, when)</label><textarea id="what" rows="6" maxlength="4000"></textarea></div>
+      <div class="fieldrow"><label for="proof">Proof (screenshots, messages, links; write where it is)</label><textarea id="proof" rows="3" maxlength="2000"></textarea></div>
+      <div class="opt"><input type="checkbox" id="serious"><label for="serious">This is a serious offence (match fixing, false vote or buying votes, misuse of IHCC money, threats and pressure, revenge on a person who complained).</label></div>
+      <div class="opt"><input type="checkbox" id="child"><label for="child">This is about the safety of a younger member (under eighteen).</label></div>
+      <div class="opt"><input type="checkbox" id="hide"><label for="hide">I am afraid. Please do not show my name to the accused.</label></div>
+      <p><button id="send" type="button">Send the complaint</button></p>
+    </section>
+    <section aria-labelledby="mineH">
+      <h2 id="mineH">My complaints</h2>
+      <ul id="mine"></ul>
+    </section>
+    <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
+  </div>
+</main>
+<script src="supabase-js-2.45.4.min.js"></script>
+<script src="p-complaint.js?v=4eb7e34c"></script>
+</body>
+</html>
