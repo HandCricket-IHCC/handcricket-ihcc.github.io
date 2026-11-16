@@ -104,6 +104,13 @@
   async function load(keepStatus) {
     if (window.__gsToolsLoad) window.__gsToolsLoad();
     var cq = await sb.rpc("gs_cmp_queue"); if (!cq.error) renderCmp((cq.data && cq.data.items) || []);
+    var wq = await sb.rpc("gs_join_waiting");
+    if (!wq.error) {
+      var wl = $("waitList"); wl.textContent = "";
+      var wr = wq.data || [];
+      wr.forEach(function (x) { wl.appendChild(el("li", x.display_name + ", " + x.board + ". Sent " + when(x.created_at) + ". Director must decide by " + when(x.due_at) + (x.overdue ? ". LATE." : "."))); });
+      if (!wr.length) wl.appendChild(el("li", "None."));
+    }
     var r = await sb.rpc("gs_join_queue");
     if (r.error) { $("deniedText").textContent = cleanErr(r.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     if (!keepStatus) say("");

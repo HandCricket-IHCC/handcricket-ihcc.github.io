@@ -67,10 +67,10 @@ Part C: Payment of badge prices
 
 Part D: Registration of new players (after the Team Directors are in office)
 2.17 [Locked] The task of the representative for the squad lists ends when the Team Director of his board is in office. From then on new players are registered by the Team Director.
-2.18 [Locked] The Team Director collects the joining form of the player, through the page on the official IHCC website or the same form. It asks for: display name, real name, city, country, Gmail address, WhatsApp number and gender.
+2.18 [Locked] The player fills in the joining form himself or herself on the page of his board on the official IHCC website, after signing in with the Gmail address he or she wants to use. The Team Director may also fill in the same form for the player. It asks for: display name, real name, city, country, Gmail address, WhatsApp number and gender.
 2.19 [Locked] The display name must be the verified name of a real cricketer of the country of the board, as Constitution clause 8.3 says, verified in the application. The Gmail address must have the Hand Cricket premium.
-2.20 [Locked] The player submits the final form (rule 2.13) and gives the statement (Constitution Article 9). The Team Director makes sure that everything is complete and sends a request to the General Secretary.
-2.21 [Locked] The General Secretary decides within twenty-four hours. Before approving, he confirms the name (rule 2.12) and checks:
+2.20 [Locked] The player submits the final form (rule 2.13) and gives the statement (Constitution Article 9). The request goes first to the Team Director of the board, who decides within seven days. He makes sure that everything is complete and either approves it, which sends it to the General Secretary, or refuses it and gives the reason in writing. The Deputy Director may decide in his place. A Team Director who sends the request himself for a player skips this step.
+2.21 [Locked] The General Secretary decides within seven days of the approval of the Team Director. Before approving, he confirms the name (rule 2.12) and checks:
     (a) That the player is not in the squad of another board.
     (b) That the cooling-off period under rules 8.17 to 8.20 is over.
     (c) That no sanction under Constitution Article 25 is in force against him.
