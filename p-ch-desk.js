@@ -5,7 +5,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var busy = false;
   window.__ihccSb = sb;
-  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
+  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); if (t) s.focus(); }
   function show(id, focusLogin) {
     ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; });
     var hid = id === "panel" ? "mtH" : id === "deniedView" ? "deniedH" : (focusLogin ? "loginH" : null);

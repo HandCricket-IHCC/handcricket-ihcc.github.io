@@ -2,7 +2,7 @@
   var sb = function () { return window.__ihccSb; };
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
-  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
+  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); if (t) s.focus(); }
   function cleanErr(m) { var t = String(m || ""); if (/^E\|/.test(t)) t = t.split("|").slice(2).join("|"); return t; }
   function when(d) { var x = new Date(d); return isNaN(x) ? "" : x.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }); }
   var busy = false, picked = null, boardsFilled = false;
@@ -122,7 +122,7 @@
       var c = el("section", null, "card"); c.setAttribute("aria-labelledby", "mo" + n);
       var h = el("h4", "Meeting of the Directors, ordered " + when(m.created_at)); h.id = "mo" + n; c.appendChild(h);
       c.appendChild(el("p", "Agenda: " + m.agenda + (m.wanted_for ? ". Wanted for " + when(m.wanted_for) : "") + ". Call it by " + when(m.call_by) + "."));
-      var b = el("button", "The notice is in the Main Group", "alt"); b.type = "button";
+      var b = el("button", "The notice is in the Main Group", "alt"); b.type = "button"; b.setAttribute("aria-label", "The notice is in the Main Group: " + m.agenda);
       b.addEventListener("click", async function () {
         if (busy) return; busy = true; var x = await sb().rpc("gs_meeting_called", { p_id: m.id, p_note: null }); busy = false;
         if (x.error) { say(cleanErr(x.error.message), true); return; } say("Saved."); loadOrders();

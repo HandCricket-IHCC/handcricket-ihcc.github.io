@@ -4,7 +4,7 @@
   var sb = window.supabase.createClient(URL_, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, lock: function (name, timeout, fn) { return fn(); } } });
   var $ = function (id) { return document.getElementById(id); };
   var busy = false;
-  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
+  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); if (t) s.focus(); }
   function show(id, focusIt) {
     ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; });
     var hid = id === "panel" ? "seatH" : id === "deniedView" ? "deniedH" : (focusIt ? "loginH" : null);

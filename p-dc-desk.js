@@ -5,7 +5,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var busy = false;
   window.__ihccSb = sb;
-  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); }
+  function say(t, err) { var s = $("status"); s.textContent = t || ""; s.hidden = !t; s.className = "msg" + (err ? " err" : ""); if (t) s.focus(); }
   function show(id, focusLogin) {
     ["loginView", "deniedView", "panel"].forEach(function (v) { $(v).hidden = v !== id; });
     var hid = id === "panel" ? "cmpH" : id === "deniedView" ? "deniedH" : (focusLogin ? "loginH" : null);
@@ -69,7 +69,7 @@
       var inp = document.createElement("input"); inp.type = "text"; inp.id = "sn" + n; inp.maxLength = 300; inp.autocomplete = "off"; card.appendChild(inp);
       var p = el("p");
       function btn(label, step, cls) {
-        var b = el("button", label, cls); b.type = "button";
+        var b = el("button", label, cls); b.type = "button"; b.setAttribute("aria-label", label + ", " + s.office);
         b.addEventListener("click", function () {
           if (busy) return; busy = true;
           sb.rpc("dc_silent_step", { p_id: s.id, p_step: step, p_note: inp.value }).then(function (r) {
