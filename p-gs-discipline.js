@@ -146,11 +146,31 @@
   $("ncAdd").addEventListener("click", function () {
     act("gs_noconf_record", { p_board: $("ncBoard").value, p_office: $("ncOffice").value, p_signatories: $("ncCount").value ? parseInt($("ncCount").value, 10) : null, p_note: $("ncNote").value }, "Recorded. The office ends and the board has thirty days to elect a new holder.", ["ncBoard", "ncCount", "ncNote"]);
   });
+  function renderPd(rows) {
+    var box = $("pdList"); box.textContent = "";
+    if (!rows.length) { box.appendChild(el("p", "No pardon has been asked for.")); return; }
+    rows.forEach(function (p, n) {
+      var card = el("section", null, "card"); card.setAttribute("aria-labelledby", "pd" + n);
+      var h = el("h3", p.ref + ", " + p.target + (p.board ? " (" + p.board + ")" : "") + ": " + (p.status === "requested" ? "waiting for the Directors" : p.outcome)); h.id = "pd" + n; card.appendChild(h);
+      card.appendChild(el("p", "Asked on " + p.requested_on + ". Reason: " + p.reason + "." + (p.status === "requested" ? " Decision due " + when(p.decide_due) + (p.overdue ? ". OVERDUE." : ".") : "") + (p.new_ends_on ? " New last day: " + p.new_ends_on + "." : "") + (p.ask_again_on ? " He may ask again from " + p.ask_again_on + "." : "") + (p.note ? " Note: " + p.note : "")));
+      if (p.status === "requested") {
+        var oc = mkField(card, "pc" + n, "Decision of the Directors", "select", [["forgiven", "Forgiven"], ["reduced", "Reduced"], ["refused", "Refused"]]);
+        var ne = mkField(card, "pe" + n, "New last day (only if reduced)", "date");
+        var vt = mkTick(card, "pv" + n, "The Directors voted by the rule: medium, more than half of all Directors; large, more than two-thirds; permanent ban, nine of twelve.");
+        var nt = mkField(card, "pn" + n, "Note", "text");
+        var pp = el("p"); card.appendChild(pp);
+        mkBtn(pp, "Record the decision", "Record the pardon decision: " + p.ref, null, function () { act("gs_pardon_decide", { p_id: p.id, p_outcome: oc.value, p_new_end: ne.value || null, p_votes_ok: vt.checked, p_note: nt.value }, "The decision is recorded. The record stays."); });
+      }
+      box.appendChild(card);
+    });
+  }
+  $("pdOpen").addEventListener("click", function () { act("gs_pardon_open", { p_ref: $("pdRef").value, p_reason: $("pdReason").value }, "The request is recorded. The Directors decide within fourteen days.", ["pdRef", "pdReason"]); });
   async function load(keepStatus) {
     var s = await sb.rpc("gs_sanction_list");
     if (s.error) { $("deniedText").textContent = cleanErr(s.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     renderSanctions(s.data || []);
     var a = await sb.rpc("gs_appeal_list"); if (!a.error) renderAppeals(a.data || []);
+    var pd = await sb.rpc("gs_pardon_list"); if (!pd.error) renderPd(pd.data || []);
     var c = await sb.rpc("gs_noconf_list"); if (!c.error) renderNc(c.data || []);
     var i = await sb.rpc("gs_interim_list"); if (!i.error) renderIm(i.data || []);
     if (!keepStatus) say("");
