@@ -92,11 +92,25 @@
     });
   });
 
+  function renderCl(rows) {
+    var box = $("clList"); box.textContent = ""; var ul = el("ul");
+    rows.forEach(function (l) { ul.appendChild(el("li", l.from + " to " + l.to + (l.note ? ". " + l.note : "") + (l.cancelled ? ". Cancelled." : "."))); });
+    box.appendChild(ul); if (!rows.length) box.appendChild(el("p", "No leave has been approved."));
+  }
+  $("clGrant").addEventListener("click", function () {
+    if (busy) return; busy = true;
+    sb.rpc("dc_leave_chairman", { p_from: $("clFrom").value || null, p_to: $("clTo").value || null, p_note: $("clNote").value }).then(function (r) {
+      busy = false; if (r.error) { say(cleanErr(r.error.message), true); return; }
+      ["clFrom", "clTo", "clNote"].forEach(function (i) { $(i).value = ""; }); say("The leave of the Chairman is approved."); load(true);
+    });
+  });
+
   async function load(keepStatus) {
     var cq = await sb.rpc("dc_cmp_queue");
     if (cq.error) { $("deniedText").textContent = cleanErr(cq.error.message) || "The check could not be completed."; show("deniedView"); return false; }
     renderCmp((cq.data && cq.data.items) || []);
     var sl = await sb.rpc("dc_silent_list"); if (!sl.error) renderSil(sl.data || []);
+    var cl = await sb.rpc("dc_leave_list"); if (!cl.error) renderCl(cl.data || []);
     if (!keepStatus) say("");
     return true;
   }

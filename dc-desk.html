@@ -54,10 +54,19 @@
       <div class="opt"><input type="checkbox" id="silTick"><label for="silTick">The General Secretary has not answered official matters for fourteen days and gave no leave notice.</label></div>
       <p><button id="silOpen" type="button">Record the notice</button></p>
     </section>
+    <section aria-labelledby="clH">
+      <h2 id="clH">Leave of the Chairman</h2>
+      <p>Constitution 14.18: the Chairman may take written leave of up to thirty days, once a year. You approve it.</p>
+      <div class="fieldrow"><label for="clFrom">First day</label><input type="date" id="clFrom"></div>
+      <div class="fieldrow"><label for="clTo">Last day</label><input type="date" id="clTo"></div>
+      <div class="fieldrow"><label for="clNote">Note</label><input type="text" id="clNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="clGrant" type="button">Approve the leave of the Chairman</button></p>
+      <div id="clList"></div>
+    </section>
     <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
   </div>
 </main>
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-dc-desk.js?v=5529be4d"></script>
+<script src="p-dc-desk.js?v=9bdba35a"></script>
 </body>
 </html>

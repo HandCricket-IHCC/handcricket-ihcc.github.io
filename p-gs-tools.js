@@ -113,5 +113,23 @@
     });
   }
 
-  window.__gsToolsLoad = function () { fillBoards(); loadBadges(); loadShort(); loadBoardReqs(); };
+  async function loadOrders() {
+    var r = await sb().rpc("gs_meeting_orders"); var box = $("moList"); if (!box) return; box.textContent = "";
+    if (r.error) return;
+    var rows = r.data || [];
+    if (!rows.length) { box.appendChild(el("p", "No meeting is waiting.")); return; }
+    rows.forEach(function (m, n) {
+      var c = el("section", null, "card"); c.setAttribute("aria-labelledby", "mo" + n);
+      var h = el("h4", "Meeting of the Directors, ordered " + when(m.created_at)); h.id = "mo" + n; c.appendChild(h);
+      c.appendChild(el("p", "Agenda: " + m.agenda + (m.wanted_for ? ". Wanted for " + when(m.wanted_for) : "") + ". Call it by " + when(m.call_by) + "."));
+      var b = el("button", "The notice is in the Main Group", "alt"); b.type = "button";
+      b.addEventListener("click", async function () {
+        if (busy) return; busy = true; var x = await sb().rpc("gs_meeting_called", { p_id: m.id, p_note: null }); busy = false;
+        if (x.error) { say(cleanErr(x.error.message), true); return; } say("Saved."); loadOrders();
+      });
+      c.appendChild(b); box.appendChild(c);
+    });
+  }
+
+  window.__gsToolsLoad = function () { fillBoards(); loadBadges(); loadShort(); loadBoardReqs(); loadOrders(); };
 })();

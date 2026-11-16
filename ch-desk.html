@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://krkrpcnovdobnscknfnw.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Working desk of the IHCC Chairman. Not for public use.">
+<meta name="theme-color" content="#0f3324">
+<title>Chairman desk - IHCC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231b5e43'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="p-admin.css?v=6bb623b7">
+<script src="frame-guard.js?v=2af19751"></script>
+</head>
+<body>
+<noscript><p class="nojs">This page needs JavaScript to work. Please turn JavaScript on in your browser and reload the page.</p></noscript>
+<a class="skip" href="#main">Skip to the content</a>
+<header>
+  <div class="wrap">
+    <h1>IHCC Chairman desk</h1>
+    <div id="who" aria-live="polite"></div>
+    <p><a href="core-signin.html">Back to the Core Committee sign-in</a></p>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+  <div id="status" class="msg" role="status" hidden></div>
+
+  <section id="loginView" hidden aria-labelledby="loginH">
+    <h2 id="loginH">Sign in</h2>
+    <p>This desk is only for the Chairman of IHCC. Sign in with the Google account that IHCC has on record for the office.</p>
+    <p><button id="signIn" type="button">Sign in with Google</button></p>
+  </section>
+
+  <section id="deniedView" hidden aria-labelledby="deniedH">
+    <h2 id="deniedH">Not authorised</h2>
+    <p id="deniedText"></p>
+    <p><button id="signOut2" type="button" class="alt">Sign out</button></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section aria-labelledby="mtH">
+      <h2 id="mtH">Order a meeting of the Directors</h2>
+      <p>Constitution 13.8: you order the meeting and the General Secretary calls it with twenty-four hours' notice. If you do not, at least five Directors may demand it in writing.</p>
+      <div class="fieldrow"><label for="mtAgenda">Agenda</label><input type="text" id="mtAgenda" maxlength="500" autocomplete="off"></div>
+      <div class="fieldrow"><label for="mtWhen">Wanted date and time (Pakistan time, optional)</label><input type="datetime-local" id="mtWhen"></div>
+      <p><button id="mtSend" type="button">Send the order to the General Secretary</button></p>
+      <div id="mtList"></div>
+    </section>
+    <section aria-labelledby="lvH">
+      <h2 id="lvH">Leave of Core officers</h2>
+      <p>Constitution 14.18: a Core officer may take written leave of up to thirty days, once a year. You approve it, except your own, which the Deputy Chairman approves.</p>
+      <div class="fieldrow"><label for="lvOffice">Office</label><select id="lvOffice"><option>Deputy Chairman</option><option>General Secretary</option><option>CEO</option><option>CFO</option><option value="Women's Director">Women's Director</option></select></div>
+      <div class="fieldrow"><label for="lvFrom">First day</label><input type="date" id="lvFrom"></div>
+      <div class="fieldrow"><label for="lvTo">Last day</label><input type="date" id="lvTo"></div>
+      <div class="fieldrow"><label for="lvNote">Note</label><input type="text" id="lvNote" maxlength="300" autocomplete="off"></div>
+      <p><button id="lvGrant" type="button">Approve the leave</button></p>
+      <div id="lvList"></div>
+    </section>
+    <section aria-labelledby="silH">
+      <h2 id="silH">An officer not answering</h2>
+      <p>Constitution 14.18: if a Core officer has not answered official matters for fourteen days and gave no leave notice, the General Secretary gives him a written notice by email and WhatsApp, and he has seven days to answer. Record it here. If he does not answer, you declare the office vacant in writing, and the Directors confirm it within seven days by more than half, or it ends. This is not a sanction. For the General Secretary, the Deputy Chairman does this.</p>
+      <div id="silList"></div>
+      <h3 id="silNewH">Record a notice</h3>
+      <div class="fieldrow"><label for="silOffice">Office</label><select id="silOffice"><option>Deputy Chairman</option><option>CEO</option><option>CFO</option><option value="Women's Director">Women's Director</option></select></div>
+      <div class="fieldrow"><label for="silNote">Note (what was not answered)</label><input type="text" id="silNote" maxlength="300" autocomplete="off"></div>
+      <div class="opt"><input type="checkbox" id="silTick"><label for="silTick">The officer has not answered official matters for fourteen days and gave no leave notice.</label></div>
+      <p><button id="silOpen" type="button">Record the notice</button></p>
+    </section>
+    <p class="mt36"><button id="signOut" type="button" class="alt">Sign out</button></p>
+  </div>
+</main>
+<script src="supabase-js-2.45.4.min.js"></script>
+<script src="p-ch-desk.js?v=accf198f"></script>
+</body>
+</html>
