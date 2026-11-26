@@ -26,7 +26,8 @@
     $("joinBtn").textContent = "Join " + (data.join_label || data.board);
     showLogo();
     var chips = $("chips"); chips.textContent = "";
-    chips.appendChild(el("li", "", data.squad.length + " players"));
+    var nv = Math.min(12, data.squad.length), no = data.squad.length - nv;
+    chips.appendChild(el("li", "", data.squad.length + (data.squad.length === 1 ? " player" : " players") + ": " + nv + " Voting Members" + (no ? " and " + no + (no === 1 ? " Squad Player" : " Squad Players") : "")));
     $("aboutText").textContent = data.about || (data.board + " is a Member Board of the International Hand Cricket Council. Its players take part in IHCC tournaments, series and elections under the IHCC Constitution.");
     $("verified").textContent = "";
     var b = el("strong", "", "Board election. "); $("verified").appendChild(b);
@@ -34,6 +35,10 @@
       var d = new Date(data.reported_on + "T00:00:00");
       var ds = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
       $("verified").appendChild(document.createTextNode("The board reported its election to IHCC on " + ds + ". The leaders confirmed in writing that the election was held. IHCC keeps the record."));
+      if (data.leaders_updated && data.leaders_updated > data.reported_on) {
+        var du = new Date(data.leaders_updated + "T00:00:00");
+        $("verified").appendChild(document.createTextNode(" The leaders were last updated on " + du.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) + "."));
+      }
     } else {
       $("verified").appendChild(document.createTextNode("The board has not yet reported its internal election to IHCC. Its leaders are not recorded yet."));
     }
@@ -54,7 +59,7 @@
       box.appendChild(a);
     });
 
-    var ol = $("teamList"); ol.textContent = "";
+    var ol = $("teamList"), ol2 = $("squadList"); ol.textContent = ""; ol2.textContent = "";
     data.squad.forEach(function (p) {
       var li = el("li"); li.appendChild(el("span", "n", String(p.position))).setAttribute("aria-hidden", "true"); li.appendChild(document.createTextNode(" "));
       var names = el("span", "names"); names.appendChild(el("span", "dn", p.display_name)); names.appendChild(document.createTextNode(".. ")); names.appendChild(el("br")); names.appendChild(el("span", "rn", "Real name: " + p.real_name)); li.appendChild(names);
@@ -62,8 +67,9 @@
       if (p.captain) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", "Captain")); label += ". Captain"; }
       if (p.vice) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", "Vice Captain")); label += ". Vice Captain"; }
       if (p.role) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("span", "tag", ROLE_NAME[p.role])); label += ". " + ROLE_NAME[p.role]; }
-      li.setAttribute("aria-label", label); ol.appendChild(li);
+      li.setAttribute("aria-label", label); (p.position <= 12 ? ol : ol2).appendChild(li);
     });
+    $("squadBox").hidden = !ol2.firstChild;
 
     var subj = "[IHCC] Problem on the page of " + data.board;
     var body = "Assalam o Alaikum,\n\nBoard page: " + data.board + "\nPage link: " + location.origin + location.pathname + "?board=" + data.code + "\n\nThe problem:\n\n";
@@ -73,7 +79,7 @@
 
   function listText() {
     var lines = [data.board, "IHCC board page", ""];
-    data.squad.forEach(function (p) { lines.push("•" + p.position + ", Display name, " + p.display_name + ".. Real name, " + p.real_name + (p.captain ? ".. Captain" : "") + (p.vice ? ".. Vice Captain" : "") + (p.role ? ".. " + ROLE_NAME[p.role] : "")); });
+    data.squad.forEach(function (p) { if (p.position === 1) lines.push("Voting Members"); if (p.position === 13) { lines.push(""); lines.push("Squad Players"); } lines.push("•" + p.position + ", Display name, " + p.display_name + ".. Real name, " + p.real_name + (p.captain ? ".. Captain" : "") + (p.vice ? ".. Vice Captain" : "") + (p.role ? ".. " + ROLE_NAME[p.role] : "")); });
     return lines.join("\n");
   }
   $("copyBtn").addEventListener("click", function () {

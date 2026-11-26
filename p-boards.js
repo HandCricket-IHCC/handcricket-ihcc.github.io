@@ -27,23 +27,28 @@
   var names = Object.keys(BOARD_STYLE);
   var OPEN = [], LAST = null;
   var list = document.getElementById("list");
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function describe(c) {
+    if (!c) return "No players yet.";
+    var v = Math.min(c, MIN), o = c - v;
+    return plural(c, "player", "players") + ": " + plural(v, "Voting Member", "Voting Members") + (o ? " and " + plural(o, "Squad Player", "Squad Players") : "") + ".";
+  }
   function draw(rows) {
     LAST = rows;
     list.textContent = "";
-    var done = 0, by = {};
+    var total = 0, by = {}, order = names.slice();
     (rows || []).forEach(function (r) { by[r.board] = r; });
-    names.forEach(function (n) {
-      if (rows && !by[n]) return;
-      var r = by[n], c = r ? r.count : 0, st = r ? r.state : null; if (st === "Completed") done++;
+    if (rows) order = rows.map(function (r) { return r.board; }).filter(function (n) { return BOARD_STYLE[n]; });
+    else order.sort();
+    order.forEach(function (n) {
+      var r = by[n], c = r ? r.count : 0; total += c;
       var li = document.createElement("li"); li.className = "bcard"; li.style.setProperty("--bc", BOARD_STYLE[n][1]);
       var t = document.createElement("strong"); t.textContent = BOARD_STYLE[n][0] + " " + DISPLAY[n];
       if (r && OPEN.indexOf(r.new_code) > -1) { var lk = document.createElement("a"); lk.href = "board.html?board=" + encodeURIComponent(r.new_code); lk.textContent = "Open the board page"; lk.setAttribute("aria-label", "Open the board page of " + DISPLAY[n]); lk.style.fontWeight = "700"; li.__lk = lk; }
-      var s = document.createElement("span"); s.textContent = rows ? st : "Not available right now.";
-      var bar = document.createElement("div"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
-      var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(c / MIN * 100)) + "%"; bar.appendChild(i);
-      li.appendChild(t); li.appendChild(s); if (li.__lk) li.appendChild(li.__lk); li.appendChild(bar); list.appendChild(li);
+      var s = document.createElement("span"); s.textContent = rows ? describe(c) : "Not available right now.";
+      li.appendChild(t); li.appendChild(s); if (li.__lk) li.appendChild(li.__lk); list.appendChild(li);
     });
-    document.getElementById("summ").textContent = rows ? (done + " of " + (rows || []).length + " boards have completed their squad list.") : "Numbers are not available right now. Please try again later.";
+    document.getElementById("summ").textContent = rows ? (plural(order.length, "Member Board", "Member Boards") + ", " + plural(total, "player", "players") + " in total.") : "Numbers are not available right now. Please try again later.";
   }
   draw(null);
   fetch(API, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: "{}" }).then(function (r) { return r.json(); }).then(function (d) { if (Array.isArray(d)) draw(d); }).catch(function () {});

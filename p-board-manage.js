@@ -185,8 +185,8 @@
     $("jrGender").value = ""; $("jrFinal").checked = false; $("jrStmt").checked = false;
     await jrLoad(); say(b, "Sent to the General Secretary, who decides within seven days.", false);
   });
-  $("removeBtn").addEventListener("click", function () { say($("closedMsg"), "Removal is closed until the elections are finished.", false); });
-  $("swapBtn").addEventListener("click", function () { say($("closedMsg"), "Swapping is closed until the elections are finished.", false); });
+  $("removeBtn").addEventListener("click", function () { say($("closedMsg"), "Removal opens on 3 December 2026.", false); });
+  $("swapBtn").addEventListener("click", function () { say($("closedMsg"), "Swapping opens on 3 December 2026.", false); });
   $("waSave").addEventListener("click", async function () {
     var b = $("waMsg"), on = $("waOn").checked, digits = $("waNum").value.replace(/\D/g, "");
     if (on && digits.length < 10) { say(b, "Please write a full number with the country code, or switch the button off.", true); return; }

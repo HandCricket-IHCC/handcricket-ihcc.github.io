@@ -83,11 +83,11 @@
 
     <section id="team" aria-labelledby="h-team">
       <h2 id="h-team">Team</h2>
-      <p class="muted">The whole squad in the order chosen by the board. The first 12 are the voting members. Only the display name and the real name are shown. Nothing else about a player is ever shown on this site.</p>
+      <p class="muted">The whole squad in the order chosen by the board. The first 12 are the Voting Members. Only the display name and the real name are shown. Nothing else about a player is ever shown on this site.</p>
       <button type="button" id="copyBtn">Copy list</button>
       <button type="button" id="dlBtn" class="secondary">Download list</button>
       <div id="copyMsg" class="msg" role="status" tabindex="-1" hidden></div>
-      <p class="muted small">New players join in two steps: the Team Director of the board approves first, then the IHCC General Secretary. Removing and swapping players is done by the board's leaders, from their Management page, after the elections are finished.</p>
+      <p class="muted small">New players join in two steps: the Team Director of the board approves first, then the IHCC General Secretary. Removing and swapping players is done by the board's leaders, from their Management page, from 3 December 2026.</p>
       <button type="button" id="joinBtn" class="secondary">Join</button>
       <div id="closedMsg" class="msg" role="status" tabindex="-1" hidden></div>
       <div class="card" id="joinBox" hidden>
@@ -116,7 +116,14 @@
         </div>
         <div id="joinMsg" class="msg" role="status" tabindex="-1" hidden></div>
       </div>
+      <h3 id="h-voting">Voting Members</h3>
+      <p class="muted small">The first 12 players of the squad. They vote in IHCC elections and can be Captain or Vice Captain.</p>
       <ol class="team" id="teamList"></ol>
+      <div id="squadBox" hidden>
+        <h3 id="h-squadplayers">Squad Players</h3>
+        <p class="muted small">The other players of the squad. They do everything a player does, but they do not vote in elections and cannot be Captain or Vice Captain.</p>
+        <ol class="team" id="squadList"></ol>
+      </div>
     </section>
 
     <section id="report" aria-labelledby="h-report">
@@ -154,7 +161,7 @@
 <!--/SITEFOOT-->
 
 <script src="supabase-js-2.45.4.min.js"></script>
-<script src="p-board.js?v=7bd71eea"></script>
+<script src="p-board.js?v=ddac6df0"></script>
 <script src="notice.js?v=3186a9d3"></script>
 </body>
 </html>
