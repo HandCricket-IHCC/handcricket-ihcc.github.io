@@ -1,0 +1,153 @@
+{
+  "title": "Directors' Election Result 2026",
+  "date": "Saturday 21 November 2026",
+  "directors": 12,
+  "boards": {
+    "Afghanistan Hand Cricket Board": "Afghanistan Hand Cricket Board",
+    "Australia Hand Cricket Board": "Hand Cricket Australia",
+    "Bangladesh Hand Cricket Board": "Bangladesh Hand Cricket Board",
+    "England Hand Cricket Board": "England and Wales Hand Cricket Board",
+    "India Hand Cricket Board": "Board of Control for Hand Cricket in India",
+    "Nepal Hand Cricket Board": "Hand Cricket Association of Nepal",
+    "New Zealand Hand Cricket Board": "New Zealand Hand Cricket",
+    "Pakistan Hand Cricket Board": "Pakistan Hand Cricket Board",
+    "South Africa Hand Cricket Board": "Hand Cricket South Africa",
+    "Sri Lanka Hand Cricket Board": "Sri Lanka Hand Cricket",
+    "UAE Hand Cricket Board": "Emirates Hand Cricket Board",
+    "USA Hand Cricket Board": "USA Hand Cricket"
+  },
+  "seats": [
+    {
+      "key": "ceo",
+      "seat": "Chief Executive Officer (CEO)",
+      "candidates": [
+        {
+          "id": "abubakar",
+          "real_name": "Abubakar Malik",
+          "display_name": "Herschelle Gibbs ⭐verified",
+          "board": "South Africa Hand Cricket Board"
+        },
+        {
+          "id": "shahzad",
+          "real_name": "Shahzad Rajput",
+          "display_name": "Pat Cummins99 ⭐verified",
+          "board": "Australia Hand Cricket Board"
+        },
+        {
+          "id": "zulfiqar",
+          "real_name": "Zulfiqar Ali",
+          "display_name": "Phil Salt ⭐verified",
+          "board": "England Hand Cricket Board"
+        }
+      ]
+    },
+    {
+      "key": "cfo",
+      "seat": "Chief Financial Officer (CFO)",
+      "candidates": [
+        {
+          "id": "suhail",
+          "real_name": "Syed Suhail Abbas Shah Rizvi",
+          "display_name": "Shahadat Hossain 786 ⭐verified",
+          "board": "Bangladesh Hand Cricket Board"
+        },
+        {
+          "id": "touseef",
+          "real_name": "Malik Touseef",
+          "display_name": "Ross Taylor ⭐verified",
+          "board": "New Zealand Hand Cricket Board"
+        }
+      ]
+    },
+    {
+      "key": "wd",
+      "seat": "Women's Director",
+      "candidates": [
+        {
+          "id": "fiza",
+          "real_name": "Fiza Khan",
+          "display_name": "Imran Khan PTI ⭐verified",
+          "board": "Pakistan Hand Cricket Board"
+        },
+        {
+          "id": "iram",
+          "real_name": "Iram Siddiqa",
+          "display_name": "",
+          "board": "Sri Lanka Hand Cricket Board"
+        }
+      ]
+    }
+  ],
+  "votes": [
+    {
+      "board": "Afghanistan Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    },
+    {
+      "board": "Australia Hand Cricket Board",
+      "ceo": "shahzad",
+      "cfo": "touseef",
+      "wd": "iram"
+    },
+    {
+      "board": "Bangladesh Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    },
+    {
+      "board": "England Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    },
+    {
+      "board": "India Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    },
+    {
+      "board": "Nepal Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    },
+    {
+      "board": "New Zealand Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "touseef",
+      "wd": "fiza"
+    },
+    {
+      "board": "Pakistan Hand Cricket Board",
+      "absent": true
+    },
+    {
+      "board": "South Africa Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "iram"
+    },
+    {
+      "board": "Sri Lanka Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "touseef",
+      "wd": "iram"
+    },
+    {
+      "board": "UAE Hand Cricket Board",
+      "ceo": "shahzad",
+      "cfo": "touseef",
+      "wd": "iram"
+    },
+    {
+      "board": "USA Hand Cricket Board",
+      "ceo": "abubakar",
+      "cfo": "suhail",
+      "wd": "fiza"
+    }
+  ]
+}

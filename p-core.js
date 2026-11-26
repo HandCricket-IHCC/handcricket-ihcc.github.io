@@ -22,7 +22,7 @@
     var av = mk("span", done ? initials(r.real_name) : String(r.seat_no), "cav"); av.setAttribute("aria-hidden", "true");
     var ht = mk("div");
     ht.appendChild(mk("h3", r.office));
-    ht.appendChild(mk("span", done ? "Elected" : "To be elected on 20 November 2026", "cbadge"));
+    ht.appendChild(mk("span", done ? "Elected" : "To be elected on 21 November 2026", "cbadge"));
     head.appendChild(av); head.appendChild(ht); li.appendChild(head);
     if (done) {
       li.appendChild(mk("p", r.display_name, "cname"));
@@ -33,7 +33,7 @@
       li.appendChild(bp);
       li.appendChild(mk("p", "Term: 3 December 2026 to 2 December 2027.", "cmeta"));
     } else {
-      li.appendChild(mk("p", "Not filled yet. The Board of Directors elects this office in its meeting of 20 November 2026.", "cmeta"));
+      li.appendChild(mk("p", "Not filled yet. The Board of Directors elects this office in its meeting of 21 November 2026.", "cmeta"));
     }
     var d = mk("details");
     d.appendChild(mk("summary", "What this office does"));
@@ -44,7 +44,7 @@
   function render(rows) {
     while (box.firstChild) box.removeChild(box.firstChild);
     var filled = rows.filter(function (r) { return r.status === "elected"; }).length;
-    st.textContent = filled + " of " + rows.length + " offices are filled. The other offices are elected by the Board of Directors on 20 November 2026.";
+    st.textContent = filled + " of " + rows.length + " offices are filled. The other offices are elected by the Board of Directors on 21 November 2026.";
     var groups = [], map = {};
     rows.forEach(function (r) {
       var k = r.elected_by || "";

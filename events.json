@@ -10,15 +10,24 @@
   },
   {
     "from": "2026-11-16T18:00:00+05:00",
-    "to": "2026-11-20T21:00:00+05:00",
+    "to": "2026-11-21T21:00:00+05:00",
     "label": "Coming up",
     "title": "Directors' vote",
-    "text": "The Board of Directors elects the CEO, the CFO and the Women's Director live on Google Meet on Friday 20 November 2026 at 9:00 PM, Pakistan time.",
+    "text": "The Board of Directors elects the CEO, the CFO and the Women's Director live on Google Meet on Saturday 21 November 2026 at 9:00 PM, Pakistan time.",
     "link": "core.html",
     "linkText": "See the Core Committee"
   },
   {
-    "from": "2026-11-20T21:00:00+05:00",
+    "from": "2026-11-21T21:00:00+05:00",
+    "to": "2026-11-28T00:00:00+05:00",
+    "label": "Just held",
+    "title": "Directors' Election Result",
+    "text": "The Board of Directors has elected the CEO, the CFO and the Women's Director. The page shows how each board voted.",
+    "link": "directors-result.html",
+    "linkText": "See the result"
+  },
+  {
+    "from": "2026-11-28T00:00:00+05:00",
     "to": "2026-12-01T00:00:00+05:00",
     "label": "Open for reading",
     "title": "Constitution and Rule Book drafts",
