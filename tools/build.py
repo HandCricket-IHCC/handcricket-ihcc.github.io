@@ -156,7 +156,7 @@ open(REPO+'rulebook-draft.txt','w').write('\n'.join(r1+r2[r2i-0:]) if False else
 # Playing Regulations
 TITLES.clear()
 pl=open(OUT+'playing.txt').read().split('\n')
-pi=[i for i,l in enumerate(pl) if l.startswith('CHAPTER 1: ')][0]
+pi=[i for i,l in enumerate(pl) if l.startswith('Part A: ') and i>5][0]
 grab(pl)
 build('r',pl[pi:],'The IHCC Playing Regulations','The IHCC Playing Regulations','The standard rules of play for every IHCC series and tournament. This is a draft that is still being made.','playing-regulations.html','playing-regulations-draft.txt','This is a DRAFT. The text is still being made and changes every day. The last day for changes is 30 November 2026. It comes into force on 3 December 2026 together with the Constitution and the Rule Book.',pl[1],('rulebook.html','Read the Rule Book draft'))
 open(REPO+'playing-regulations-draft.txt','w').write('\n'.join(pl).replace('Draft (27 November 2026).','DRAFT (27 November 2026).'))
