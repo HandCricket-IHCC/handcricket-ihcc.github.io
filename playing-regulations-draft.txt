@@ -15,7 +15,7 @@ Chapter 8: Captains
 Chapter 9: Playing list
 Chapter 10: Switching
 Chapter 11: Recording
-Chapter 12: Joining, live broadcast and scorecards
+Chapter 12: Match time, room, joining, live broadcast and scorecards
 Chapter 13: Match group and messages
 Chapter 14: Unclear cases and eliminated teams
 Chapter 15: Decisions and complaints
@@ -65,14 +65,14 @@ CHAPTER 8: Captains
 8.4 If the captain has a technical problem, the captaincy goes to the vice-captain. If the vice-captain also has a problem, the first umpire may make any player of that team the captain.
 
 CHAPTER 9: Playing list
-9.1 The captain or vice-captain sends the list of the playing ten to the match group at least one hour before the start of the match.
+9.1 The captain or vice-captain sends the list of the playing ten to the match group at least one hour before the match time.
 9.2 Only the players on the list may play. No other player of the squad may play in that match.
-9.3 If the list is sent late, the following applies, counted from the start time of the match:
-    (a) Up to one hour before the start: the list is accepted without any consequence.
-    (b) From one hour to 15 minutes before the start: the list is accepted. If the same captain does this more than once in the same series or tournament, the match officials may impose a penalty.
-    (c) From 15 minutes to 5 minutes before the start: the list is accepted, but the captain is banned from the next match of the team.
-    (d) If the list has not been sent by 5 minutes before the start, the match is awarded to the opponent team.
-9.4 After the list has been sent, the captain may change it and send it again, up to 15 minutes before the start of the match. No change is allowed after that.
+9.3 If the list is sent late, the following applies, counted from the match time:
+    (a) Up to one hour before the match time: the list is accepted without any consequence.
+    (b) From one hour to 15 minutes before the match time: the list is accepted. If the same captain does this more than once in the same series or tournament, the match officials may impose a penalty.
+    (c) From 15 minutes to 5 minutes before the match time: the list is accepted, but the captain is banned from the next match of the team.
+    (d) If the list has not been sent by 5 minutes before the match time, the match is awarded to the opponent team.
+9.4 After the list has been sent, the captain may change it and send it again, up to 15 minutes before the match time. No change is allowed after that.
 
 CHAPTER 10: Switching
 10.1 If the striker and the non-striker appear to be the same player, the captain must switch again.
@@ -82,12 +82,14 @@ CHAPTER 10: Switching
 CHAPTER 11: Recording
 11.1 The captain or vice-captain records the match, in any format (audio, video or screen recording). The match officials use the recording in case of a technical problem. A team that has no recording cannot challenge a team that has proof. The umpire or the match referee decides on the proof that is available.
 
-CHAPTER 12: Joining, live broadcast and scorecards
-12.1 When the match link is shared, both teams must join within 10 minutes. If a technical problem is reported, 5 more minutes are given.
-12.2 When both teams are ready, the umpire starts the match.
-12.3 If four players of a team are not ready within 15 minutes (10 minutes and 5 extra minutes), the match is awarded to the opponent team.
-12.4 In a series or tournament that is broadcast live, the captain of the team playing that day must join the Google Meet before the match, at the time announced by the series or tournament (20 minutes before the start by default). If the captain cannot join, the vice-captain must join. After the match, both captains and the Player of the Match must join. A captain who is late may be penalised by the match officials, if it is repeated in the same series or tournament.
-12.5 After every match, three scorecards in CSV format must be sent to the match group within one hour of the end of the match: one from each team (sent by the captain or the vice-captain), and one from the officials (sent by the first or second official).
+CHAPTER 12: Match time, room, joining, live broadcast and scorecards
+12.1 The match time is the time announced for the match. At the match time the match officials create the room and send the link to the match group. Every time in these regulations that is counted before or after the start of the match is counted from the match time, and not from the moment when play actually begins.
+12.2 The standard way is a room that the teams join through the link. A series or a tournament may use an open room, which can be seen in the application, as an exception.
+12.3 When the link is shared, both teams must join and line up their players within 10 minutes of the match time. If a team has not lined up for a reason, such as a technical problem, the match official may give 5 more minutes.
+12.4 When both teams are ready, the umpire starts the match. The match must start within 15 minutes of the match time (10 minutes and 5 extra minutes).
+12.5 If four players of a team are not ready by then, the match is awarded to the opponent team by walkover.
+12.6 In a series or tournament that is broadcast live, the captain of the team playing that day must join the Google Meet before the match, at the time announced by the series or tournament (20 minutes before the match time by default). If the captain cannot join, the vice-captain must join. After the match, both captains and the Player of the Match must join. A captain who is late may be penalised by the match officials, if it is repeated in the same series or tournament.
+12.7 After every match, three scorecards in CSV format must be sent to the match group within one hour of the end of the match: one from each team (sent by the captain or the vice-captain), and one from the officials (sent by the first or second official).
 
 CHAPTER 13: Match group and messages
 13.1 The match group has all captains, vice-captains, match officials and the Core Committee. The match link, the CSV files and all discussion about matches are in this group.
