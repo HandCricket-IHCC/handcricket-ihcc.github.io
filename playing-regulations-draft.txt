@@ -85,11 +85,12 @@ CHAPTER 11: Recording
 CHAPTER 12: Match time, room, joining, live broadcast and scorecards
 12.1 The match time is the time announced for the match. At the match time the match officials create the room and send the link to the match group. Every time in these regulations that is counted before or after the start of the match is counted from the match time, and not from the moment when play actually begins.
 12.2 The standard way is a room that the teams join through the link. A series or a tournament may use an open room, which can be seen in the application, as an exception.
-12.3 When the link is shared, both teams must join and line up their players within 10 minutes of the match time. If a team has not lined up for a reason, such as a technical problem, the match official may give 5 more minutes.
-12.4 When both teams are ready, the umpire starts the match. The match must start within 15 minutes of the match time (10 minutes and 5 extra minutes).
-12.5 If four players of a team are not ready by then, the match is awarded to the opponent team by walkover.
-12.6 In a series or tournament that is broadcast live, the captain of the team playing that day must join the Google Meet before the match, at the time announced by the series or tournament (20 minutes before the match time by default). If the captain cannot join, the vice-captain must join. After the match, both captains and the Player of the Match must join. A captain who is late may be penalised by the match officials, if it is repeated in the same series or tournament.
-12.7 After every match, three scorecards in CSV format must be sent to the match group within one hour of the end of the match: one from each team (sent by the captain or the vice-captain), and one from the officials (sent by the first or second official).
+12.3 The teams must join within 10 minutes of the match time. At 10 minutes after the match time the match official starts the match with the players who are present, if each team has at least four players. A team does not have to wait for all ten players.
+12.4 The match official may wait a short time, for a reason, if a captain asks for it, for example one more minute because another player is coming. This is the decision of the match official.
+12.5 If a team has fewer than four players at 10 minutes after the match time, the captain may ask for 5 more minutes, and the match official may give them. The match must then start within 15 minutes of the match time.
+12.6 If a team still has fewer than four players at that time, the match is awarded to the opponent team by walkover.
+12.7 In a series or tournament that is broadcast live, the captain of the team playing that day must join the Google Meet before the match, at the time announced by the series or tournament (20 minutes before the match time by default). If the captain cannot join, the vice-captain must join. After the match, both captains and the Player of the Match must join. A captain who is late may be penalised by the match officials, if it is repeated in the same series or tournament.
+12.8 After every match, three scorecards in CSV format must be sent to the match group within one hour of the end of the match: one from each team (sent by the captain or the vice-captain), and one from the officials (sent by the first or second official).
 
 CHAPTER 13: Match group and messages
 13.1 The match group has all captains, vice-captains, match officials and the Core Committee. The match link, the CSV files and all discussion about matches are in this group.
