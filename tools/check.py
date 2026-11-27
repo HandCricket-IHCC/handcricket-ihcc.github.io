@@ -60,7 +60,7 @@ for u in re.findall(r'<loc>https://handcricket-ihcc\.github\.io/([^<]*)</loc>', 
 r = subprocess.run([sys.executable, 'tools/stamp.py', '--check'], capture_output=True, text=True)
 if r.returncode != 0: err('versions', r.stdout.strip() + ' (run: python3 tools/stamp.py)')
 # generated pages must match the masters
-before = {f: open(f, 'rb').read() for f in ['constitution.html', 'rulebook.html', 'constitution-draft.txt', 'rulebook-draft.txt']}
+before = {f: open(f, 'rb').read() for f in ['constitution.html', 'rulebook.html', 'playing-regulations.html', 'constitution-draft.txt', 'rulebook-draft.txt', 'playing-regulations-draft.txt']}
 subprocess.run([sys.executable, 'tools/build.py'], check=True, capture_output=True)
 subprocess.run([sys.executable, 'tools/stamp.py'], check=True, capture_output=True)
 for f, b in before.items():

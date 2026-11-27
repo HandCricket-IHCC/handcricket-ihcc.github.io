@@ -152,3 +152,11 @@ TOOLS='''<section class="doctools" aria-labelledby="toolsH"><h2 id="toolsH">Find
 <ol id="dres" class="sres"></ol></section>'''
 build('r',r1[ri:]+r2[r2i:],'The IHCC Rule Book','The IHCC Rule Book','The detailed rules of the International Hand Cricket Council. This is a draft that is still being made.','rulebook.html','rulebook-draft.txt','This is a DRAFT. The text is still being made and changes every day. The last day for changes is 30 November 2026. It comes into force on 3 December 2026 together with the Constitution.',intro_r,('constitution.html','Read the Constitution draft'))
 open(REPO+'rulebook-draft.txt','w').write('\n'.join(r1+r2[r2i-0:]) if False else ('\n'.join(r1)+'\n'+'\n'.join(r2[2:])).replace('Draft 5 (14 November 2026), Part 1 of 2: Chapters 1 to 7.','DRAFT (14 November 2026).').replace(' Part 2 holds Chapters 8 to 13.',''))
+
+# Playing Regulations
+TITLES.clear()
+pl=open(OUT+'playing.txt').read().split('\n')
+pi=[i for i,l in enumerate(pl) if l.startswith('CHAPTER 1: ')][0]
+grab(pl)
+build('r',pl[pi:],'The IHCC Playing Regulations','The IHCC Playing Regulations','The standard rules of play for every IHCC series and tournament. This is a draft that is still being made.','playing-regulations.html','playing-regulations-draft.txt','This is a DRAFT. The text is still being made and changes every day. The last day for changes is 30 November 2026. It comes into force on 3 December 2026 together with the Constitution and the Rule Book.',pl[1],('rulebook.html','Read the Rule Book draft'))
+open(REPO+'playing-regulations-draft.txt','w').write('\n'.join(pl).replace('Draft (27 November 2026).','DRAFT (27 November 2026).'))
