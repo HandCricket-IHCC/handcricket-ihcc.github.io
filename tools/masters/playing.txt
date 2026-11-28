@@ -62,7 +62,7 @@ CHAPTER 8: Captains
 8.1 Before a series or a tournament begins, every board gives the captain and the vice-captain for that series or tournament.
 8.2 In a match, the captain captains the team. If the captain is not playing, the vice-captain captains the team.
 8.3 For one or two matches, for a reason, another player of the playing ten may be made the captain. This cannot be done regularly. If it is done regularly, the match officials may impose a penalty.
-8.4 If the captain has a technical problem, the captaincy goes to the vice-captain. If the vice-captain also has a problem, the first umpire may make any player of that team the captain.
+8.4 If the captain has a technical problem, the captaincy goes to the vice-captain. If the vice-captain also has a problem, the First Official may make any player of that team the captain.
 
 CHAPTER 9: Playing list
 9.1 The captain or vice-captain sends the list of the playing ten to the match group at least one hour before the match time.
@@ -80,7 +80,7 @@ CHAPTER 10: Switching
 10.3 If a request is made earlier than the last eight seconds, the opponent captain cannot reject it. If the opponent captain rejects it, the loss to the team is adjusted by the match officials.
 
 CHAPTER 11: Recording
-11.1 The captain or vice-captain records the match, in any format (audio, video or screen recording). The match officials use the recording in case of a technical problem. A team that has no recording cannot challenge a team that has proof. The umpire or the match referee decides on the proof that is available.
+11.1 The captain or vice-captain records the match, in any format (audio, video or screen recording). The match officials use the recording in case of a technical problem. A team that has no recording cannot challenge a team that has proof. The First Official and the Second Official decide on the proof that is available.
 
 CHAPTER 12: Match time, room, joining, live broadcast and scorecards
 12.1 The match time is the time announced for the match. At the match time the match officials create the room and send the link to the match group. Every time in these regulations that is counted before or after the start of the match is counted from the match time, and not from the moment when play actually begins.

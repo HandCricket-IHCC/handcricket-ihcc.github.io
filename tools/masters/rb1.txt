@@ -120,23 +120,24 @@ CHAPTER 3: PLAYING CONDITIONS
 3.12 This Rule Book holds only the main and important rules of play. A tournament or a series may have its own rules that differ in small ways, announced in advance. What is not written in this Rule Book or in the rules of the tournament or series is as the Hand Cricket application is set up.
 
 CHAPTER 4: MATCH OFFICIALS, SCORERS AND COMMENTATORS
-4.1 The match officials of IHCC are the on-field umpires, the third umpire, the match referee, the scorers and the commentators. Which of these IHCC will have in each match: [to be decided].
-4.2 Whether an official may belong to a board that is playing the match: [to be decided].
-4.3 How officials and commentators are chosen and appointed: [to be decided].
-4.4 The duties of each kind of official: [to be decided].
+4.1 Every match of IHCC, of every series and of every tournament must have two match officials: the First Official and the Second Official. Because Hand Cricket is played on the application, one official stays with each team. Other officials, such as a third umpire for the recording, a match referee, scorers or commentators, are used only where a series or a tournament decides to have them.
+4.2 An official may not belong to either of the two Member Boards that are playing the match. He may belong to a neutral board, or he may be a person who belongs to no board.
+4.3 In a series, the boards of the series bring their own officials, who must meet rule 4.2, and decide the officials, the sponsor and the number of matches among themselves. The General Secretary approves them together with the series (rule 5.2). For a tournament, the Core Committee may appoint organisers. The organisers organise the whole tournament and choose its officials, with the approval of the General Secretary.
+4.4 The duties of the First Official and the Second Official are the same. They create the room on the application, select the playing players, start the match, catch any violation during the match, upload the scorecard (CSV) and send it to the match group (Playing Regulations, Chapter 12).
 4.5 Officials and commentators follow Chapter 6.
 4.6 The costs of officials, commentators and broadcasting of IHCC tournaments are paid from the operational fee, as Constitution clause 27.2 says. For a series between boards, rule 5.2B applies.
-4.7 Rules for the broadcast of matches: [to be decided].
+4.7 IHCC does not broadcast its series and tournaments live itself. The announcement of every series and tournament is made by IHCC on its WhatsApp channel. A series that wishes to be broadcast live may do so on the channel of a board or anywhere else the boards choose. The boards decide the sponsor, the number of matches, the officials and the place of the broadcast, and the General Secretary approves them with the series (rule 5.2). The Board of Directors has no part in this. A commentary must not contain an insult, abuse or a false accusation against any player, board or religion (Chapter 6).
 
 CHAPTER 5: TOURNAMENTS, SERIES AND RANKINGS
 5.1 The Core Committee proposes a tournament of IHCC, and the Board of Directors approves it, as Constitution clause 27.1 says. A series between Member Boards is approved by the General Secretary under rule 5.2.
 5.2 A series between two, three or four Member Boards is arranged as Constitution clauses 27.3 to 27.3D say. The boards send the General Secretary a written request that gives the boards, the dates, the number of matches in each format, the officials (volunteer or paid), the sponsors, the budget, and who pays. The General Secretary alone approves it, and the series is played only after that. Within twenty-four hours of the approval he announces it in the Main Group and tells the CEO, who follows the series. Every three months he gives the Board of Directors a report on the series played.
 5.2A The number of matches is decided by the boards. An odd number (for example three or five) is preferred, but an even number is allowed. If the series ends level, it is a drawn series.
-5.2B IHCC gives the officials of a series. Volunteers may serve without a fee. If officials are paid, the boards of the series bear the cost.
+5.2B The boards of a series bring their own officials (rule 4.3). Volunteers may serve without a fee. If officials are paid, the boards of the series bear the cost.
 5.2C The prizes of a series are decided and paid by the boards, or are paid by IHCC from the sponsor's money that the boards found and the General Secretary approved with the series.
 5.2D The boards send IHCC the scorecards (CSV) and results of every match, and the results count in the rankings of the boards.
 5.3 The results and records of IHCC events are published in the Main Group and on the official IHCC website.
-5.4 The method of the rankings of the boards: [to be decided].
+5.4 The method of the rankings of the boards. A win gives a board two points. If two boards have equal points, the result of the match between them decides. The rankings of T20, ODI and Test are kept separately.
+5.4A The scorecards (CSV) and the rankings are open, so that anyone may see them and check them again.
 5.5 A cash prize is offered only when a sponsor has promised it, as Constitution clause 23.7 says. The prizes of an IHCC tournament (the winner, the runner-up, the third place, the player of the match, the best batter, the best bowler and other awards) are paid from sponsorship money, step by step, as Constitution clause 23.7A says.
 
 CHAPTER 6: CODE OF CONDUCT
