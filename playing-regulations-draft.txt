@@ -36,6 +36,7 @@ CHAPTER 2: Teams and players
 CHAPTER 3: Batting
 3.1 A player may bat at most twice in an innings. The player may be sent in again immediately after being out.
 3.2 If a player bats a third time, all the runs scored by that player in the third turn are deducted from the team score.
+3.3 Only the runs scored by the player in the third turn are deducted, so the team score cannot fall below what it was before that turn. If the player is out in the third turn, that wicket is counted as a wicket of the team.
 
 CHAPTER 4: Bowling
 4.1 In an innings a team must use at least four bowlers. The limits are those of Rule Book 3.7: three overs in a T20 innings, four overs in an ODI innings, and five overs in each block of 20 overs in a Test innings (overs 1 to 20, 21 to 40, and 41 to 50). After each block of 20 overs the count of every bowler starts again from zero.
