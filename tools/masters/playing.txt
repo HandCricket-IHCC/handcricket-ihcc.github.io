@@ -52,6 +52,8 @@ CHAPTER 4: Bowling
 
 4.4 A wicket taken in a violation over is counted in the record of the bowler and is not deducted. The batter who is out is counted as out. The 20 runs awarded under clause 4.2(b) belong to the team: they are added to the team score and to the team record, but not to the record of any individual player.
 
+4.5 If a bowler loses his connection because of a technical error and leaves the room of the application, the captain may replace him with another bowler of the team, who bowls the rest of that over. The balls already bowled by the first bowler remain in his record and in his quota. If the first bowler becomes active again, he may bowl the rest of his quota later. If he does not, the overs that he could not bowl are bowled by the other bowlers, each within his own quota. For example, a bowler has bowled one over and three balls when he loses his connection. Another bowler bowls the remaining balls of that over, and the rest of the overs of the first bowler are bowled by other bowlers if he does not return.
+
 CHAPTER 5: Teams with fewer players
 5.1 Because every player may bat twice, a team with six or more players can complete the ten wickets without any change.
 5.2 A team with five players can have nine wickets fall by batting. The last wicket is thrown by the captain by pressing zero.
