@@ -17,7 +17,7 @@ Chapter 10: Switching
 Chapter 11: Recording
 Chapter 12: Match time, room, joining, live broadcast and scorecards
 Chapter 13: Match group and messages
-Chapter 14: Unclear cases and eliminated teams
+Chapter 14: Technical problems, unclear cases and eliminated teams
 Chapter 15: Decisions and complaints
 
 Part A: Core rules of play, which no series or tournament may change
@@ -110,9 +110,11 @@ CHAPTER 13: Match group and messages
 13.3 In the lobby, only captains, vice-captains and officials may send messages. After the match starts, public messages and voice notes are allowed only for them. Private messages are allowed to everyone, but they must stay within good manners, and nobody may be rude to a player of the own team.
 13.4 Rules about emoji are made by the series or tournament.
 
-CHAPTER 14: Unclear cases and eliminated teams
+CHAPTER 14: Technical problems, unclear cases and eliminated teams
 14.1 If a violation makes it necessary to complete the remaining score or overs and the case cannot be decided by these rules, a new room may be made at the same time, to complete the remaining overs and wickets.
 14.2 If a team is eliminated or disqualified, for any reason, the results of its earlier matches do not change. The teams that were to play it in the later matches get two points each.
+14.3 If a technical glitch occurs before 1.3 overs of the match have been played (one over and three balls), for example the room is not shown to all players, or all players are put out, and both officials approve it, a new room is created and the match is played again from the beginning. This limit is the same for T20, ODI and Test matches.
+14.4 If a technical glitch occurs after 1.3 overs, the match is not played again. It is continued from the same position, and the matter is settled by the match officials under these regulations.
 
 CHAPTER 15: Decisions and complaints
 15.1 During a match, the decision belongs to the match officials. In a tournament, the organisers also decide, together with the match officials.
