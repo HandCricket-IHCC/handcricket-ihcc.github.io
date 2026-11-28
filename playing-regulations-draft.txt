@@ -37,7 +37,6 @@ CHAPTER 3: Batting
 3.1 A player may bat at most twice in an innings. The player may be sent in again immediately after being out.
 3.2 If a player bats a third time, all the runs scored by that player in the third turn are deducted from the team score.
 3.3 Only the runs scored by the player in the third turn are deducted, so the team score cannot fall below what it was before that turn. If the player is out in the third turn, that wicket is counted as a wicket of the team.
-
 3.4 If the batter who is playing loses his connection because of a technical error, and leaves the room of the application, the following applies. It depends on the runs that the batter scored in that same turn, and not in any earlier turn of his.
     (a) If he has scored 20 runs or fewer in that turn, the captain may replace him with another player of the team whose own turn is the first or the second, and not a third. The runs he scored remain in the team score.
     (b) If he has scored 21 runs or more in that turn, he cannot be replaced. The innings continues with the other players. When nine wickets have fallen and he is the only batter left, he is brought to the strike by a long press and is given out on zero, because the timer ends without a throw. This is his wicket, and it is counted.
@@ -49,9 +48,7 @@ CHAPTER 4: Bowling
     (a) On a violation ball on which no wicket falls, three runs are deducted from the overall runs of the bowling team in the series or tournament, that is, the total from which its run rate is calculated. Nothing is deducted from the scorecard of the match.
     (b) On a violation ball on which a wicket falls, the batting team is awarded 20 runs for each such wicket. These runs are added to its score on the scoreboard of the match. The deduction in (a) does not apply to that ball.
 4.3 Example. In a T20 match the batting team has scored 150 runs. A bowler bowls a fourth over, and takes a wicket on its first ball. The batting team is awarded 20 runs, its score becomes 170, and the target for the other team is 171. On each other ball of that over on which no wicket falls, three runs are deducted from the overall runs of the bowling team in the series or tournament.
-
 4.4 A wicket taken in a violation over is counted in the record of the bowler and is not deducted. The batter who is out is counted as out. The 20 runs awarded under rule 4.2(b) belong to the team: they are added to the team score and to the team record, but not to the record of any individual player.
-
 4.5 If a bowler loses his connection because of a technical error and leaves the room of the application, the captain may replace him with another bowler of the team, who bowls the rest of that over. The balls already bowled by the first bowler remain in his record and in his quota. If the first bowler becomes active again, he may bowl the rest of his quota later. If he does not, the overs that he could not bowl are bowled by the other bowlers, each within his own quota. For example, a bowler has bowled one over and three balls when he loses his connection. Another bowler bowls the remaining balls of that over, and the rest of the overs of the first bowler are bowled by other bowlers if he does not return.
 
 CHAPTER 5: Teams with fewer players
