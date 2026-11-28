@@ -109,7 +109,7 @@
 <p class="cl" id="r-1-1"><span class="num">1.1</span> T20: each innings has 12 overs and 10 wickets.</p>
 <p class="cl" id="r-1-2"><span class="num">1.2</span> ODI: each innings has 16 overs and 10 wickets.</p>
 <p class="cl" id="r-1-3"><span class="num">1.3</span> Test: each innings has 50 overs and 10 wickets.</p>
-<p class="cl" id="r-1-4"><span class="num">1.4</span> If the scores are level, the application plays the super over automatically.</p>
+<p class="cl" id="r-1-4"><span class="num">1.4</span> In a T20 or an ODI match, if the scores are level, the application plays the super over automatically. If the super over is also level, the application plays another super over, and this continues until there is a result. In a Test match, level scores are a tie.</p>
 <p class="pn"><a href="#ch-2">Next: Chapter 2</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-2">Chapter 2: Teams and players</h2>
 <p class="cl" id="r-2-1"><span class="num">2.1</span> Every team plays with ten players, in T20, ODI and Test. There are no reserve players.</p>
@@ -123,7 +123,7 @@
 <p class="cl" id="r-3-4"><span class="num">3.4</span> If the batter who is playing loses his connection because of a technical error, and leaves the room of the application, the following applies. It depends on the runs that the batter scored in that same turn, and not in any earlier turn of his.</p>
 <p class="sub">(a) If he has scored 20 runs or fewer in that turn, the captain may replace him with another player of the team whose own turn is the first or the second, and not a third. The runs he scored remain in the team score.</p>
 <p class="sub">(b) If he has scored 21 runs or more in that turn, he cannot be replaced. The innings continues with the other players. When nine wickets have fallen and he is the only batter left, he is brought to the strike by a long press and is given out on zero, because the timer ends without a throw. This is his wicket, and it is counted.</p>
-<p class="cl" id="r-3-5"><span class="num">3.5</span> Clause 3.4 is separate from clause <a href="constitution.html#c-3-2">3.2</a>, which deals with a third turn.</p>
+<p class="cl" id="r-3-5"><span class="num">3.5</span> Rule 3.4 is separate from rule <a href="#r-3-2">3.2</a>, which deals with a third turn.</p>
 <p class="pn"><a href="#ch-2">Previous: Chapter 2</a> <a href="#ch-4">Next: Chapter 4</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-4">Chapter 4: Bowling</h2>
 <p class="cl" id="r-4-1"><span class="num">4.1</span> In an innings a team must use at least four bowlers. The limits are those of Rule Book 3.7: three overs in a T20 innings, four overs in an ODI innings, and five overs in each block of 20 overs in a Test innings (overs 1 to 20, 21 to 40, and 41 to 50). After each block of 20 overs the count of every bowler starts again from zero.</p>
@@ -131,7 +131,7 @@
 <p class="sub">(a) On a violation ball on which no wicket falls, three runs are deducted from the overall runs of the bowling team in the series or tournament, that is, the total from which its run rate is calculated. Nothing is deducted from the scorecard of the match.</p>
 <p class="sub">(b) On a violation ball on which a wicket falls, the batting team is awarded 20 runs for each such wicket. These runs are added to its score on the scoreboard of the match. The deduction in (a) does not apply to that ball.</p>
 <p class="cl" id="r-4-3"><span class="num">4.3</span> Example. In a T20 match the batting team has scored 150 runs. A bowler bowls a fourth over, and takes a wicket on its first ball. The batting team is awarded 20 runs, its score becomes 170, and the target for the other team is 171. On each other ball of that over on which no wicket falls, three runs are deducted from the overall runs of the bowling team in the series or tournament.</p>
-<p class="cl" id="r-4-4"><span class="num">4.4</span> A wicket taken in a violation over is counted in the record of the bowler and is not deducted. The batter who is out is counted as out. The 20 runs awarded under clause <a href="constitution.html#c-4-2">4.2</a>(b) belong to the team: they are added to the team score and to the team record, but not to the record of any individual player.</p>
+<p class="cl" id="r-4-4"><span class="num">4.4</span> A wicket taken in a violation over is counted in the record of the bowler and is not deducted. The batter who is out is counted as out. The 20 runs awarded under rule <a href="#r-4-2">4.2</a>(b) belong to the team: they are added to the team score and to the team record, but not to the record of any individual player.</p>
 <p class="cl" id="r-4-5"><span class="num">4.5</span> If a bowler loses his connection because of a technical error and leaves the room of the application, the captain may replace him with another bowler of the team, who bowls the rest of that over. The balls already bowled by the first bowler remain in his record and in his quota. If the first bowler becomes active again, he may bowl the rest of his quota later. If he does not, the overs that he could not bowl are bowled by the other bowlers, each within his own quota. For example, a bowler has bowled one over and three balls when he loses his connection. Another bowler bowls the remaining balls of that over, and the rest of the overs of the first bowler are bowled by other bowlers if he does not return.</p>
 <p class="pn"><a href="#ch-3">Previous: Chapter 3</a> <a href="#ch-5">Next: Chapter 5</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-5">Chapter 5: Teams with fewer players</h2>
@@ -139,11 +139,16 @@
 <p class="cl" id="r-5-2"><span class="num">5.2</span> A team with five players can have nine wickets fall by batting. The last wicket is thrown by the captain by pressing zero.</p>
 <p class="cl" id="r-5-3"><span class="num">5.3</span> A team with four players can have seven wickets fall by batting. The last three wickets are thrown by the captain by pressing zero.</p>
 <p class="cl" id="r-5-4"><span class="num">5.4</span> Wickets thrown by pressing zero are counted as wickets in the match record.</p>
+<p class="cl" id="r-5-5"><span class="num">5.5</span> A wicket is thrown in the third turn of the player who throws it. The bowler bowls zero, and the batter who comes, who may be the captain, the vice-captain or any other player, also presses zero and is out.</p>
+<p class="cl" id="r-5-6"><span class="num">5.6</span> If the player who throws presses 2, 4 or 6, those runs are deducted from the team score under rule <a href="#r-3-2">3.2</a>, and he is not out. On the next ball he presses zero to throw the wicket.</p>
+<p class="cl" id="r-5-7"><span class="num">5.7</span> If the player who throws presses 1, 3 or 5, the strike would pass to the active player, which cannot happen while wickets are still to be thrown. The runs are deducted, the score is locked at that point, and all the remaining wickets, including those of the active players, are counted as fallen. The innings ends.</p>
+<p class="cl" id="r-5-8"><span class="num">5.8</span> If a wicket is still to be thrown, but the player who throws it is at the non-striker's end, the active player at the strike continues to bat normally. This can happen, for example, when a wicket is thrown on the last ball of an over, or when the last wicket falls on the last ball of an over. When the player who throws gets the strike, he presses zero.</p>
 <p class="pn"><a href="#ch-4">Previous: Chapter 4</a> <a href="#ch-6">Next: Chapter 6</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-6">Chapter 6: Points</h2>
 <p class="cl" id="r-6-1"><span class="num">6.1</span> The winning team gets two points. The losing team gets no points.</p>
 <p class="cl" id="r-6-2"><span class="num">6.2</span> If a team is ready and the opponent is not, the ready team wins by walkover and gets two points.</p>
 <p class="cl" id="r-6-3"><span class="num">6.3</span> If both teams agree not to play, no team gets any point.</p>
+<p class="cl" id="r-6-4"><span class="num">6.4</span> If a Test match is tied, each team gets one point.</p>
 <h3>Part B: Standard match procedures, which may be changed in small ways with the permission of the General Secretary</h3>
 <p class="pn"><a href="#ch-5">Previous: Chapter 5</a> <a href="#ch-7">Next: Chapter 7</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-7">Chapter 7: Timer</h2>
@@ -164,11 +169,14 @@
 <p class="sub">(c) From 15 minutes to 5 minutes before the match time: the list is accepted, but the captain is banned from the next match of the team.</p>
 <p class="sub">(d) If the list has not been sent by 5 minutes before the match time, the match is awarded to the opponent team.</p>
 <p class="cl" id="r-9-4"><span class="num">9.4</span> After the list has been sent, the captain may change it and send it again, up to 15 minutes before the match time. No change is allowed after that.</p>
+<p class="cl" id="r-9-5"><span class="num">9.5</span> If a player who is not on the list is selected by mistake, the official does not select him if this is noticed in the lobby before the match. If it is noticed after the match has started, the official does not allow him to play.</p>
+<p class="cl" id="r-9-6"><span class="num">9.6</span> If a player who is not on the list has played, and this was not noticed during the match, the runs and the wickets of that player are deducted from that match, and the result may be reversed. A complaint about this must be made within 24 hours of the end of the match.</p>
 <p class="pn"><a href="#ch-8">Previous: Chapter 8</a> <a href="#ch-10">Next: Chapter 10</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-10">Chapter 10: Switching</h2>
 <p class="cl" id="r-10-1"><span class="num">10.1</span> If the striker and the non-striker appear to be the same player, the captain must switch again.</p>
 <p class="cl" id="r-10-2"><span class="num">10.2</span> A bowler or a batter must be switched in the last eight seconds of the timer, so that the request does not reach the opponent captain.</p>
 <p class="cl" id="r-10-3"><span class="num">10.3</span> If a request is made earlier than the last eight seconds, the opponent captain cannot reject it. If the opponent captain rejects it, the loss to the team is adjusted by the match officials.</p>
+<p class="cl" id="r-10-4"><span class="num">10.4</span> A player who was in the room when the match started, but whose connection did not stay stable, is switched. If his connection is restored, he may continue his turn.</p>
 <p class="pn"><a href="#ch-9">Previous: Chapter 9</a> <a href="#ch-11">Next: Chapter 11</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-11">Chapter 11: Recording</h2>
 <p class="cl" id="r-11-1"><span class="num">11.1</span> The captain or vice-captain records the match, in any format (audio, video or screen recording). The match officials use the recording in case of a technical problem. A team that has no recording cannot challenge a team that has proof. The First Official and the Second Official decide on the proof that is available.</p>
@@ -182,6 +190,9 @@
 <p class="cl" id="r-12-6"><span class="num">12.6</span> If a team still has fewer than four players at that time, the match is awarded to the opponent team by walkover.</p>
 <p class="cl" id="r-12-7"><span class="num">12.7</span> In a series or tournament that is broadcast live, the captain of the team playing that day must join the Google Meet before the match, at the time announced by the series or tournament (20 minutes before the match time by default). If the captain cannot join, the vice-captain must join. After the match, both captains and the Player of the Match must join. A captain who is late may be penalised by the match officials, if it is repeated in the same series or tournament.</p>
 <p class="cl" id="r-12-8"><span class="num">12.8</span> After every match, three scorecards in CSV format must be sent to the match group within one hour of the end of the match: one from each team (sent by the captain or the vice-captain), and one from the officials (sent by the first or second official).</p>
+<p class="cl" id="r-12-9"><span class="num">12.9</span> If the First Official is absent, the Second Official creates the room. If both officials are absent, either of the two captains sends a message in the match group to find a new official, who creates the room at once and holds the match. If no official answers within five to seven minutes, the two captains may, by mutual agreement, create a room themselves and complete the match under these regulations.</p>
+<p class="cl" id="r-12-10"><span class="num">12.10</span> In a match where the captains have created the room themselves under rule <a href="#r-12-9">12.9</a>, the two captains together catch any violation. Each team sends its own scorecard (CSV). In place of the scorecard of the officials, the two captains send together a written confirmation of the score and of any violation.</p>
+<p class="cl" id="r-12-11"><span class="num">12.11</span> The toss, and the choice of batting or bowling by the team that wins it, are done on the application exactly as the application provides.</p>
 <p class="pn"><a href="#ch-11">Previous: Chapter 11</a> <a href="#ch-13">Next: Chapter 13</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-13">Chapter 13: Match group and messages</h2>
 <p class="cl" id="r-13-1"><span class="num">13.1</span> The match group has all captains, vice-captains, match officials and the Core Committee. The match link, the CSV files and all discussion about matches are in this group.</p>
@@ -195,10 +206,13 @@
 <p class="cl" id="r-14-3"><span class="num">14.3</span> If a technical glitch occurs before 1.3 overs of the match have been played (one over and three balls), for example the room is not shown to all players, or all players are put out, and both officials approve it, a new room is created and the match is played again from the beginning. This limit is the same for T20, ODI and Test matches.</p>
 <p class="cl" id="r-14-4"><span class="num">14.4</span> If a technical glitch occurs after 1.3 overs, the match is not played again. It is continued from the same position, and the matter is settled by the match officials under these regulations.</p>
 <p class="cl" id="r-14-5"><span class="num">14.5</span> A new room that is created to complete a match, whether in the middle of the match, at its end, or because of an adjustment for a violation, starts from zero. When the match is complete, the match officials add the scores of the earlier room to the scorecard (CSV) of the new room. This adjustment is the duty of the match officials.</p>
+<p class="cl" id="r-14-6"><span class="num">14.6</span> If the room continues but one official loses his connection and leaves the room, the match continues, and the other official handles everything. If both officials lose their connection, the match still continues, because both teams know these regulations. The officials rejoin as soon as they can, and make any adjustment that is needed under rule <a href="#r-14-5">14.5</a>.</p>
 <p class="pn"><a href="#ch-13">Previous: Chapter 13</a> <a href="#ch-15">Next: Chapter 15</a> <a href="#tocH">Back to contents</a></p>
 <h2 id="ch-15">Chapter 15: Decisions and complaints</h2>
 <p class="cl" id="r-15-1"><span class="num">15.1</span> During a match, the decision belongs to the match officials. In a tournament, the organisers also decide, together with the match officials.</p>
-<p class="cl" id="r-15-2"><span class="num">15.2</span> A complaint against a wrong decision of an official is sent to the General Secretary, and the Core Committee decides on it.</p>
+<p class="cl" id="r-15-2"><span class="num">15.2</span> A complaint against a wrong decision of an official is first looked at by the CEO (rule <a href="#r-15-4">15.4</a>). If a team does not accept the decision of the CEO, it may complain to the General Secretary, and the Core Committee decides on it.</p>
+<p class="cl" id="r-15-3"><span class="num">15.3</span> The officials give all their decisions on batting and bowling violations immediately after the match, and within one hour of its end. The match is finished according to these decisions. If both captains accept them, the match is final.</p>
+<p class="cl" id="r-15-4"><span class="num">15.4</span> If a team does not accept the decision of an official and believes that it is wrong, it may go to the CEO within the same one hour, because the CEO keeps the scorecards (CSV) and the records.</p>
 <p class="pn"><a href="#ch-14">Previous: Chapter 14</a> <a href="#tocH">Back to contents</a></p>
 </main>
 <!--SITEFOOT-->
