@@ -45,6 +45,8 @@ CHAPTER 4: Bowling
     (b) On a violation ball on which a wicket falls, the batting team is awarded 20 runs for each such wicket. These runs are added to its score on the scoreboard of the match. The deduction in (a) does not apply to that ball.
 4.3 Example. In a T20 match the batting team has scored 150 runs. A bowler bowls a fourth over, and takes a wicket on its first ball. The batting team is awarded 20 runs, its score becomes 170, and the target for the other team is 171. On each other ball of that over on which no wicket falls, three runs are deducted from the overall runs of the bowling team in the series or tournament.
 
+4.4 A wicket taken in a violation over is counted in the record of the bowler and is not deducted. The batter who is out is counted as out. The 20 runs awarded under clause 4.2(b) belong to the team: they are added to the team score and to the team record, but not to the record of any individual player.
+
 CHAPTER 5: Teams with fewer players
 5.1 Because every player may bat twice, a team with six or more players can complete the ten wickets without any change.
 5.2 A team with five players can have nine wickets fall by batting. The last wicket is thrown by the captain by pressing zero.
