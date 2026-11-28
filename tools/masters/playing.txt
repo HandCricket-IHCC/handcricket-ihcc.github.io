@@ -115,6 +115,7 @@ CHAPTER 14: Technical problems, unclear cases and eliminated teams
 14.2 If a team is eliminated or disqualified, for any reason, the results of its earlier matches do not change. The teams that were to play it in the later matches get two points each.
 14.3 If a technical glitch occurs before 1.3 overs of the match have been played (one over and three balls), for example the room is not shown to all players, or all players are put out, and both officials approve it, a new room is created and the match is played again from the beginning. This limit is the same for T20, ODI and Test matches.
 14.4 If a technical glitch occurs after 1.3 overs, the match is not played again. It is continued from the same position, and the matter is settled by the match officials under these regulations.
+14.5 A new room that is created to complete a match, whether in the middle of the match, at its end, or because of an adjustment for a violation, starts from zero. When the match is complete, the match officials add the scores of the earlier room to the scorecard (CSV) of the new room. This adjustment is the duty of the match officials.
 
 CHAPTER 15: Decisions and complaints
 15.1 During a match, the decision belongs to the match officials. In a tournament, the organisers also decide, together with the match officials.
